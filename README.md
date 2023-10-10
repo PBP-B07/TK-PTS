@@ -1,7 +1,6 @@
 django 
 
-I. Nama-nama anggota kelompok
-
+I. Nama-nama anggota kelompok<br>
 - Alifa Hanania Ardha - 2206024392<br>
 - Hanan Adipratama - 2206081824<br>
 - Muhammad Azmi Falah - 2206082285<br>
