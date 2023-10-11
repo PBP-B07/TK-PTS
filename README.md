@@ -9,7 +9,20 @@
 - Rahida Syafa Nurdya - 2206829023
 
 ## Cerita dan Manfaat Aplikasi 
-Di tengah pesatnya perkembangan teknologi dan pengetahuan, keberadaan `UlasBuku` menjadi penting sebagai panduan terkini bagi para penggiat teknologi. Dengan memberikan panduan yang terfokus, aplikasi ini mempercepat akses ke sumber-sumber literatur berkualitas, memudahkan para pelajar dan peneliti untuk mengidentifikasi bahan bacaan yang mendukung peningkatan pengetahuan mereka. Selain itu, aplikasi ini juga menciptakan komunitas yang memungkinkan para profesional dan pelajar dalam bidang CS berinteraksi, berbagi pengetahuan, dan memperdalam pemahaman pengguna tentang topik-topik terbaru dalam ilmu komputer, mendorong kolaborasi dan pertukaran gagasan yang memperkaya dunia teknologi informasi. Dengan cara ini, aplikasi ini bukan hanya sekedar sumber informasi, tetapi juga katalisator bagi kemajuan ilmu komputer, memberdayakan pembaca untuk terus berkembang dan berkontribusi dalam revolusi teknologi informasi global.
+Dalam dunia yang terus bergerak cepat dalam inovasi teknologi dan ilmu komputer, mencari sumber referensi berkualitas menjadi tantangan tersendiri. Sebagian besar mahasiswa, terutama mereka yang baru memulai perjalanan akademik di bidang ini, sering kali merasa terjebak dalam belantara informasi. Ditambah lagi, pemasaran buku yang menarik sering kali mengecoh, memancing mereka untuk membeli buku dengan harapan tinggi namun kemudian merasa kecewa dengan isi halamannya.
+
+Sekelompok mahasiswa dari Fakultas Ilmu Komputer UI, yang telah menghabiskan banyak waktu dalam pencarian buku yang tepat, memutuskan untuk mengambil langkah proaktif. Mereka mendirikan "UlasBuku", sebuah platform online di mana mereka dan orang-orang lain yang berkecimpung di dunia Computer Science dapat meninggalkan ulasan jujur tentang buku-buku yang mereka baca. Tujuannya sederhana: membantu orang lain menghindari kesalahan yang sama dan memastikan bahwa setiap pembelian buku memang bernilai.
+
+Namun, UlasBuku bukan sekadar tempat untuk ulasan. Seiring dengan pertumbuhan penggunanya, fitur-fitur baru diperkenalkan. Forum diskusi diluncurkan, memberikan ruang bagi anggota untuk mendiskusikan konsep-konsep yang mereka temukan dalam buku-buku tersebut, membagikan perspektif, atau bahkan meminta bantuan dalam topik yang sulit.
+
+
+
+Manfaat:
+1. Peningkatan Keputusan Pembelian Buku: Dengan adanya ulasan dan rekomendasi dari komunitas, pengguna dapat menghemat waktu dan uang dengan memilih buku yang benar-benar sesuai dengan kebutuhan dan kualitas yang diharapkan.
+
+2. Mengurangi Kesulitan dalam Menemukan Materi Berkualitas: Banyaknya buku di pasaran seringkali membingungkan. UlasBuku menjadi penyaring informasi, memudahkan pengguna menemukan buku berkualitas tinggi berdasarkan ulasan komunitas.
+
+3. Menambah Pengetahuan: Melalui diskusi dengan komunitas yang aktif, pengguna mendapat wawasan tambahan tentang topik-topik dalam buku, yang mungkin tidak mereka peroleh hanya dengan membaca buku tersebut.
 
 ## Daftar Modul
 1. Homepage (main) -> berupa rekomendasi buku 
