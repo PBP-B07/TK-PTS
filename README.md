@@ -13,41 +13,48 @@ Di tengah pesatnya perkembangan teknologi dan pengetahuan, keberadaan `CSBookSco
 
 ## Daftar Modul
 1. Homepage (main) -> berupa rekomendasi buku 
-    - Menampilkan rekomendasi buku berupa forum yang sedang ramai diperbincangkan dan juga forum yang kurang peminatnya
-    - Menampilkan buku dengan ulasan terbaru dan terbaik dari user
-    - Menampilkan buku dengan forum yang di dalamnya ada kontribusi user
-    - Tentang CSBookScore
+    - Menampilkan rekomendasi buku berupa forum yang sedang ramai diperbincangkan dan juga forum yang kurang peminatnya (READ)
+    - Menampilkan buku dengan ulasan terbaru dan terbaik dari user (READ)
+    - Menampilkan buku dengan forum yang di dalamnya ada kontribusi user (READ)
+    - Tentang CSBookScore (READ)
+    - User bisa menambahkan Bookmark (CREATE)
 
 2. Profile (ditaruh di navbar)
-    - Riwayat ulasan buku yang pernah di ulas oleh user
-	- Deskripsi diri
+    - Riwayat ulasan buku yang pernah di ulas oleh user (READ)
+	- Deskripsi diri (READ)
+    - 
 
 3. Katalog buku (ditaruh di navbar)
-    - Berisi apa saja buku yang ada di CSBookScore yang terurut sesuai abjad
-    - Didalam page ini ada fitur ‘search’ buku
-    - Didalam page ini ada fitur filter (berdasarkan tag) 
+    - Berisi apa saja buku yang ada di CSBookScore yang terurut sesuai abjad (READ)
+    - Didalam page ini ada fitur ‘search’ buku (READ)
+    - Didalam page ini ada fitur filter (berdasarkan tag)  (READ)
         1. Kategori buku
         2. Bintang (hasil ulasan)
+    - Menambahkan detail buku (CREATE) (Admin)
 
 4. Deskripsi per buku (ada di setiap buku)
-    - Details buku (Judul, Deskripsi, Penulis, ISBN-10, ISBN-13, Tanggal Rilis, Edisi, Best Seller, Estimasi Harga, tag buku)
-    - Lihat ringkasan review dan rate yang ada di buku yang berkaitan
-    - Lihat ringkasan forum diskusi yang ada di buku yang berkaitan
+    - Details buku (Judul, Deskripsi, Penulis, ISBN-10, ISBN-13, Tanggal Rilis, Edisi, Best Seller, Estimasi Harga, tag buku) (READ)
+    - Lihat ringkasan review dan rate yang ada di buku yang berkaitan (READ)
+    - Lihat ringkasan forum diskusi yang ada di buku yang berkaitan (READ)
+    - Admin dapat mengedit deskripsi buku (UPDATE)
 
 5. Review + Rate (ada di setiap buku)
-    - User dapat memberikan review/ulasan dan rating terhadap suatu buku
-    - User dapat melihat review dan rating secara lengkap
-    - User dapat memfilter review dan rating yang diinginkan berdasarkan:
-        1. Jumlah Bintang (1-5)
+    - User dapat memberikan review/ulasan dan rating terhadap suatu buku (CREATE)
+    - User dapat melihat review dan rating secara lengkap (READ)
+    - User dapat memfilter review dan rating yang diinginkan berdasarkan: (READ)
+        1. Jumlah Bintang (1-5) 
         2. Terbaru-Terlama
 
 6. Forum (ada di setiap buku)
-    - User dapat memposting pembicaraannya pada forum
-    - User dapat mengirimkan foto pada forum
+    - User dapat memposting pembicaraannya pada forum (CREATE)
+    - User dapat mengirimkan foto pada forum (CREATE)
+    - User dapat melihat perbincangan di forum tersebut (READ)
 
 7. Login dan Register
-    - User dapat masuk menggunakan login
-    - User dapat mendaftarkan menggunakan register
+    - User dapat masuk menggunakan login (CREATE)
+    - User dapat mendaftarkan menggunakan register (CREATE)
+
+8. 
 
 
 ## Sumber Dataset
