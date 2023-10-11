@@ -24,10 +24,10 @@ Namun, UlasBuku bukan sekadar tempat untuk ulasan. Seiring dengan pertumbuhan pe
 3. Menambah Pengetahuan: Melalui diskusi dengan komunitas yang aktif, pengguna mendapat wawasan tambahan tentang topik-topik dalam buku, yang mungkin tidak mereka peroleh hanya dengan membaca buku tersebut.
 
 ## Daftar Modul 📚
-1. Homepage (main) 
-    - Menampilkan rekomendasi buku berupa forum yang sedang ramai diperbincangkan dan juga forum yang kurang peminatnya (READ)
+1. Homepage (main) -> berisi rekomendasi, iklan dari buku yang ada di database
+    - Menampilkan rekomendasi buku berupa forum yang sedang ramai diperbincangkan dan juga forum yang kurang peminatnya dari seluruh user (READ)
     - Menampilkan buku dengan ulasan terbaru dan terbaik dari user (READ)
-    - Menampilkan buku dengan forum yang paling ramai (READ)
+    - Menampilkan buku dengan forum terbaru dan ter-ramai dari user (READ)
     - Menampilkan event/iklan yang berhubungan dengan buku pada database (READ)
     - `Admin` Menambahkan event/iklan yang berhubungan dengan buku pada database (CREATE)
     - Tentang UlasBuku (READ)
