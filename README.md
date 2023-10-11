@@ -1,6 +1,6 @@
 # UlasBuku 📖
 
-## Kelompok B-07 
+## Kelompok B-07 💁‍♂️💁‍♀️
 - Alifa Hanania Ardha - 2206024392<br>
 - Hanan Adipratama - 2206081824<br>
 - Muhammad Azmi Falah - 2206082285<br>
@@ -8,7 +8,7 @@
 - Monica Gloria Damanik - 2206082442<br>
 - Rahida Syafa Nurdya - 2206829023
 
-## Cerita Aplikasi
+## Cerita Aplikasi 👨‍💻
 Dalam dunia yang terus bergerak cepat dalam inovasi teknologi dan ilmu komputer, mencari sumber referensi berkualitas menjadi tantangan tersendiri. Sebagian besar mahasiswa, terutama mereka yang baru memulai perjalanan akademik di bidang ini, sering kali merasa terjebak dalam belantara informasi. Ditambah lagi, pemasaran buku yang menarik sering kali mengecoh, memancing mereka untuk membeli buku dengan harapan tinggi namun kemudian merasa kecewa dengan isi halamannya.
 
 Sekelompok mahasiswa dari Fakultas Ilmu Komputer UI, yang telah menghabiskan banyak waktu dalam pencarian buku yang tepat, memutuskan untuk mengambil langkah proaktif. Mereka mendirikan "UlasBuku", sebuah platform online di mana mereka dan orang-orang lain yang berkecimpung di dunia Computer Science dapat meninggalkan ulasan jujur tentang buku-buku yang mereka baca. Tujuannya sederhana: membantu orang lain menghindari kesalahan yang sama dan memastikan bahwa setiap pembelian buku memang bernilai.
@@ -16,15 +16,14 @@ Sekelompok mahasiswa dari Fakultas Ilmu Komputer UI, yang telah menghabiskan ban
 Namun, UlasBuku bukan sekadar tempat untuk ulasan. Seiring dengan pertumbuhan penggunanya, fitur-fitur baru diperkenalkan. Forum diskusi diluncurkan, memberikan ruang bagi anggota untuk mendiskusikan konsep-konsep yang mereka temukan dalam buku-buku tersebut, membagikan perspektif, atau bahkan meminta bantuan dalam topik yang sulit.
 
 
-
-## Manfaat Aplikasi
+## Manfaat Aplikasi 👍
 1. Peningkatan Keputusan Pembelian Buku: Dengan adanya ulasan dan rekomendasi dari komunitas, pengguna dapat menghemat waktu dan uang dengan memilih buku yang benar-benar sesuai dengan kebutuhan dan kualitas yang diharapkan.
 
 2. Mengurangi Kesulitan dalam Menemukan Materi Berkualitas: Banyaknya buku di pasaran seringkali membingungkan. UlasBuku menjadi penyaring informasi, memudahkan pengguna menemukan buku berkualitas tinggi berdasarkan ulasan komunitas.
 
 3. Menambah Pengetahuan: Melalui diskusi dengan komunitas yang aktif, pengguna mendapat wawasan tambahan tentang topik-topik dalam buku, yang mungkin tidak mereka peroleh hanya dengan membaca buku tersebut.
 
-## Daftar Modul
+## Daftar Modul 📚
 1. Homepage (main) 
     - Menampilkan rekomendasi buku berupa forum yang sedang ramai diperbincangkan dan juga forum yang kurang peminatnya (READ)
     - Menampilkan buku dengan ulasan terbaru dan terbaik dari user (READ)
@@ -72,12 +71,12 @@ Namun, UlasBuku bukan sekadar tempat untuk ulasan. Seiring dengan pertumbuhan pe
     - User dapat mendaftarkan menggunakan register (CREATE)
 
 
-## Sumber Dataset
+## Sumber Dataset 🧾
 Pada projek kali ini kami menggunakan dataset dari `Kaggle`, Dataset tersebut berisi lebih dari 300 buku Ilmu Komputer yang tersedia di Amazon:
 
 [Amazon Books Details for Computer Science](https://www.kaggle.com/datasets/uzair01/amazon-books)
 
-## Role
+## Role 👥
 1. Role dari pengunjung terdaftar: 
     - Dapat mendaftarkan akun dan melakukan login
     - Dapat menambahkan review buku yang ada di UlasBuku 
@@ -88,6 +87,6 @@ Pada projek kali ini kami menggunakan dataset dari `Kaggle`, Dataset tersebut be
     - Dapat mendaftarkan akun dan melakukan login
     - Dapat mengelola katalog buku yang ada di UlasBuku
 
-## Referensi
+## Referensi 
 1. [Ulas Kelas](https://www.ulaskelas.id/en)
 			      
