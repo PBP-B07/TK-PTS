@@ -17,7 +17,7 @@ Namun, UlasBuku bukan sekadar tempat untuk ulasan. Seiring dengan pertumbuhan pe
 
 
 
-Manfaat
+Manfaat:
 1. Peningkatan Keputusan Pembelian Buku: Dengan adanya ulasan dan rekomendasi dari komunitas, pengguna dapat menghemat waktu dan uang dengan memilih buku yang benar-benar sesuai dengan kebutuhan dan kualitas yang diharapkan.
 
 2. Mengurangi Kesulitan dalam Menemukan Materi Berkualitas: Banyaknya buku di pasaran seringkali membingungkan. UlasBuku menjadi penyaring informasi, memudahkan pengguna menemukan buku berkualitas tinggi berdasarkan ulasan komunitas.
