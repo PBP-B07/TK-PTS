@@ -27,10 +27,11 @@ Namun, UlasBuku bukan sekadar tempat untuk ulasan. Seiring dengan pertumbuhan pe
 1. Homepage (main) 
     - Menampilkan rekomendasi buku berupa forum yang sedang ramai diperbincangkan dan juga forum yang kurang peminatnya (READ)
     - Menampilkan buku dengan ulasan terbaru dan terbaik dari user (READ)
-    - Menampilkan buku dengan forum yang di dalamnya ada kontribusi user (READ)
-    - Tentang UlasBuku (READ)
+    - Menampilkan buku dengan forum yang paling ramai (READ)
     - Menampilkan event/iklan yang berhubungan dengan buku pada database (READ)
     - `Admin` Menambahkan event/iklan yang berhubungan dengan buku pada database (CREATE)
+    - Tentang UlasBuku (READ)
+    
 
 2. Profile (ditaruh di navbar)
     - Riwayat ulasan buku yang pernah di ulas oleh user (READ)
