@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'books',
     'catalogue',
     'forum',
+    'autentifikasi',
 ]
 
 MIDDLEWARE = [
