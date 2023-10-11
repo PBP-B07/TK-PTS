@@ -58,13 +58,13 @@ Pada projek kali ini kami menggunakan dataset dari `Kaggle`, Dataset tersebut be
 ## Role
 1. Role dari pengunjung : 
     - Dapat mendaftarkan akun dan melakukan login
-    - Dapat menambahkan review buku yang ada di UlasBuku 
-    - Dapat melihat detail dan review dari tiap buku yang ada di UlasBuku
-    - Dapat menambahkan diskusi di forum diskusi UlasBuku
+    - Dapat menambahkan review buku yang ada di CSBookScore 
+    - Dapat melihat detail dan review dari tiap buku yang ada di CSBookScore
+    - Dapat menambahkan diskusi di forum diskusi CSBookScore
     - Dapat melakukan pencarian buku dengan filter yang diterapkan
 2. Role dari admin:
     - Dapat mendaftarkan akun dan melakukan login
-    - Dapat mengelola katalog buku yang ada di UlasBuku
+    - Dapat mengelola katalog buku yang ada di CSBookScore
 
 ## Referensi
 1. [Ulas Kelas](https://www.ulaskelas.id/en)
