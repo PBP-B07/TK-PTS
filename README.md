@@ -1,6 +1,6 @@
 # UlasBuku 📖
 
-## Kelompok B-07
+## Kelompok B-07 
 - Alifa Hanania Ardha - 2206024392<br>
 - Hanan Adipratama - 2206081824<br>
 - Muhammad Azmi Falah - 2206082285<br>
@@ -8,7 +8,7 @@
 - Monica Gloria Damanik - 2206082442<br>
 - Rahida Syafa Nurdya - 2206829023
 
-## Cerita dan Manfaat Aplikasi 
+## Cerita Aplikasi
 Dalam dunia yang terus bergerak cepat dalam inovasi teknologi dan ilmu komputer, mencari sumber referensi berkualitas menjadi tantangan tersendiri. Sebagian besar mahasiswa, terutama mereka yang baru memulai perjalanan akademik di bidang ini, sering kali merasa terjebak dalam belantara informasi. Ditambah lagi, pemasaran buku yang menarik sering kali mengecoh, memancing mereka untuk membeli buku dengan harapan tinggi namun kemudian merasa kecewa dengan isi halamannya.
 
 Sekelompok mahasiswa dari Fakultas Ilmu Komputer UI, yang telah menghabiskan banyak waktu dalam pencarian buku yang tepat, memutuskan untuk mengambil langkah proaktif. Mereka mendirikan "UlasBuku", sebuah platform online di mana mereka dan orang-orang lain yang berkecimpung di dunia Computer Science dapat meninggalkan ulasan jujur tentang buku-buku yang mereka baca. Tujuannya sederhana: membantu orang lain menghindari kesalahan yang sama dan memastikan bahwa setiap pembelian buku memang bernilai.
@@ -17,7 +17,7 @@ Namun, UlasBuku bukan sekadar tempat untuk ulasan. Seiring dengan pertumbuhan pe
 
 
 
-Manfaat:
+## Manfaat Aplikasi
 1. Peningkatan Keputusan Pembelian Buku: Dengan adanya ulasan dan rekomendasi dari komunitas, pengguna dapat menghemat waktu dan uang dengan memilih buku yang benar-benar sesuai dengan kebutuhan dan kualitas yang diharapkan.
 
 2. Mengurangi Kesulitan dalam Menemukan Materi Berkualitas: Banyaknya buku di pasaran seringkali membingungkan. UlasBuku menjadi penyaring informasi, memudahkan pengguna menemukan buku berkualitas tinggi berdasarkan ulasan komunitas.
