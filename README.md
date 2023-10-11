@@ -16,14 +16,14 @@ Di tengah pesatnya perkembangan teknologi dan pengetahuan, keberadaan `CSBookSco
     - Menampilkan rekomendasi buku berupa forum yang sedang ramai diperbincangkan dan juga forum yang kurang peminatnya
     - Menampilkan buku dengan ulasan terbaru dan terbaik dari user
     - Menampilkan buku dengan forum yang di dalamnya ada kontribusi user
-    - Tentang CSBookScor
+    - Tentang CSBookScore
 
 2. Profile (ditaruh di navbar)
     - Riwayat ulasan buku yang pernah di ulas oleh user
 	- Deskripsi diri
 
 3. Katalog buku (ditaruh di navbar)
-    - Berisi apa saja buku yang ada di UlasBuku yang terurut sesuai abjad
+    - Berisi apa saja buku yang ada di CSBookScore yang terurut sesuai abjad
     - Didalam page ini ada fitur ‘search’ buku
     - Didalam page ini ada fitur filter (berdasarkan tag) 
         1. Kategori buku
