@@ -25,7 +25,7 @@ Namun, UlasBuku bukan sekadar tempat untuk ulasan. Seiring dengan pertumbuhan pe
 
 ## Daftar Modul 📚
 1. Homepage (main) -> berisi rekomendasi, iklan dari buku yang ada di database
-    - Menampilkan rekomendasi buku berupa forum yang sedang ramai diperbincangkan dan juga forum yang kurang peminatnya dari seluruh user (READ)
+    - Menampilkan rekomendasi buku berupa forum yang sedang ramai diperbincangkan dan juga forum yang kurang peminatnya dari seluruh user UlasBuku (READ)
     - Menampilkan buku dengan ulasan terbaru dan terbaik dari user (READ)
     - Menampilkan buku dengan forum terbaru dan ter-ramai dari user (READ)
     - Menampilkan event/iklan yang berhubungan dengan buku pada database (READ)
