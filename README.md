@@ -1,4 +1,4 @@
-# CSBookScore
+# CSBookScore 📖
 
 ## Kelompok B-07<br>
 - Alifa Hanania Ardha - 2206024392<br>
