@@ -8,9 +8,9 @@
         </a>
 
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Catalogue</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Profile</a></li>
+            <li class="nav-item"><a href="{% url 'homepage:show_main' %}" class="nav-link active" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="{% url 'catalogue:show_main' %}" class="nav-link">Catalogue</a></li>
+            <li class="nav-item"><a href="{% url 'user_profile:show_main' %}" class="nav-link">Profile</a></li>
             <li class="nav-item"><a href="#" class="nav-link">About</a></li>
         </ul>
     </header>
