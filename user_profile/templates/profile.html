@@ -6,4 +6,41 @@
     <h2>Description</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed hendrerit dolor. Vestibulum vel fringilla orci, non varius nunc. Praesent vehicula, justo eu dictum consequat, risus libero interdum purus, sed dignissim quam lorem non nunc. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Proin in augue eu ex imperdiet consectetur vel in purus. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Vivamus vulputate augue sit amet est suscipit, eu tempus justo hendrerit.</p>
     <p style="font-weight: 300; font-style: italic;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <table id="profile"></table>
+
+    <script>
+        async function getProfile() {
+            return fetch("{% url 'user_profile:get_profile_json' %}").then((res) => res.json())
+        }
+        async function getUlasan() {
+            return fetch("{% url 'user_profile:get_ulasan_json' %}").then((res) => res.json())
+        }
+        async function refreshProducts() {
+            document.getElementById("profile").innerHTML = ""
+            let products = await getProfile()
+            console.log(products)
+            let htmlString = `<tr>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>`
+            products.forEach((item) => {
+                htmlString += `\n<tr>
+                <td>${item.fields.name}</td>
+                <td>${item.fields.description}</td>
+            </tr>` 
+            })
+            products = await getUlasan()
+            console.log(products)
+            products.forEach((item) => {
+                htmlString += `\n<tr>
+                <td>${item.fields.description}</td>
+                <td>${item.fields.rate}</td>
+            </tr>` 
+            })
+            
+            document.getElementById("profile").innerHTML = htmlString
+        }
+
+        refreshProducts()
+    </script>
 {% endblock content %}
