@@ -3,6 +3,7 @@
 {% block content %}
     {% include "header.html" %}
     <h1>{{page}}</h1>
+    <h5>Sesi terakhir login: {{ last_login }}</h5>
     <a href="{% url 'autentifikasi:logout' %}">
         <button>
             Logout

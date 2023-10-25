@@ -4,8 +4,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages  
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
+import datetime
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
+@csrf_exempt
 def register(request):
     form = UserCreationForm()
 
@@ -18,6 +23,7 @@ def register(request):
     context = {'form':form}
     return render(request, 'register.html', context)
 
+@csrf_exempt
 def login_user(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -25,7 +31,9 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('homepage:show_main')
+            response = HttpResponseRedirect(reverse("homepage:show_main")) 
+            response.set_cookie('last_login', str(datetime.datetime.now()))
+            return response
         else:
             messages.info(request, 'Sorry, incorrect username or password. Please try again.')
     context = {}
@@ -33,4 +41,6 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('autentifikasi:login')
+    response = HttpResponseRedirect(reverse('autentifikasi:login'))
+    response.delete_cookie('last_login')
+    return response
