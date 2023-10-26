@@ -1,0 +1,1402 @@
+[
+  {
+    "pk": 1,
+    "model": "book.book",
+    "fields": {
+      "title": "The Staff Engineer's Path",
+      "description": "A Guide for Individual Contributors Navigating Growth and Change",
+      "author": " Tanya Reilly",
+      "isbn10": 1098118731,
+      "isbn13": "978-1098118730",
+      "publish_date": "2022-10-25",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "book.book",
+    "fields": {
+      "title": "Cracking the Coding Interview",
+      "description": "189 Programming Questions and Solutions",
+      "author": "Gayle Laakmann McDowell",
+      "isbn10": 984782869,
+      "isbn13": "978-0984782857",
+      "publish_date": "2015-07-01",
+      "edition": 6,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "book.book",
+    "fields": {
+      "title": "Python Crash Course, 3rd Edition",
+      "description": "A Hands-On, Project-Based Introduction to Programming",
+      "author": "Eric Matthes",
+      "isbn10": 1718502702,
+      "isbn13": "978-1718502703",
+      "publish_date": "2023-01-10",
+      "edition": 3,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "book.book",
+    "fields": {
+      "title": "Automate the Boring Stuff with Python, 2nd Edition",
+      "description": "Practical Programming for Total Beginners",
+      "author": "Al Sweigart",
+      "isbn10": 1593279922,
+      "isbn13": "978-1593279929",
+      "publish_date": "2019-11-12",
+      "edition": 2,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "book.book",
+    "fields": {
+      "title": "The Manager's Path",
+      "description": "A Guide for Tech Leaders Navigating Growth and Change",
+      "author": "Camille Fournier",
+      "isbn10": 1491973897,
+      "isbn13": "978-1491973899",
+      "publish_date": "2017-05-02",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "book.book",
+    "fields": {
+      "title": "Design Patterns",
+      "description": "Elements of Reusable Object-Oriented Software",
+      "author": "Erich Gamma",
+      "isbn10": 201633612,
+      "isbn13": "978-0201633610",
+      "publish_date": "1994-10-31",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "book.book",
+    "fields": {
+      "title": "The Pragmatic Programmer",
+      "description": "Your Journey To Mastery, 20th Anniversary Edition (2nd Edition)",
+      "author": "David Thomas",
+      "isbn10": 135957052,
+      "isbn13": "978-0135957059",
+      "publish_date": "2019-09-13",
+      "edition": 2,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "book.book",
+    "fields": {
+      "title": "Python Crash Course, 3rd Edition",
+      "description": "A Hands-On, Project-Based Introduction to Programming",
+      "author": " Eric Matthes",
+      "isbn10": 1718502702,
+      "isbn13": "978-1718502703",
+      "publish_date": "2023-01-10",
+      "edition": 3,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "book.book",
+    "fields": {
+      "title": "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow",
+      "description": "Concepts, Tools, and Techniques to Build Intelligent Systems",
+      "author": "Aurélien Géron ",
+      "isbn10": 1098125975,
+      "isbn13": "978-1098125974",
+      "publish_date": "2022-11-08",
+      "edition": 3,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "book.book",
+    "fields": {
+      "title": "Sql Guide (Quick Study",
+      "description": "SQL)",
+      "author": "Inc. BarCharts",
+      "isbn10": 1572229160,
+      "isbn13": "978-1572229167",
+      "publish_date": "2005-01-01",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "book.book",
+    "fields": {
+      "title": "Python for Data Analysis",
+      "description": "Data Wrangling with pandas, NumPy, and Jupyter",
+      "author": "Wes McKinney",
+      "isbn10": 1491957662,
+      "isbn13": "978-1098104030",
+      "publish_date": "2022-09-20",
+      "edition": 3,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 12,
+    "model": "book.book",
+    "fields": {
+      "title": "Automate the Boring Stuff with Python, 2nd Edition",
+      "description": "Practical Programming for Total Beginners ",
+      "author": " Al Sweigart",
+      "isbn10": 1593279922,
+      "isbn13": "978-1593279929",
+      "publish_date": "2019-11-12",
+      "edition": 2,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 13,
+    "model": "book.book",
+    "fields": {
+      "title": "Python QuickStart Guide",
+      "description": "The Simplified Beginner's Guide to Python Programming Using Hands-On Projects and Real-World Applications",
+      "author": "Robert Oliver",
+      "isbn10": 1636100357,
+      "isbn13": "978-1636100357",
+      "publish_date": "2023-04-22",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 14,
+    "model": "book.book",
+    "fields": {
+      "title": "150 Most Famous Poems",
+      "description": "Emily Dickinson, Robert Frost, William Shakespeare, Edgar Allan Poe, Walt Whitman and many more",
+      "author": "Poetry House",
+      "isbn10": 1647751071,
+      "isbn13": "978-1647751074",
+      "publish_date": "2020-08-01",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 15,
+    "model": "book.book",
+    "fields": {
+      "title": "HTML and CSS",
+      "description": "Design and Build Websites",
+      "author": " Jon Duckett",
+      "isbn10": 1118008189,
+      "isbn13": "978-1118008188",
+      "publish_date": "2011-11-08",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 16,
+    "model": "book.book",
+    "fields": {
+      "title": "Python for Everybody",
+      "description": "Exploring Data in Python 3",
+      "author": "Dr. Charles Russell Severance",
+      "isbn10": 1530051126,
+      "isbn13": "978-1530051120",
+      "publish_date": "2016-07-10",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 17,
+    "model": "book.book",
+    "fields": {
+      "title": "Grokking Algorithms",
+      "description": "An Illustrated Guide for Programmers and Other Curious People",
+      "author": "Aditya Bhargava",
+      "isbn10": 1617292230,
+      "isbn13": "978-1617292231",
+      "publish_date": "2016-05-01",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 18,
+    "model": "book.book",
+    "fields": {
+      "title": "Beginner's Step-by-Step Coding Course",
+      "description": "Learn Computer Programming the Easy Way (DK Complete Courses)",
+      "author": "DK",
+      "isbn10": 1465482210,
+      "isbn13": "978-1465482211",
+      "publish_date": "2020-01-07",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 19,
+    "model": "book.book",
+    "fields": {
+      "title": "Coding for Kids",
+      "description": "Python: Learn to Code with 50 Awesome Games and Activities",
+      "author": "Adrienne Tacke",
+      "isbn10": 1641521759,
+      "isbn13": "978-1641521758",
+      "publish_date": "2019-03-19",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 20,
+    "model": "book.book",
+    "fields": {
+      "title": "Escape from a Video Game",
+      "description": "The Complete Series",
+      "author": "Dustin Brady",
+      "isbn10": 1524876062,
+      "isbn13": "978-1524876067",
+      "publish_date": "2022-10-25",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 21,
+    "model": "book.book",
+    "fields": {
+      "title": "Rust Web Programming",
+      "description": "A hands-on guide to developing, packaging, and deploying fully functional Rust web applications, 2nd Edition",
+      "author": "Maxwell Flitton",
+      "isbn10": 1803234695,
+      "isbn13": "978-1803234694",
+      "publish_date": "2023-01-27",
+      "edition": 2,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 22,
+    "model": "book.book",
+    "fields": {
+      "title": "Programming Rust",
+      "description": "Fast, Safe Systems Development",
+      "author": "Jim Blandy",
+      "isbn10": 1492052590,
+      "isbn13": "978-1492052593",
+      "publish_date": "2021-07-20",
+      "edition": 2,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 23,
+    "model": "book.book",
+    "fields": {
+      "title": "Command-Line Rust",
+      "description": "A Project-Based Primer for Writing Rust CLIs",
+      "author": "Ken Youens-Clark",
+      "isbn10": 1098109430,
+      "isbn13": "978-1098109431",
+      "publish_date": "2022-02-22",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 24,
+    "model": "book.book",
+    "fields": {
+      "title": "Code",
+      "description": "The Hidden Language of Computer Hardware and Software",
+      "author": "Charles Petzold",
+      "isbn10": 137909101,
+      "isbn13": "978-0137909100",
+      "publish_date": "2022-08-07",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 25,
+    "model": "book.book",
+    "fields": {
+      "title": "Python (2nd Edition)",
+      "description": "Learn Python in One Day and Learn It Well. Python for Beginners with Hands-on Project. (Learn Coding Fast with Hands-On Project Book 1)",
+      "author": "Jamie Chan ",
+      "isbn10": 1546488332,
+      "isbn13": "978-1546488330",
+      "publish_date": "2017-05-10",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 26,
+    "model": "book.book",
+    "fields": {
+      "title": "Python Standard Library",
+      "description": "A Quickstudy Laminated Reference Guide",
+      "author": "Berajah Jayne",
+      "isbn10": 1423244230,
+      "isbn13": "978-1423244233",
+      "publish_date": "2020-05-01",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 27,
+    "model": "book.book",
+    "fields": {
+      "title": "Fluent Python",
+      "description": "Clear, Concise, and Effective Programming",
+      "author": "Luciano Ramalho ",
+      "isbn10": 1492056359,
+      "isbn13": "978-1492056355",
+      "publish_date": "2022-05-10",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 28,
+    "model": "book.book",
+    "fields": {
+      "title": "Practical Discrete Mathematics",
+      "description": "Discover math principles that fuel algorithms for computer science and machine learning with Python",
+      "author": " Ryan T. White ",
+      "isbn10": 1838983147,
+      "isbn13": "978-1838983147",
+      "publish_date": "2021-02-22",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 29,
+    "model": "book.book",
+    "fields": {
+      "title": "Expert Python Programming",
+      "description": "Master Python by learning the best coding practices and advanced programming concepts, 4th Edition",
+      "author": "Michal Jaworski ",
+      "isbn10": 1801071101,
+      "isbn13": "978-1801071109",
+      "publish_date": "2021-05-28",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 30,
+    "model": "book.book",
+    "fields": {
+      "title": "Linear Algebra",
+      "description": "Theory, Intuition, Code",
+      "author": " Mike X Cohen ",
+      "isbn10": 9083136604,
+      "isbn13": "978-9083136608",
+      "publish_date": "2021-02-01",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 31,
+    "model": "book.book",
+    "fields": {
+      "title": "Forecasting Time Series Data with Prophet",
+      "description": "Build, improve, and optimize time series forecasting models using Meta's advanced forecasting tool, 2nd Edition",
+      "author": "Greg Rafferty ",
+      "isbn10": 1837630410,
+      "isbn13": "978-1837630417",
+      "publish_date": "2023-03-31",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 32,
+    "model": "book.book",
+    "fields": {
+      "title": "Functional Python Programming",
+      "description": "Use a functional approach to write succinct, expressive, and efficient Python code, 3rd Edition",
+      "author": "Steven F. Lott",
+      "isbn10": 1803232579,
+      "isbn13": "978-1803232577",
+      "publish_date": "2022-12-30",
+      "edition": 3,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 33,
+    "model": "book.book",
+    "fields": {
+      "title": "Learning Tableau 2022",
+      "description": "Create effective data visualizations, build interactive visual analytics, and improve your data storytelling capabilities, 5th Edition",
+      "author": "Joshua N. Milligan",
+      "isbn10": 1801072329,
+      "isbn13": "978-1801072328",
+      "publish_date": "2022-08-26",
+      "edition": 5,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 34,
+    "model": "book.book",
+    "fields": {
+      "title": "Mastering Python Networking",
+      "description": "Utilize Python packages and frameworks for network automation, monitoring, cloud, and management, 4th Edition",
+      "author": "Eric Chou",
+      "isbn10": 1803234618,
+      "isbn13": "978-1803234618",
+      "publish_date": "2023-01-20",
+      "edition": 4,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 35,
+    "model": "book.book",
+    "fields": {
+      "title": "Mastering Tableau 2021",
+      "description": "Implement advanced business intelligence techniques and analytics with Tableau, 3rd Edition",
+      "author": "Marleen Meier",
+      "isbn10": 1800561644,
+      "isbn13": "978-1800561649",
+      "publish_date": "2021-05-31",
+      "edition": 3,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 36,
+    "model": "book.book",
+    "fields": {
+      "title": "Microsoft Power BI Cookbook",
+      "description": "Gain expertise in Power BI with over 90 hands-on recipes, tips, and use cases, 2nd Edition",
+      "author": "Greg Deckler",
+      "isbn10": 1801813043,
+      "isbn13": "978-1801813044",
+      "publish_date": "2021-09-30",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 37,
+    "model": "book.book",
+    "fields": {
+      "title": "Mastering Microsoft Power BI",
+      "description": " Expert techniques for effective data analytics and business intelligence",
+      "author": "Brett Powell",
+      "isbn10": 1788297237,
+      "isbn13": "978-1788297233",
+      "publish_date": "2018-03-29",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 38,
+    "model": "book.book",
+    "fields": {
+      "title": "The Definitive Guide to DAX",
+      "description": "Business Intelligence for Microsoft Power BI, SQL Server Analysis Services, and Excel Second Edition (Business Skills)",
+      "author": "Marco Russo",
+      "isbn10": 1509306978,
+      "isbn13": "978-1509306978",
+      "publish_date": "2019-07-02",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 39,
+    "model": "book.book",
+    "fields": {
+      "title": "Mastering Kubernetes",
+      "description": "Level up your container orchestration skills with Kubernetes to build, run, secure, and observe large-scale distributed apps, 3rd Edition",
+      "author": "Gigi Sayfan ",
+      "isbn10": 1839211253,
+      "isbn13": "978-1839211256",
+      "publish_date": "2020-06-30",
+      "edition": 3,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 40,
+    "model": "book.book",
+    "fields": {
+      "title": "Extreme DAX",
+      "description": "Take your Power BI and Microsoft data analytics skills to the next level",
+      "author": "Michiel Rozema",
+      "isbn10": 1801078513,
+      "isbn13": "978-1801078511",
+      "publish_date": "2022-01-20",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 41,
+    "model": "book.book",
+    "fields": {
+      "title": "Kubernetes: Up and Running",
+      "description": "Dive into the Future of Infrastructure",
+      "author": "Brendan Burns",
+      "isbn10": 1098110208,
+      "isbn13": "978-1098110208",
+      "publish_date": "2022-09-06",
+      "edition": 3,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 42,
+    "model": "book.book",
+    "fields": {
+      "title": "Microsoft Power BI Quick Start Guide",
+      "description": "The ultimate beginner's guide to data modeling, visualization, digital storytelling, and more, 3rd Edition",
+      "author": " Devin Knight",
+      "isbn10": 1804613495,
+      "isbn13": "978-1804613498",
+      "publish_date": "2022-11-25",
+      "edition": 3,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 43,
+    "model": "book.book",
+    "fields": {
+      "title": "Becoming KCNA Certified",
+      "description": "Build a strong foundation in cloud native and Kubernetes and pass the KCNA exam with ease",
+      "author": "Dmitry Galkin",
+      "isbn10": 1804613398,
+      "isbn13": "978-1804613399",
+      "publish_date": "2023-02-10",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 44,
+    "model": "book.book",
+    "fields": {
+      "title": "Learn Power BI",
+      "description": "A comprehensive, step-by-step guide for beginners to learn real-world business intelligence, 2nd Edition",
+      "author": "Greg Deckler ",
+      "isbn10": 1801811954,
+      "isbn13": "978-1801811958",
+      "publish_date": "2022-02-18",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 45,
+    "model": "book.book",
+    "fields": {
+      "title": "Learn Kubernetes Security",
+      "description": "Securely orchestrate, scale, and manage your microservices in Kubernetes deployments",
+      "author": "Kaizhe Huang",
+      "isbn10": 1839216506,
+      "isbn13": "978-1839216503",
+      "publish_date": "2020-07-09",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 46,
+    "model": "book.book",
+    "fields": {
+      "title": "SharePoint Architect's Planning Guide",
+      "description": "Create reusable architecture and governance to support collaboration with SharePoint and Microsoft 365",
+      "author": "Patrick Tucker",
+      "isbn10": 1803249366,
+      "isbn13": "978-1803249360",
+      "publish_date": "2022-08-30",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 47,
+    "model": "book.book",
+    "fields": {
+      "title": "Container Security",
+      "description": "Fundamental Technology Concepts that Protect Containerized Applications",
+      "author": "Liz Rice",
+      "isbn10": 1492056707,
+      "isbn13": "978-1492056706",
+      "publish_date": "2020-05-12",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 48,
+    "model": "book.book",
+    "fields": {
+      "title": "The Elements of Computing Systems, second edition",
+      "description": "Building a Modern Computer from First Principles",
+      "author": "Noam Nisan",
+      "isbn10": 262539802,
+      "isbn13": "978-0262539807",
+      "publish_date": "2021-06-15",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 49,
+    "model": "book.book",
+    "fields": {
+      "title": "Cloud Security Handbook",
+      "description": "Find out how to effectively secure cloud environments using AWS, Azure, and GCP",
+      "author": "Eyal Estrin",
+      "isbn10": 1800569195,
+      "isbn13": "978-1800569195",
+      "publish_date": "2022-04-14",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 50,
+    "model": "book.book",
+    "fields": {
+      "title": "Microsoft Azure Security Technologies Certification and Beyond",
+      "description": "Gain practical skills to secure your Azure environment and pass the AZ-500 exam",
+      "author": "David Okeyode",
+      "isbn10": 1800562659,
+      "isbn13": "978-1800562653",
+      "publish_date": "2021-11-04",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 51,
+    "model": "book.book",
+    "fields": {
+      "title": "Learning C# by Developing Games with Unity",
+      "description": "Get to grips with coding in C# and build simple 3D games in Unity 2022 from the ground up, 7th Edition",
+      "author": "Harrison Ferrone",
+      "isbn10": 1837636877,
+      "isbn13": "978-1837636877",
+      "publish_date": "2022-11-29",
+      "edition": 7,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 52,
+    "model": "book.book",
+    "fields": {
+      "title": "Developing Solutions for Microsoft Azure AZ-204 Exam Guide",
+      "description": "Discover the essentials for success when developing and maintaining cloud-based solutions on Azure",
+      "author": "Paul Ivey",
+      "isbn10": 1803237066,
+      "isbn13": "978-1803237060",
+      "publish_date": "2022-10-19",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 53,
+    "model": "book.book",
+    "fields": {
+      "title": "Hands-On Unity 2022 Game Development",
+      "description": "Learn to use the latest Unity 2022 features to create your first video game in the simplest way possible, 3rd Edition",
+      "author": "Nicolas Alejandro Borromeo",
+      "isbn10": 1803236914,
+      "isbn13": "978-1803236919",
+      "publish_date": "2022-10-31",
+      "edition": 3,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 54,
+    "model": "book.book",
+    "fields": {
+      "title": "Machine Learning with PyTorch and Scikit-Learn",
+      "description": "Develop machine learning and deep learning models with Python",
+      "author": "Sebastian Raschka ",
+      "isbn10": 1801819319,
+      "isbn13": "978-1801819312",
+      "publish_date": "2022-02-25",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 55,
+    "model": "book.book",
+    "fields": {
+      "title": "Azure for Developers",
+      "description": "Implement rich Azure PaaS ecosystems using containers, serverless services, and storage solutions, 2nd Edition",
+      "author": "Kamil Mrzyglod",
+      "isbn10": 1803240091,
+      "isbn13": "978-1803240091",
+      "publish_date": "2022-08-30",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 56,
+    "model": "book.book",
+    "fields": {
+      "title": "Unity 2020 Mobile Game Development",
+      "description": "Discover practical techniques and examples to create and deliver engaging games for Android and iOS, 2nd Edition",
+      "author": "John P. Doran ",
+      "isbn10": 1838987339,
+      "isbn13": "978-1838987336",
+      "publish_date": "2020-08-21",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 57,
+    "model": "book.book",
+    "fields": {
+      "title": "The Machine Learning Solutions Architect Handbook",
+      "description": "Create machine learning platforms to run solutions in an enterprise setting",
+      "author": "David Ping",
+      "isbn10": 1801072167,
+      "isbn13": "978-1801072168",
+      "publish_date": "2022-01-21",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 58,
+    "model": "book.book",
+    "fields": {
+      "title": "Unity 2020 By Example",
+      "description": "A project-based guide to building 2D, 3D, augmented reality, and virtual reality games from scratch, 3rd Edition",
+      "author": "Robert Wells",
+      "isbn10": 1800203381,
+      "isbn13": "978-1800203389",
+      "publish_date": "2020-09-30",
+      "edition": 3,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 59,
+    "model": "book.book",
+    "fields": {
+      "title": "Developing Solutions for Microsoft Azure AZ-204 Exam Guide",
+      "description": "Discover the essentials for success when developing and maintaining cloud-based solutions on Azure",
+      "author": "Paul Ivey",
+      "isbn10": 1803237066,
+      "isbn13": "978-1803237060",
+      "publish_date": "2022-10-19",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 60,
+    "model": "book.book",
+    "fields": {
+      "title": "Python GUI Programming with Tkinter",
+      "description": "Design and build functional and user-friendly GUI applications, 2nd Edition",
+      "author": "Alan D. Moore ",
+      "isbn10": 1801815925,
+      "isbn13": "978-1801815925",
+      "publish_date": "2021-10-28",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 61,
+    "model": "book.book",
+    "fields": {
+      "title": "AWS Certified Machine Learning Specialty",
+      "description": "MLS-C01 Certification Guide: The definitive guide to passing the MLS-C01 exam on the very first attempt",
+      "author": "Somanath Nanda",
+      "isbn10": 1800569009,
+      "isbn13": "978-1800569003",
+      "publish_date": "2021-03-19",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 62,
+    "model": "book.book",
+    "fields": {
+      "title": "HTML and CSS QuickStart Guide",
+      "description": "The Simplified Beginners Guide to Developing a Strong Coding Foundation, Building Responsive Websites, and Mastering ... Web Design (QuickStart Guides™ - Technology)",
+      "author": "David DuRocher",
+      "isbn10": 1636100007,
+      "isbn13": "978-1636100005",
+      "publish_date": "2021-01-22",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 63,
+    "model": "book.book",
+    "fields": {
+      "title": "Blue Fox",
+      "description": "Arm Assembly Internals and Reverse Engineering",
+      "author": "Maria Markstedter",
+      "isbn10": 1119745306,
+      "isbn13": "978-1119745303",
+      "publish_date": "2023-04-11",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 64,
+    "model": "book.book",
+    "fields": {
+      "title": "Responsive Web Design with HTML5 and CSS",
+      "description": "Build future-proof responsive websites using the latest HTML5 and CSS techniques, 4th Edition",
+      "author": "Ben Frain",
+      "isbn10": 1803242712,
+      "isbn13": "978-1803242712",
+      "publish_date": "2022-09-19",
+      "edition": 4,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 65,
+    "model": "book.book",
+    "fields": {
+      "title": "Apps and Services with .NET 7",
+      "description": "Build practical projects with Blazor, .NET MAUI, gRPC, GraphQL, and other enterprise technologies",
+      "author": "Mark J. Price",
+      "isbn10": 1801813434,
+      "isbn13": "978-1801813433",
+      "publish_date": "2022-11-15",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 66,
+    "model": "book.book",
+    "fields": {
+      "title": "JavaScript from Beginner to Professional",
+      "description": "Learn JavaScript quickly by building fun, interactive, and dynamic web apps, games, and pages",
+      "author": " Laurence Lars Svekis",
+      "isbn10": 1800562527,
+      "isbn13": "978-1800562523",
+      "publish_date": "2021-12-15",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 67,
+    "model": "book.book",
+    "fields": {
+      "title": "C# 11 and .NET 7 – Modern Cross-Platform Development Fundamentals",
+      "description": "Start building websites and services with ASP.NET Core 7, Blazor, and EF Core 7, 7th Edition",
+      "author": " Mark J. Price",
+      "isbn10": 1803237805,
+      "isbn13": "978-1803237800",
+      "publish_date": "2022-11-08",
+      "edition": 7,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 68,
+    "model": "book.book",
+    "fields": {
+      "title": "JavaScript",
+      "description": "The Definitive Guide: Master the World's Most-Used Programming Language",
+      "author": "David Flanagan",
+      "isbn10": 1491952024,
+      "isbn13": "978-1491952023",
+      "publish_date": "2020-06-23",
+      "edition": 7,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 69,
+    "model": "book.book",
+    "fields": {
+      "title": "Python QuickStart Guide",
+      "description": "The Simplified Beginner's Guide to Python Programming Using Hands-On Projects and Real-World Applications",
+      "author": " Robert Oliver",
+      "isbn10": 1636100357,
+      "isbn13": "978-1636100357",
+      "publish_date": "2023-04-22",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 70,
+    "model": "book.book",
+    "fields": {
+      "title": "Python 3",
+      "description": "The Comprehensive Guide to Hands-On Python Programming",
+      "author": "Johannes Ernesti",
+      "isbn10": 1493223022,
+      "isbn13": "978-1493223022",
+      "publish_date": "2022-09-26",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 71,
+    "model": "book.book",
+    "fields": {
+      "title": "JavaScript",
+      "description": "The Comprehensive Guide to Learning Professional JavaScript Programming (The Rheinwerk Computing)",
+      "author": " Philip Ackermann",
+      "isbn10": 1493222864,
+      "isbn13": "978-1493222865",
+      "publish_date": "2022-08-24",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 72,
+    "model": "book.book",
+    "fields": {
+      "title": "Node.js",
+      "description": "The Comprehensive Guide to Server-Side JavaScript Programming",
+      "author": "Sebastian Springer",
+      "isbn10": 1493222929,
+      "isbn13": "978-1493222926",
+      "publish_date": "2022-08-24",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 73,
+    "model": "book.book",
+    "fields": {
+      "title": "React Key Concepts",
+      "description": "Consolidate your knowledge of React's core features",
+      "author": "Maximilian Schwarzmuller",
+      "isbn10": 1803234504,
+      "isbn13": "978-1803234502",
+      "publish_date": "2022-12-26",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 74,
+    "model": "book.book",
+    "fields": {
+      "title": "Eloquent JavaScript, 3rd Edition",
+      "description": "A Modern Introduction to Programming",
+      "author": "Marijn Haverbeke",
+      "isbn10": 1593279507,
+      "isbn13": "978-1593279509",
+      "publish_date": "2018-12-04",
+      "edition": 3,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 75,
+    "model": "book.book",
+    "fields": {
+      "title": "Computer Systems",
+      "description": "A Programmer's Perspective, 3 Edition",
+      "author": "David R. O'Hallaron Randal E. Bryant",
+      "isbn10": 9332573905,
+      "isbn13": "978-9332573901",
+      "publish_date": "2016-01-01",
+      "edition": 3,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 76,
+    "model": "book.book",
+    "fields": {
+      "title": "Cracking the Coding Interview",
+      "description": "189 Programming Questions and Solutions",
+      "author": " Gayle Laakmann McDowell",
+      "isbn10": 984782869,
+      "isbn13": "978-0984782857",
+      "publish_date": "2015-07-01",
+      "edition": 6,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 77,
+    "model": "book.book",
+    "fields": {
+      "title": "The Principles of Deep Learning Theory",
+      "description": "An Effective Theory Approach to Understanding Neural Networks",
+      "author": "Daniel A. Roberts",
+      "isbn10": 1316519333,
+      "isbn13": "978-1316519332",
+      "publish_date": "2022-05-26",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 78,
+    "model": "book.book",
+    "fields": {
+      "title": "Geometry of Deep Learning",
+      "description": "A Signal Processing Perspective (Mathematics in Industry, 37)",
+      "author": "Jong Chul Ye",
+      "isbn10": 9811660450,
+      "isbn13": "978-9811660450",
+      "publish_date": "2022-01-06",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 79,
+    "model": "book.book",
+    "fields": {
+      "title": "Rust for Rustaceans",
+      "description": "Idiomatic Programming for Experienced Developers",
+      "author": "Jon Gjengset",
+      "isbn10": 1718501854,
+      "isbn13": "978-1718501850",
+      "publish_date": "2021-12-21",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 80,
+    "model": "book.book",
+    "fields": {
+      "title": "Data Engineering with AWS",
+      "description": "Learn how to design and build cloud-based data transformation pipelines using AWS",
+      "author": " Gareth Eagar",
+      "isbn10": 1800560419,
+      "isbn13": "978-1800560413",
+      "publish_date": "2021-12-29",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 81,
+    "model": "book.book",
+    "fields": {
+      "title": "Fundamentals of Data Engineering",
+      "description": "Plan and Build Robust Data Systems",
+      "author": " Joe Reis",
+      "isbn10": 1098108302,
+      "isbn13": "978-1098108304",
+      "publish_date": "2022-07-26",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 82,
+    "model": "book.book",
+    "fields": {
+      "title": "Rust Atomics and Locks",
+      "description": "Low-Level Concurrency in Practice",
+      "author": " Mara Bos ",
+      "isbn10": 1098119444,
+      "isbn13": "978-1098119447",
+      "publish_date": "2023-02-07",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 83,
+    "model": "book.book",
+    "fields": {
+      "title": "Designing Data-Intensive Applications",
+      "description": "The Big Ideas Behind Reliable, Scalable, and Maintainable Systems",
+      "author": "Martin Kleppmann",
+      "isbn10": 1449373321,
+      "isbn13": "978-1449373320",
+      "publish_date": "2017-05-02",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 84,
+    "model": "book.book",
+    "fields": {
+      "title": "Microsoft Certified Azure Data Fundamentals (Exam DP-900) Certification Guide",
+      "description": "The comprehensive guide to passing the DP-900 exam on your first attempt",
+      "author": "Marcelo Leite",
+      "isbn10": 1803240636,
+      "isbn13": "978-1803240633",
+      "publish_date": "2022-11-25",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 85,
+    "model": "book.book",
+    "fields": {
+      "title": "Command-Line Rust",
+      "description": "A Project-Based Primer for Writing Rust CLIs",
+      "author": "Ken Youens-Clark",
+      "isbn10": 1098109430,
+      "isbn13": "978-1098109431",
+      "publish_date": "2022-02-22",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 86,
+    "model": "book.book",
+    "fields": {
+      "title": "Age of Invisible Machines",
+      "description": "A Practical Guide to Creating a Hyperautomated Ecosystem of Intelligent Digital Workers",
+      "author": " Robb Wilson",
+      "isbn10": 1119899923,
+      "isbn13": "978-1119899921",
+      "publish_date": "2022-09-27",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 87,
+    "model": "book.book",
+    "fields": {
+      "title": "Power and Prediction",
+      "description": "The Disruptive Economics of Artificial Intelligence",
+      "author": " Ajay Agrawal",
+      "isbn10": 1647824192,
+      "isbn13": "978-1647824198",
+      "publish_date": "2022-11-15",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 88,
+    "model": "book.book",
+    "fields": {
+      "title": "Rust Web Programming",
+      "description": "A hands-on guide to developing, packaging, and deploying fully functional Rust web applications, 2nd Edition",
+      "author": "Maxwell Flitton",
+      "isbn10": 1803234695,
+      "isbn13": "978-1803234694",
+      "publish_date": "2023-01-27",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 89,
+    "model": "book.book",
+    "fields": {
+      "title": "Guide to Competitive Programming",
+      "description": "Learning and Improving Algorithms Through Contests (Undergraduate Topics in Computer Science)",
+      "author": "Antti Laaksonen ",
+      "isbn10": 3030393569,
+      "isbn13": "978-3030393564",
+      "publish_date": "2nd ed. 2020",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 90,
+    "model": "book.book",
+    "fields": {
+      "title": "Programming C# 10",
+      "description": "Build Cloud, Web, and Desktop Applications",
+      "author": "Ian Griffiths",
+      "isbn10": 1098117816,
+      "isbn13": "978-1098117818",
+      "publish_date": "2022-09-13",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 91,
+    "model": "book.book",
+    "fields": {
+      "title": "Software Architecture",
+      "description": "The Hard Parts: Modern Trade-Off Analyses for Distributed Architectures",
+      "author": " Neal Ford",
+      "isbn10": 1098117816,
+      "isbn13": "978-1492086895",
+      "publish_date": "2021-11-30",
+      "edition": 1,
+      "best_seller": "Yes"
+    }
+  },
+  {
+    "pk": 92,
+    "model": "book.book",
+    "fields": {
+      "title": "Microsoft Azure Fundamentals Certification and Beyond",
+      "description": "Simplified cloud concepts and core Azure fundamentals for absolute beginners to pass the AZ-900 exam",
+      "author": " Steve Miles",
+      "isbn10": 1801073309,
+      "isbn13": "978-1801073301\n",
+      "publish_date": "2022-01-07",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 93,
+    "model": "book.book",
+    "fields": {
+      "title": "Grokking Algorithms",
+      "description": "An Illustrated Guide for Programmers and Other Curious People",
+      "author": "Aditya Bhargava",
+      "isbn10": 1617292230,
+      "isbn13": "978-1617292231",
+      "publish_date": "2016-05-01",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 94,
+    "model": "book.book",
+    "fields": {
+      "title": "Microsoft Certified Azure Fundamentals Study Guide",
+      "description": "Exam AZ-900",
+      "author": "Jim Boyce",
+      "isbn10": 1119770920,
+      "isbn13": "978-1119770923",
+      "publish_date": "2021-04-23",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 95,
+    "model": "book.book",
+    "fields": {
+      "title": "Code",
+      "description": "The Hidden Language of Computer Hardware and Software",
+      "author": " Charles Petzold",
+      "isbn10": 137909101,
+      "isbn13": "978-0137909100",
+      "publish_date": "2022-08-07",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 96,
+    "model": "book.book",
+    "fields": {
+      "title": "MCA Microsoft Certified Associate Azure Administrator Study Guide",
+      "description": "Exam AZ-104",
+      "author": " Rithin Skaria",
+      "isbn10": 1119705150,
+      "isbn13": "978-1119705154",
+      "publish_date": "2022-04-20",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 97,
+    "model": "book.book",
+    "fields": {
+      "title": "Head First Java",
+      "description": "A Brain-Friendly Guide",
+      "author": " Kathy Sierra ",
+      "isbn10": 1491910771,
+      "isbn13": "978-1491910771",
+      "publish_date": "2022-06-21",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 98,
+    "model": "book.book",
+    "fields": {
+      "title": "Microsoft Azure Architect Technologies and Design Complete Study Guide",
+      "description": "Microsoft Azure Architect Technologies and Design Complete Study Guide",
+      "author": " William Panek",
+      "isbn10": 1119559537,
+      "isbn13": "978-1119559535",
+      "publish_date": "2021-01-13",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 99,
+    "model": "book.book",
+    "fields": {
+      "title": "Head First Design Patterns",
+      "description": "Building Extensible and Maintainable Object-Oriented Software 2nd Edition",
+      "author": "Eric Freeman",
+      "isbn10": 1492078005,
+      "isbn13": "978-1492078005",
+      "publish_date": "2021-01-12",
+      "edition": 2,
+      "best_seller": "No"
+    }
+  },
+  {
+    "pk": 100,
+    "model": "book.book",
+    "fields": {
+      "title": "Microsoft Security, Compliance, and Identity Fundamentals Exam Ref SC-900",
+      "description": "Familiarize yourself with security, identity, and compliance in Microsoft 365 and Azure",
+      "author": "Dwayne Natwick",
+      "isbn10": 1801815992,
+      "isbn13": "978-1801815994",
+      "publish_date": "2022-05-26",
+      "edition": 1,
+      "best_seller": "No"
+    }
+  }
+]

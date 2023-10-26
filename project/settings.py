@@ -41,10 +41,10 @@ INSTALLED_APPS = [
     'homepage',
     'user_profile',
     'reviews',
-    'books',
     'catalogue',
     'forum',
     'autentifikasi',
+    'book',
 ]
 
 MIDDLEWARE = [
