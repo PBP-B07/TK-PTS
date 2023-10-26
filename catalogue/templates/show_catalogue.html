@@ -4,31 +4,58 @@
     {% include "header.html" %}
     <h1>{{page}}</h1>
 
-    <form method="get">
-        <button type="submit" name="sort" value="title">Sort by Title</button>
-    </form>
+    <button id="sortButton">Sort by Title</button>
+    
+    <table id="product_table"></table>
 
-    <table border="1">
-        <thead>
-            <tr>
+    <script>
+        async function getProducts(sort = false) {
+            let url = "{% url 'catalogue:get_product_json' %}";
+            if (sort) {
+                url += "?sort=title";
+            }
+            return fetch(url).then((res) => res.json())
+        }
+
+        function sortAlphabetically(items) {
+            return items.sort((a, b) => {
+                return a.fields.title.localeCompare(b.fields.title);
+            });
+        }
+
+        async function refreshProducts() {
+            document.getElementById("product_table").innerHTML = "";
+            let products = await getProducts();
+            
+            // Sort products alphabetically if sort button is clicked
+            document.getElementById("sortButton").addEventListener("click", async function (event) {
+                event.preventDefault();
+                products = sortAlphabetically(await getProducts(true));
+                displayProducts(products);
+            });
+            
+            displayProducts(products);
+        }
+
+        function displayProducts(products) {
+            let htmlString = `<tr>
                 <th>Title</th>
-                <th>Description</th>
+                <th>Desc</th>
                 <th>Author</th>
                 <th>Publish Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for book in books %}
-                <tr>
-                    <td>{{ book.title }}</td>
-                    <td>{{ book.description }}</td>
-                    <td>{{ book.author }}</td>
-                    <td>{{ book.publish_date }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </tr>`;
+            products.forEach((item) => {
+                htmlString += `\n<tr>
+                    <td>${item.fields.title}</td>
+                    <td>${item.fields.description}</td>
+                    <td>${item.fields.author}</td>
+                    <td>${item.fields.publish_date}</td>
+                </tr>`;
+            });
+            document.getElementById("product_table").innerHTML = htmlString;
+        }
+
+        refreshProducts();
+    </script>
 
 {% endblock content %}
-
-

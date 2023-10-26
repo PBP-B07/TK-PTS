@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from book.models import Book
+from django.http import HttpResponse, JsonResponse
+from django.core import serializers
 
 
 
@@ -20,3 +22,7 @@ def show_main(request):
 
 
 
+
+def get_product_json(request):
+    product_item = Book.objects.all()
+    return HttpResponse(serializers.serialize('json', product_item))
