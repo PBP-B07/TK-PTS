@@ -8,13 +8,51 @@
     <p style="font-weight: 300; font-style: italic;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
     <table id="profile"></table>
 
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit Product by AJAX</button>
+
+    <!-- modal edit -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEdit" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         async function getProfile() {
-            return fetch("{% url 'user_profile:get_profile_json' %}").then((res) => res.json())
+            return fetch("{% url 'user_profile:get_profile' %}").then((res) => res.json())
         }
-        async function getUlasan() {
-            return fetch("{% url 'user_profile:get_ulasan_json' %}").then((res) => res.json())
+        function editProduct() {
+            fetch("{% url 'user_profile:edit_profile_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#formEdit'))
+            }).then(refreshProducts)
+
+            document.getElementById("form").reset()
+            return false
         }
+        document.getElementById("button_edit").onclick = editProduct
         async function refreshProducts() {
             document.getElementById("profile").innerHTML = ""
             let products = await getProfile()
@@ -27,14 +65,6 @@
                 htmlString += `\n<tr>
                 <td>${item.fields.name}</td>
                 <td>${item.fields.description}</td>
-            </tr>` 
-            })
-            products = await getUlasan()
-            console.log(products)
-            products.forEach((item) => {
-                htmlString += `\n<tr>
-                <td>${item.fields.description}</td>
-                <td>${item.fields.rate}</td>
             </tr>` 
             })
             

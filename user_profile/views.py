@@ -1,8 +1,8 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.core import serializers
 from django.shortcuts import render
-from user_profile.models import Profile, UlasanBuatan
-from django.core.management import call_command
+from user_profile.models import Profile
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def show_main(request):
@@ -12,21 +12,24 @@ def show_main(request):
 
     return render(request, "profile.html", context)
 
-def get_profile(request):
-    data = UlasanBuatan.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
-
-def get_ulasan(request):
-    data = UlasanBuatan.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
-
-def load_my_initial_data(apps, schema_editor):
-    call_command("loaddata","fixtures/data.json")
-
 def get_profile_json(request):
-    product_item = Profile.objects.all()
-    return HttpResponse(serializers.serialize('json', product_item))
+    profile = Profile.objects.all()
+    return HttpResponse(serializers.serialize('json', profile))
 
-def get_ulasan_json(request):
-    product_item = UlasanBuatan.objects.all()
-    return HttpResponse(serializers.serialize('json', product_item))
+def get_profile(request):
+    profile = Profile.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', profile))
+
+def edit_profile_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+
+        profile = Profile.objects.get(user=request.user)
+        profile.name = name
+        profile.description = description
+        profile.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
