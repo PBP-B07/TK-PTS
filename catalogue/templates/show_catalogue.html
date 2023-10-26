@@ -4,55 +4,74 @@
     {% include "header.html" %}
     <h1>{{page}}</h1>
 
-    <button id="sortButton">Sort by Title</button>
-    
-    <table id="product_table"></table>
+    <div class="search-container">
+        <input type="text" id="searchBar" placeholder="Search products..." onkeyup="searchProducts()">
+    </div>
+
+    <div id="product_cards" class="card-container"></div>
+
+    <style>
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #searchBar {
+            padding: 10px;
+            width: 300px;
+        }
+    </style>
 
     <script>
-        async function getProducts(sort = false) {
-            let url = "{% url 'catalogue:get_product_json' %}";
-            if (sort) {
-                url += "?sort=title";
+        async function getProducts(query = '') {
+            let url = "{% url 'catalogue:get_product_json' %}?sort=title";
+            if (query) {
+                url += `&query=${query}`;
             }
-            return fetch(url).then((res) => res.json())
+            return fetch(url).then((res) => res.json());
         }
 
-        function sortAlphabetically(items) {
-            return items.sort((a, b) => {
-                return a.fields.title.localeCompare(b.fields.title);
-            });
-        }
-
-        async function refreshProducts() {
-            document.getElementById("product_table").innerHTML = "";
-            let products = await getProducts();
-            
-            // Sort products alphabetically if sort button is clicked
-            document.getElementById("sortButton").addEventListener("click", async function (event) {
-                event.preventDefault();
-                products = sortAlphabetically(await getProducts(true));
-                displayProducts(products);
-            });
-            
+        async function refreshProducts(query = '') {
+            document.getElementById("product_cards").innerHTML = "";
+            const products = await getProducts(query);
             displayProducts(products);
         }
 
         function displayProducts(products) {
-            let htmlString = `<tr>
-                <th>Title</th>
-                <th>Desc</th>
-                <th>Author</th>
-                <th>Publish Date</th>
-            </tr>`;
+            const container = document.getElementById("product_cards");
+
             products.forEach((item) => {
-                htmlString += `\n<tr>
-                    <td>${item.fields.title}</td>
-                    <td>${item.fields.description}</td>
-                    <td>${item.fields.author}</td>
-                    <td>${item.fields.publish_date}</td>
-                </tr>`;
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                card.innerHTML = `
+                    <h3>${item.fields.title}</h3>   
+                    <p><strong>Author:</strong> ${item.fields.author}</p>
+                    <p><strong>Publish Date:</strong> ${item.fields.publish_date}</p>
+                `;
+
+                container.appendChild(card);
             });
-            document.getElementById("product_table").innerHTML = htmlString;
+        }
+
+        function searchProducts() {
+            const query = document.getElementById('searchBar').value;
+            refreshProducts(query);
         }
 
         refreshProducts();
