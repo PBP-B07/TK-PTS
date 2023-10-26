@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include "header.html" %}
+    <h1>{{ page}} </h1>
+    <h2>{{ book.title }}</h2>
+    <h4>Author</h4>
+    <p>{{ book.author }}</p>
+    <h4>Description</h4>
+    <p>{{ book.description }}</p>
+    <h4>ISBN-10</h4>
+    <p>{{ book.isbn10 }}</p>
+    <h4>ISBN-13</h4>
+    <p>{{ book.isbn13 }}</p>
+    <h4>Publish Date</h4>
+    <p>{{ book.publish_date }}</p>
+    <h4>Edition</h4>
+    <p>{{ book.edition }}</p>
+    <h4>Best Seller</h4>
+    <p>{{ book.best_seller }}</p>
+    <a href="/">Back to Home</a>
+{% endblock content %}
