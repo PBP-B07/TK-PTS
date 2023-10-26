@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <head>
+        <title>Forum</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <style>
+            body {
+            background: white; /* Change this to your desired color */
+            }
+            .card {
+                max-width: 50%;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                margin-right: auto;
+                margin-left: 10px;
+                margin-bottom: 25px;
+                background-color: #d8e5e6; /* Change this to your desired color */
+                color: rgb(31, 28, 28);
+            }
+            .center-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px; /* Adjust the margin to your liking */
+                margin-bottom: 50px;
+                border-radius: 15px;
+            }
+            .last-item .card {
+                max-width: 50%;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                margin-right: auto;
+                margin-left: 10px;
+                margin-bottom: 25px;
+                background-color: #0096FF; /* Change this to your desired color */
+                color: white;
+            }
+
+            .center-align {
+                text-align: center;
+            }
+        </style>
+    </head>
+{% endblock meta %}
+
+{% block content %}
+<body>
+
+    <h1 class="center-align">Forum Discussion</h1>
+
+    <div class="center-button">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Forum</button>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Forum</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="subject" class="col-form-label">Subject:</label>
+                            <input type="text" class="form-control" id="subject" name="subject"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add New Forum</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="forum_card">
+    </div>
+
+    <script>
+        async function getForums() {
+            return fetch("{% url 'forum:get_forum_json' %}").then((res) => res.json())
+        }
+
+        async function refreshForums() {
+            document.getElementById("forum_card").innerHTML = ""
+            const forums = await getForums()
+            let htmlString = ''
+            let counter = 0
+            const totalForums = forums.length
+            for (const item of forums) {
+                counter++
+                const isLastItem = counter === totalForums
+                htmlString += `
+                    <div class="row" id="forum_card">
+                        <div class="col s12 m6 l4 ${isLastItem ? 'last-item' : ''}">
+                            <div class="card">  
+                                <div class="card-content">
+                                    <span class="card-title", style="font-family: 'Poppins', sans-serif; font-weight: bold;">${item.fields.subject}</span>
+                                    <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">${item.fields.description}</p>
+                                    <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">Date Added: ${item.fields.date_added}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+            document.getElementById("forum_card").innerHTML = htmlString
+        }
+
+        refreshForums()
+
+        function addForum() {
+            fetch("{% url 'forum:add_forum_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshForums)
+
+            document.getElementById("form").reset()
+            return false
+        }
+
+        document.getElementById("button_add").onclick = addForum
+    </script>
+
+</body>
+{% endblock content %}
