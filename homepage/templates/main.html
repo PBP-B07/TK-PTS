@@ -2,11 +2,104 @@
 
 {% block content %}
     {% include "header.html" %}
-    <h1>{{page}}</h1>
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-    <a href="{% url 'autentifikasi:logout' %}">
-        <button>
-            Logout
-        </button>
-    </a>
+    <h1>{{ page }}</h1>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Daftar Buku</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                flex-direction: column;
+            }
+
+            .book-box {
+                width: 300px;
+                height: 200px;
+                border: 1px solid #ccc;
+                text-align: center;
+                padding: 20px;
+                cursor: pointer;
+                margin-bottom: 20px;
+            }
+
+            .description {
+                display: none;
+                margin-top: 20px;
+            }
+
+            .logout-button {
+                margin-top: 20px;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="book-box" id="bookBox">
+            </div>
+
+            <h5>Sesi terakhir login: 2023-10-31 13:45:00</h5>
+            <a href="#" onclick="logout()">
+                <button class="logout-button">Logout</button>
+            </a>
+        </div>
+
+        <script>
+        
+            async function getBook() {
+                return fetch("{% url 'homepage:get_book' %}").then((res) => res.json())
+            }
+    
+            async function refreshProducts() {
+                document.getElementById("bookBox").innerHTML = "";
+                const products = await getBook(); // Pastikan fungsi getBook mengembalikan data buku dari server
+                let htmlString = '';
+            
+                products.forEach((item) => {
+                    htmlString += `<div>
+                        <strong>Title:</strong> "${item.fields.title}"<br>
+                        <strong>Author:</strong> "${item.fields.author}"<br>
+                        <strong>Description:</strong> "${item.fields.description}"<br>
+                        <a href="{% url 'book:detail' pk=${item.pk} %}">Detail</a>
+                    </div>`;
+                });
+            
+                document.getElementById("bookBox").innerHTML = htmlString;
+            }
+            
+        
+            refreshProducts()
+
+            var bookBox = document.getElementById('bookBox');
+            var bookDescription = document.getElementById('bookDescription');
+
+            bookBox.addEventListener('click', function() {
+                if (bookDescription.style.display === 'none' || bookDescription.style.display === '') {
+                    bookDescription.style.display = 'block';
+                } else {
+                    bookDescription.style.display = 'none';
+                }
+            });
+
+            function logout() {
+                alert('Logout berhasil!');
+            }
+        </script>
+    </body>
+    </html>
 {% endblock content %}
