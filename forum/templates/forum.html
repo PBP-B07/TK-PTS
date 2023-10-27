@@ -3,19 +3,30 @@
 {% block meta %}
     <head>
         <title>Forum</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <style>
             body {
             background: white; /* Change this to your desired color */
             }
-            .card {
+            #forum_container{
                 max-width: 50%;
+                flex-direction: column-reverse;
+            }
+            #reply_container{
+                max-width:50%;
+            }
+            button{
+                background: none;
+                border: none;
+            }
+            .card {
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
                 margin-right: auto;
                 margin-left: 10px;
                 margin-bottom: 25px;
                 background-color: #d8e5e6; /* Change this to your desired color */
                 color: rgb(31, 28, 28);
+                padding: 25px;
+                text-align: left;
             }
             .center-button {
                 display: flex;
@@ -26,7 +37,6 @@
                 border-radius: 15px;
             }
             .last-item .card {
-                max-width: 50%;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
                 margin-right: auto;
                 margin-left: 10px;
@@ -38,6 +48,54 @@
             .center-align {
                 text-align: center;
             }
+
+            .row{
+                display: flex;
+                justify-content: space-between;
+            }
+
+            #page {
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 0 20px;
+            }
+            .frame{
+                float: right;
+                max-width:50%; 
+                border: 2px solid #999999;
+                background-color: #999999;
+                border-radius: 5px;
+                padding: 10px;
+                margin: 10px 0;
+            }
+            .container {
+            border: 2px solid #8bd8ed;
+            background-color: #8bd8ed;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            }
+
+            .darker {
+            border-color: #2f97b4;
+            background-color: #2f97b4;
+            }
+
+            .container::after {
+            content: "";
+            clear: both;
+            display: table;
+            }
+
+            .time-right {
+            float: right;
+            color: #ffffff;
+            }
+
+            .time-left {
+            float: left;
+            color: #d6d4d4;
+            }
         </style>
     </head>
 {% endblock meta %}
@@ -45,7 +103,7 @@
 {% block content %}
 <body>
 
-    <h1 class="center-align">Forum Discussion</h1>
+    <h1 class="center-align">Forum Discussion of {{book.title}} by {{book.author}} </h1>
 
     <div class="center-button">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Forum</button>
@@ -79,54 +137,78 @@
         </div>
     </div>
 
-    <div class="row" id="forum_card">
+    <div class="row" id="forum_container">
+    </div>
+    
+    <div class="frame">
+        <h2>Chat Messages</h2>
+
+        <div class="container">
+        <p>Hello. How are you today?</p>
+        <span class="time-right">11:00</span>
+        </div>
+
+        <div class="container darker">
+        <p>Hey! I'm fine. Thanks for asking!</p>
+        <span class="time-left">11:01</span>
+        </div>
+
+        <div class="container">
+        <p>Sweet! So, what do you wanna do today?</p>
+        <span class="time-right">11:02</span>
+        </div>
+
+        <div class="container darker">
+        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+        <span class="time-left">11:05</span>
+        </div>
     </div>
 
-    <script>
-        async function getForums() {
-            return fetch("{% url 'forum:get_forum_json' %}").then((res) => res.json())
-        }
+</body>
 
-        async function refreshForums() {
-            document.getElementById("forum_card").innerHTML = ""
-            const forums = await getForums()
-            let htmlString = ''
-            let counter = 0
-            const totalForums = forums.length
-            for (const item of forums) {
-                counter++
-                const isLastItem = counter === totalForums
-                htmlString += `
-                    <div class="row" id="forum_card">
-                        <div class="col s12 m6 l4 ${isLastItem ? 'last-item' : ''}">
-                            <div class="card">  
-                                <div class="card-content">
-                                    <span class="card-title", style="font-family: 'Poppins', sans-serif; font-weight: bold;">${item.fields.subject}</span>
-                                    <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">${item.fields.description}</p>
-                                    <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">Date Added: ${item.fields.date_added}</p>
-                                </div>
+<script>
+    async function getForums() {
+        return fetch("{% url 'forum:get_forum_json' book.pk %}").then((res) => res.json())
+    }
+
+    async function refreshForums() {
+        document.getElementById("forum_container").innerHTML = ""
+        const forums = await getForums()
+        let htmlString = ''
+        let counter = 0
+        const totalForums = forums.length
+        for (const item of forums) {
+            counter++
+            const isLastItem = counter === totalForums
+            htmlString += `
+                <button class="row" id="forum_card">
+                    <div class="col s12 m6 l4 ${isLastItem ? 'last-item' : ''}">
+                        <div class="card">  
+                            <div class="card-content">
+                                <span class="card-title", style="font-family: 'Poppins', sans-serif; font-weight: bold;">${item.fields.subject}</span>
+                                <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">${item.fields.description}</p>
+                                <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">Date Added: ${item.fields.date_added}</p>
                             </div>
                         </div>
                     </div>
-                `
-            }
-            document.getElementById("forum_card").innerHTML = htmlString
+                </button>
+            `
         }
+        document.getElementById("forum_container").innerHTML = htmlString
+    }
 
-        refreshForums()
+    refreshForums()
 
-        function addForum() {
-            fetch("{% url 'forum:add_forum_ajax' %}", {
-                method: "POST",
-                body: new FormData(document.querySelector('#form'))
-            }).then(refreshForums)
+    function addForum() {
+        fetch("{% url 'forum:add_forum_ajax' book.pk %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshForums)
 
-            document.getElementById("form").reset()
-            return false
-        }
+        document.getElementById("form").reset()
+        return false
+    }
 
-        document.getElementById("button_add").onclick = addForum
-    </script>
-
-</body>
+    document.getElementById("button_add").onclick = addForum
+</script>
 {% endblock content %}

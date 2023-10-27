@@ -9,7 +9,7 @@ class Forum(models.Model):
     date_added = models.DateField(auto_now=True, null = True)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
-class Message(models.Model):
+class Reply(models.Model):
     message = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE)
