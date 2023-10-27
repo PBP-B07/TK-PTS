@@ -2,34 +2,170 @@
 
 {% block content %}
     {% include "header.html" %}
-    <h1>{{ page}} </h1>
-    <h2>{{ book.title }}</h2>
-    <h4>Author</h4>
-    <p>{{ book.author }}</p>
-    <h4>Description</h4>
-    <p>{{ book.description }}</p>
-    <h4>ISBN-10</h4>
-    <p>{{ book.isbn10 }}</p>
-    <h4>ISBN-13</h4>
-    <p>{{ book.isbn13 }}</p>
-    <h4>Publish Date</h4>
-    <p>{{ book.publish_date }}</p>
-    <h4>Edition</h4>
-    <p>{{ book.edition }}</p>
-    <h4>Best Seller</h4>
-    <p>{{ book.best_seller }}</p>
-
-    <div class="scrollable">
-        <h4>Reviews:</h4>
-        <ul id="reviews-list">
-            {% for review in reviews %}
-                <li>{{ review.author }}: {{ review.text }}</li>
-            {% endfor %}
-        </ul>
-        <button class="btn btn-primary" id="load-more-reviews">Lihat Review Lainnya</button>
+    <div class="container mt-4">
+        <h1>{{ page }}</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>{{ book.title }}</h2>
+                        <p>{{ book.description }}</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Author:</strong> {{ book.author }}</li>
+                            <li class="list-group-item"><strong>ISBN-10:</strong> {{ book.isbn10 }}</li>
+                            <li class="list-group-item"><strong>ISBN-13:</strong> {{ book.isbn13 }}</li>
+                            <li class="list-group-item"><strong>Publish Date:</strong> {{ book.publish_date }}</li>
+                            <li class="list-group-item"><strong>Edition:</strong> {{ book.edition }}</li>
+                            <li class="list-group-item"><strong>Best Seller:</strong> {{ book.best_seller }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="scrollable">
+                    <h4>Reviews:</h4>
+                    <ul id="reviews-list">
+                        {% for review in reviews %}
+                            <li>{{ review.author }}: {{ review.text }}</li>
+                        {% endfor %}
+                    </ul>
+                    <button class="btn btn-primary" id="load-more-reviews">Lihat Review Lainnya</button>
+                </div>
+                <button class="btn btn-primary" id="edit-book">Edit Book</button>
+            </div>
+        </div>
+    </div>
+        <!-- Modal edit book -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEdit" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="edit-book-title" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="edit-book-title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-book-description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="edit-book-description" name="description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-book-author" class="col-form-label">Author:</label>
+                            <input type="text" class="form-control" id="edit-book-author" name="author" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-book-isbn10" class="col-form-label">ISBN-10:</label>
+                            <input type="text" class="form-control" id="edit-book-isbn10" name="isbn10">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-book-isbn13" class="col-form-label">ISBN-13:</label>
+                            <input type="text" class="form-control" id="edit-book-isbn13" name="isbn13">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-book-publish_date" class="col-form-label">Publish Date:</label>
+                            <input type="date" class="form-control" id="edit-book-publish_date" name="publish_date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-book-edition" class="col-form-label">Edition:</label>
+                            <input type="number" class="form-control" id="edit-book-edition" name="edition">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-book-best_seller" class="col-form-label">Best Seller:</label>
+                            <input type="text" class="form-control" id="edit-book-best_seller" name="best_seller">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal">Edit</button>
+                </div>
+            </div>
+        </div>
     </div>
     
     <script>
+        // Fungsi untuk mengambil data buku
+        async function getBookData() {
+            return fetch("{% url 'book:show_main_book' book.id %}").then((res) => res.json());
+        }
+    
+        // Fungsi untuk mengisi data buku ke dalam dialog pengeditan
+        async function fillEditBookDialog() {
+            const bookData = await getBookData();
+            const titleInput = document.getElementById("edit-book-title");
+            const descriptionInput = document.getElementById("edit-book-description");
+            const authorInput = document.getElementById("edit-book-author");
+            const isbn10Input = document.getElementById("edit-book-isbn10");
+            const isbn13Input = document.getElementById("edit-book-isbn13");
+            const publishDateInput = document.getElementById("edit-book-publish_date");
+            const editionInput = document.getElementById("edit-book-edition");
+            const bestSellerInput = document.getElementById("edit-book-best_seller");
+    
+            titleInput.value = bookData.title;
+            descriptionInput.value = bookData.description;
+            authorInput.value = bookData.author;
+            isbn10Input.value = bookData.isbn10;
+            isbn13Input.value = bookData.isbn13;
+            publishDateInput.value = bookData.publish_date;
+            editionInput.value = bookData.edition;
+            bestSellerInput.value = bookData.best_seller;
+        }
+    
+        // Fungsi untuk mengirim data buku yang diedit ke server
+        async function editBook() {
+            const titleInput = document.getElementById("edit-book-title");
+            const descriptionInput = document.getElementById("edit-book-description");
+            const authorInput = document.getElementById("edit-book-author");
+            const isbn10Input = document.getElementById("edit-book-isbn10");
+            const isbn13Input = document.getElementById("edit-book-isbn13");
+            const publishDateInput = document.getElementById("edit-book-publish_date");
+            const editionInput = document.getElementById("edit-book-edition");
+            const bestSellerInput = document.getElementById("edit-book-best_seller");
+    
+            const formData = new FormData();
+            formData.append("title", titleInput.value);
+            formData.append("description", descriptionInput.value);
+            formData.append("author", authorInput.value);
+            formData.append("isbn10", isbn10Input.value);
+            formData.append("isbn13", isbn13Input.value);
+            formData.append("publish_date", publishDateInput.value);
+            formData.append("edition", editionInput.value);
+            formData.append("best_seller", bestSellerInput.value);
+    
+            fetch("{% url 'book:edit_book' book.id %}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRFToken": csrftoken, // Pastikan Anda memiliki variabel csrftoken yang telah didefinisikan sebelumnya
+                },
+            }).then((response) => {
+                if (response.status === 201) {
+                    // Sukses, tutup dialog pengeditan
+                    const editBookModal = new bootstrap.Modal(document.getElementById("editModal"));
+                    editBookModal.hide();
+                }
+            });
+        }
+    
+        // Event listener untuk tombol "Edit Book"
+        const editBookButton = document.getElementById("edit-book");
+        editBookButton.addEventListener("click", () => {
+            fillEditBookDialog();
+            const editBookModal = new bootstrap.Modal(document.getElementById("editModal"));
+            editBookModal.show();
+        });
+    
+        // Event listener untuk tombol "Edit" di dalam dialog pengeditan
+        const editButton = document.getElementById("button_edit");
+        editButton.addEventListener("click", () => {
+            editBook();
+        });
+    
         async function getReviews() {
             return fetch("{% url 'book:get_reviews' book.id %}").then((res) => res.json());
         }
@@ -37,13 +173,18 @@
         async function refreshReviews() {
             const reviewsList = document.getElementById("reviews-list");
             const reviews = await getReviews();
-            
+    
             reviewsList.innerHTML = "";
             reviews.forEach((review) => {
                 const li = document.createElement("li");
                 li.textContent = `${review.author}: ${review.text}`;
                 reviewsList.appendChild(li);
             });
+    
+            if (reviews.length === 0) {
+                // Semua review telah dimuat, sembunyikan tombol
+                loadMoreReviewsButton.style.display = "none";
+            }
         }
     
         refreshReviews();
@@ -54,10 +195,7 @@
             window.location.href = `/reviews/${book.id}`;
         });
     </script>
-
     
-    
-
 
     <!-- <a href="/">Back to Home</a> -->
 {% endblock content %}
