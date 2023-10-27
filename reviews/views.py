@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.shortcuts import render
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
@@ -20,8 +20,10 @@ def show_review(request, id):
 
 def get_reviews_json(request, id):
     book = Book.objects.get(pk=id)
-    reviews = Review.objects.filter(book=book)
-    return HttpResponse(serializers.serialize('json', reviews))
+    reviews = Review.objects.filter(book=book).values('user','profile__name', 'book__title', 'book__pk', 'pk', 'description', 'star', 'date_added')
+    
+    return JsonResponse(list(reviews), safe=False)
+    # return HttpResponse(serializers.serialize('json', reviews))
 
 @csrf_exempt
 def add_reviews_ajax(request, id):
