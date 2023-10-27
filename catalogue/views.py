@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from book.models import Book
 from django.http import HttpResponse
+from django.http import HttpResponseNotFound
 from django.core import serializers
 from django.db.models import Q  # jangan lupa mengimpor Q
 from django.http import JsonResponse  # impor JsonResponse
@@ -42,19 +43,19 @@ def get_product_json(request):
     return HttpResponse(books_json)
 
 
-...
+
+
 @csrf_exempt
 def add_product_ajax(request):
     if request.method == 'POST':
-        data = json.loads(request.body.decode('utf-8'))  # Mendapatkan data JSON yang dikirim
-        title = data.get("title")
-        description = data.get("description")
-        author = data.get("author")
-        isbn10 = data.get("isbn10")
-        isbn13 = data.get("isbn13")
-        publish_date = data.get("publish_date")
-        edition = data.get("edition")
-        best_seller = data.get("best_seller")
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        author = request.POST.get("author")
+        isbn10 = request.POST.get("isbn10")
+        isbn13 = request.POST.get("isbn13")
+        publish_date = request.POST.get("publish_date")
+        edition = request.POST.get("edition")
+        best_seller = request.POST.get("best_seller")
         
         # Membuat dan menyimpan objek buku baru
         new_book = Book(
@@ -64,6 +65,6 @@ def add_product_ajax(request):
         )
         new_book.save()
 
-        return JsonResponse({"message": "Book added successfully!"}, status=201)
-    else:
-        return JsonResponse({"error": "Invalid request method"}, status=405)
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()

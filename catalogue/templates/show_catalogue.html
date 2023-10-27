@@ -50,7 +50,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book AJAX</button>
                 </div>
             </div>
         </div>
@@ -154,19 +154,17 @@
         refreshProducts();
 
 
-        // function addProduct() {
-        // fetch("{% url 'catalogue:add_product_ajax' %}", {
-        //     method: "POST",
-        //     body: new FormData(document.querySelector('#form'))
-        // }).then(refreshProducts)
+        function addProduct() {
+            fetch("{% url 'catalogue:add_product_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshProducts)
 
-        // document.getElementById("form").reset()
-        // return false
-        // }
-        // document.getElementById("button_add").onclick = addProduct
-
-        
-
+            document.getElementById("form").reset()
+            return false
+        }
+        document.getElementById("button_add").onclick = addProduct
+        refreshProducts();
     </script>
 
 {% endblock content %}
