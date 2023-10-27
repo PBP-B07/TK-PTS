@@ -68,13 +68,10 @@ def add_event_ajax(request):
 
 
 def get_latest_review(request):
-    reviews = Review.objects.filter(user=request.user.pk).order_by('-date_added')[:5]
+    reviews = Review.objects.filter(user=request.user.pk)
     return HttpResponse(serializers.serialize('json',reviews))
 
 def get_review(request):
     review = Review.objects.all()
     return HttpResponse(serializers.serialize('json',review))
 
-def get_forum(request):
-    forum = Review.objects.all()
-    return HttpResponse(serializers.serialize('json',review))

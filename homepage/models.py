@@ -6,4 +6,3 @@ class BookEvent(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     book = models.ForeignKey('book.Book', on_delete=models.CASCADE)
-  

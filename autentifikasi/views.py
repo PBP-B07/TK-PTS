@@ -8,19 +8,24 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from autentifikasi.forms import ProfileForm
 
 # Create your views here.
 @csrf_exempt
 def register(request):
     form = UserCreationForm()
+    form_profile = ProfileForm(request.POST or None)
 
     if request.method == "POST":
         form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
+        if form.is_valid() and form_profile.is_valid:
+            user = form.save()
+            profile = form_profile.save(commit=False)
+            profile.user = user
+            profile.save()
             messages.success(request, 'Your account has been successfully created!')
             return redirect('autentifikasi:login')
-    context = {'form':form}
+    context = {'form':form, 'form_profile':form_profile}
     return render(request, 'register.html', context)
 
 @csrf_exempt
