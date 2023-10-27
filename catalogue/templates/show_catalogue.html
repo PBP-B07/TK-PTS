@@ -50,7 +50,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book AJAX</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book</button>
                 </div>
             </div>
         </div>
@@ -158,13 +158,27 @@
             fetch("{% url 'catalogue:add_product_ajax' %}", {
                 method: "POST",
                 body: new FormData(document.querySelector('#form'))
-            }).then(refreshProducts)
+            })
+            .then(response => {
+                console.log(response); // Log the response for debugging
+                if (response.status === 201) { // Check if the response status is 201 (Created)
+                    refreshProducts(); // Refresh the product list if the book was added successfully
+                    document.getElementById("form").reset(); // Reset the form
+                } else {
+                    console.error('Failed to add the book.'); // Log an error message if the status is not 201
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error); // Handle errors during the fetch request
+            });
 
-            document.getElementById("form").reset()
-            return false
+            return false;
         }
+
+
+
         document.getElementById("button_add").onclick = addProduct
-        refreshProducts();
+       
     </script>
 
 {% endblock content %}
