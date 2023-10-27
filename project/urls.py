@@ -26,4 +26,5 @@ urlpatterns = [
     path('autentifikasi/', include('autentifikasi.urls')),
     path('api/books/', include('book.urls')),
     path('book/<int:book_id>/', show_main_book, name='show_main_book'),
+    path('review/<int:id>/', include('reviews.urls')),
 ]
