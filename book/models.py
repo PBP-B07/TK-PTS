@@ -10,3 +10,4 @@ class Book(models.Model):
     publish_date = models.TextField(null=True, blank=True)
     edition = models.IntegerField(null=True, blank=True)
     best_seller = models.TextField(null=True, blank=True)
+    
