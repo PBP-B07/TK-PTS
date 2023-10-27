@@ -2,6 +2,131 @@
 
 {% block content %}
     {% include "header.html" %}
-    <h1>{{page}}</h1>
-    <h2>{{ title }}</h2>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            .reviews-container {
+                margin-top: 50px;
+            }
+            .review-card {
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                margin-right: auto;
+                margin-left: 10px;
+                margin-bottom: 25px;
+                /* background-color: #d8e5e6; Change this to your desired color */
+                color: rgb(31, 28, 28);
+                padding: 25px;
+                text-align: left;
+            }
+            /* .review-stars {
+                width: 50%;
+            } */
+        </style>
+    </head>
+    <body>
+        <div class="container">        
+        <h1>{{page}}</h1>
+        <br>
+        <h2 style="text-align: center;">Reviews of {{ book.title }} by {{ book.author }}</h2>
+
+        <div class="center-button">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Review</button>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Review for {{book.title}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="review-form" onsubmit="return false;">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="rate" class="col-form-label">Rate (0-5 stars):</label>
+                                <input type="range" class="form-control" id="rate" name="rate" min="0" max="5" value="0" id="rating-slider"></input>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="col-form-label">Description:</label>
+                                <textarea class="form-control" id="description" name="description"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="submit-review" data-bs-dismiss="modal">Add Review</button>
+                    </div>
+                </div>
+            </div>   
+        </div> 
+        <div id="reviews-container"></div>
+    </div>
+
+        <script>
+            // const slider = document.getElementById("rating-slider");
+            // const ratingText = document.getElementById("rating-text");
+
+            // Add an event listener to the range slider
+            // slider.addEventListener("DOMContentLoaded", function() {
+            //     // Update the text based on the current slider value
+            //     ratingText.textContent = this.value + " stars";
+            // });
+
+            async function getReviews() {
+                return fetch("{% url 'reviews:get_reviews_json' book.pk %}").then((res) => res.json())
+            }
+
+            function generateStarRating(starCount) {
+                const filledStars = '<i class="fa fa-star"></i>'.repeat(starCount);
+                const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(5 - starCount);
+                return filledStars + emptyStars;
+            }
+
+            async function refreshReviews() {
+                document.getElementById("reviews-container").innerHTML = ""
+                const reviews = await getReviews()
+                console.log(reviews)
+
+                let htmlString = ``
+                reviews.forEach((review) => {
+                    const starRating = generateStarRating(review.fields.star);
+                    htmlString += `\n
+                        <div class="review-card">
+                            <div class="user-review">
+                                <div class="review-top">
+                                    <div class="review-stars">
+                                        <h4>${starRating} (${review.fields.star} stars)</h4>
+                                    </div>
+                                    <div class="review-date">
+                                        <h3>by ${review.fields.user.username}</h3>
+                                        <p>posted on ${review.fields.date_added}</p>
+                                    </div>
+                                </div>
+                                <div class="review-bottom">
+                                    <div class="review-desc">
+                                        <p>${review.fields.description}</p>
+                                    </div>
+                                <div>
+                            </div>
+                        </div>
+                    `
+                })
+                document.getElementById("reviews-container").innerHTML = htmlString
+            }
+
+            refreshReviews()
+            function addReview() {
+                fetch("{% url 'reviews:add_reviews_ajax' book.pk %}", {
+                    method: "POST",
+                    body: new FormData(document.querySelector('#form'))
+                }).then(refreshReviews)
+
+                document.getElementById("review-form").reset()
+                return false
+            }
+
+            document.getElementById("submit-review").onclick = addReview
+        </script>
+    </body>
 {% endblock content %}
