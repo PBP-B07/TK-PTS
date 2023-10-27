@@ -18,5 +18,46 @@
     <p>{{ book.edition }}</p>
     <h4>Best Seller</h4>
     <p>{{ book.best_seller }}</p>
-    <a href="/">Back to Home</a>
+
+    <div class="scrollable">
+        <h4>Reviews:</h4>
+        <ul id="reviews-list">
+            {% for review in reviews %}
+                <li>{{ review.author }}: {{ review.text }}</li>
+            {% endfor %}
+        </ul>
+        <button class="btn btn-primary" id="load-more-reviews">Lihat Review Lainnya</button>
+    </div>
+    
+    <script>
+        async function getReviews() {
+            return fetch("{% url 'book:get_reviews' book.id %}").then((res) => res.json());
+        }
+    
+        async function refreshReviews() {
+            const reviewsList = document.getElementById("reviews-list");
+            const reviews = await getReviews();
+            
+            reviewsList.innerHTML = "";
+            reviews.forEach((review) => {
+                const li = document.createElement("li");
+                li.textContent = `${review.author}: ${review.text}`;
+                reviewsList.appendChild(li);
+            });
+        }
+    
+        refreshReviews();
+    
+        const loadMoreReviewsButton = document.getElementById("load-more-reviews");
+        loadMoreReviewsButton.addEventListener("click", () => {
+            // Mengarahkan pengguna ke halaman review.html untuk melihat review lengkap
+            window.location.href = `/reviews/${book.id}`;
+        });
+    </script>
+
+    
+    
+
+
+    <!-- <a href="/">Back to Home</a> -->
 {% endblock content %}
