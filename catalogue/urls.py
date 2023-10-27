@@ -1,5 +1,5 @@
 from django.urls import path
-from catalogue.views import show_main, get_product_json,add_product_ajax
+from catalogue.views import show_main, get_product_json,add_product_ajax,get_categories_json
 
 
 app_name = 'catalogue'
@@ -7,5 +7,6 @@ app_name = 'catalogue'
 urlpatterns = [
     path('', show_main, name='show_main'),
     path('get-product/', get_product_json, name='get_product_json'),
-    path('create-product-ajax/', add_product_ajax, name='add_product_ajax')
-]
+    path('create-product-ajax/', add_product_ajax, name='add_product_ajax'),
+    path('get_categories/', get_categories_json, name='get_categories'),
+]   

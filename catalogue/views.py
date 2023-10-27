@@ -26,23 +26,33 @@ def show_main(request):
 
 
 
-
-
-
 def get_product_json(request):
     query = request.GET.get('query', '')  # mendapatkan query pencarian dari parameter GET
+    category = request.GET.get('category', '')  # mendapatkan kategori dari parameter GET
+    
+    # Memulai dengan semua buku
+    books = Book.objects.all()
+    
     # Jika ada query pencarian, filter buku yang judulnya mengandung query
     if query:
-        books = Book.objects.filter(title__icontains=query).order_by('title')
-    else:
-        # Jika tidak ada query pencarian, ambil semua buku dan urutkan berdasarkan judul
-        books = Book.objects.all().order_by('title')
+        books = books.filter(title__icontains=query)
+    
+    # Jika ada kategori yang dipilih, filter buku berdasarkan kategori
+    if category:
+        books = books.filter(category__iexact=category)  # Assuming your field name is 'category'
+    
+    # Mengurutkan buku berdasarkan judul
+    books = books.order_by('title')
     
     # Mengonversi queryset ke format JSON dan mengembalikannya sebagai respons
     books_json = serializers.serialize('json', books)
     return HttpResponse(books_json)
 
 
+
+def get_categories_json(request):
+    categories = Book.objects.values_list('category', flat=True).distinct()
+    return JsonResponse(list(categories), safe=False)
 
 
 @csrf_exempt
@@ -56,15 +66,18 @@ def add_product_ajax(request):
         publish_date = request.POST.get("publish_date")
         edition = request.POST.get("edition")
         best_seller = request.POST.get("best_seller")
+        category = request.POST.get("category")
         
         # Membuat dan menyimpan objek buku baru
         new_book = Book(
             title=title, description=description, author=author,
             isbn10=isbn10, isbn13=isbn13, publish_date=publish_date,
-            edition=edition, best_seller=best_seller
+            edition=edition, best_seller=best_seller, category=category
         )
         new_book.save()
 
         return HttpResponse(b"CREATED", status=201)
 
     return HttpResponseNotFound()
+
+
