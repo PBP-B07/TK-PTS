@@ -3,103 +3,169 @@
 {% block content %}
     {% include "header.html" %}
     <h1>{{ page }}</h1>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal">Add Event</button>
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Daftar Buku</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-            }
+    <div class="search-container">
+        <input type="text" id="searchBar" placeholder="Search products..." onkeyup="searchProducts()">
+    </div>
 
-            .container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                flex-direction: column;
-            }
 
-            .book-box {
-                width: 300px;
-                height: 200px;
-                border: 1px solid #ccc;
-                text-align: center;
-                padding: 20px;
-                cursor: pointer;
-                margin-bottom: 20px;
-            }
+    <div class="container">
+        <table id="event_table"></table>
+        <table id="review_table"></table>
+        <div class="book-box" id="bookBox"></div>
+        <h5>Sesi terakhir login: 2023-10-31 13:45:00</h5>
+        <a href="{% url 'autentifikasi:logout'%}">
+            <button class="logout-button">Logout</button>
+        </a>
+    </div>
 
-            .description {
-                display: none;
-                margin-top: 20px;
-            }
-
-            .logout-button {
-                margin-top: 20px;
-                padding: 10px 20px;
-                font-size: 16px;
-                cursor: pointer;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="book-box" id="bookBox">
+    <div id="book-list"></div>
+    <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-            <h5>Sesi terakhir login: 2023-10-31 13:45:00</h5>
-            <a href="#" onclick="logout()">
-                <button class="logout-button">Logout</button>
-            </a>
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Title:</label>
+                        <input type="text" class="form-control" id="title" name="title"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Event</button>
+            </div>
         </div>
+    </div>
+</div>
 
-        <script>
-        
-            async function getBook() {
-                return fetch("{% url 'homepage:get_book' %}").then((res) => res.json())
-            }
+
+
+    <script>
+        // get event 
+        async function getEvent() {
+            return fetch("{% url 'homepage:get_event' %}").then((res) => res.json())
+        }
+
+        async function addEvent() {
+            fetch("{% url 'homepage:add_event_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshProducts)
     
-            async function refreshProducts() {
-                document.getElementById("bookBox").innerHTML = "";
-                const products = await getBook(); // Pastikan fungsi getBook mengembalikan data buku dari server
-                let htmlString = '';
-            
-                products.forEach((item) => {
-                    htmlString += `<div>
-                        <strong>Title:</strong> "${item.fields.title}"<br>
-                        <strong>Author:</strong> "${item.fields.author}"<br>
-                        <strong>Description:</strong> "${item.fields.description}"<br>
-                        <a href="{% url 'book:detail' pk=${item.pk} %}">Detail</a>
-                    </div>`;
-                });
-            
-                document.getElementById("bookBox").innerHTML = htmlString;
-            }
-            
+            document.getElementById("form").reset()
+            return false
+        }
         
-            refreshProducts()
+        document.getElementById("button_add").onclick = addEvent
+        
+    
+        async function refreshEvents() {
+            const eventsContainer = document.getElementById("event_table");
+            eventsContainer.innerHTML = ""; 
 
-            var bookBox = document.getElementById('bookBox');
-            var bookDescription = document.getElementById('bookDescription');
+            const events = await getEvent();
+            let htmlString = `<tr>
+                <th>Title</th>
+                <th>Description</th>
+            </tr>`
+            events.forEach((item) => {
+                htmlString += `\n<tr>
+                <td>${item.fields.title}</td>
+                <td>${item.fields.description}</td>
+            </tr>` 
+            })
+            
+            document.getElementById("event_table").innerHTML = htmlString
+        }
 
-            bookBox.addEventListener('click', function() {
-                if (bookDescription.style.display === 'none' || bookDescription.style.display === '') {
-                    bookDescription.style.display = 'block';
-                } else {
-                    bookDescription.style.display = 'none';
-                }
+        // Panggil fungsi refreshEvents untuk menampilkan kartu-kartu event
+        refreshEvents();
+    
+
+
+
+
+        // get BOOK 
+        async function getBook() {
+            return fetch("{% url 'homepage:get_book' %}").then((res) => res.json())
+        }
+    
+        async function refreshProducts() {
+            document.getElementById("bookBox").innerHTML = "";
+            const products = await getBook(); // Pastikan fungsi getBook mengembalikan data buku dari server
+            let htmlString = '';
+        
+            products.forEach((item) => {
+                htmlString += `<div>
+                    <strong>Title:</strong> "${item.fields.title}"<br>
+                    <strong>Author:</strong> "${item.fields.author}"<br>
+                    <strong>Description:</strong> "${item.fields.description}"<br>
+                    <a href="{% url 'homepage:book_detail' book_id=1 %}">Detail</a>
+                </div>`;
             });
-
-            function logout() {
-                alert('Logout berhasil!');
+        
+            document.getElementById("bookBox").innerHTML = htmlString;
+        }
+        
+    
+        refreshProducts()
+    
+        var bookBox = document.getElementById('bookBox');
+        var bookDescription = document.getElementById('bookDescription');
+    
+        bookBox.addEventListener('click', function() {
+            if (bookDescription.style.display === 'none' || bookDescription.style.display === '') {
+                bookDescription.style.display = 'block';
+            } else {
+                bookDescription.style.display = 'none';
             }
-        </script>
-    </body>
-    </html>
+        });
+    
+        function logout() {
+            alert('Logout berhasil!');
+        }
+
+
+
+
+        // get review
+        async function getLatestreview() {
+            return fetch("{% url 'homepage:get_latest_review' %}").then((res) => res.json())
+        }
+
+        async function refreshReview(){
+            document.getElementById("review_table").innerHTML = "";
+            const reviews = await getLatestreview();
+            console.log(reviews) 
+            console.log({{pk}}) 
+            let htmlString = `<tr>
+                <th>User</th>
+                <th>Description</th>
+            </tr>`
+            reviews.forEach((review) => {
+                htmlString += `\n<tr>
+                <td>{{username}}</td>
+                <td>${review.fields.description}</td>
+            </tr>` 
+            })
+        
+            document.getElementById("review_table").innerHTML = htmlString;
+        }
+
+        refreshReview()
+
+    </script>
 {% endblock content %}
+
+
