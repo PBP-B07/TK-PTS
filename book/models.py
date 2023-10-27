@@ -11,3 +11,4 @@ class Book(models.Model):
     edition = models.IntegerField(null=True, blank=True)
     best_seller = models.TextField(null=True, blank=True)
     rating = models.FloatField(null=True, blank=True)
+    category = models.TextField(null=True, blank=True)

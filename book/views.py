@@ -55,4 +55,3 @@ def show_reviews(request, book_id):
         'reviews': reviews,
     }
     return render(request, "reviews.html", context)
-
