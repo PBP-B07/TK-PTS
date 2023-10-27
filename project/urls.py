@@ -24,6 +24,6 @@ urlpatterns = [
     path('profile/', include('user_profile.urls')),
     path('catalogue/', include('catalogue.urls')),
     path('autentifikasi/', include('autentifikasi.urls')),
-    path('api/books/', include('book.urls')),
-    path('book/<int:book_id>/', show_main_book, name='show_main_book'),
+    path('books/', include('book.urls')),
+    path('review/<int:id>/', include('reviews.urls')),
 ]

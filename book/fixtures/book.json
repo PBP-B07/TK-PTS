@@ -10,7 +10,8 @@
       "isbn13": "978-1098118730",
       "publish_date": "2022-10-25",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Software Engineering"
     }
   },
   {
@@ -24,7 +25,8 @@
       "isbn13": "978-0984782857",
       "publish_date": "2015-07-01",
       "edition": 6,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -38,7 +40,8 @@
       "isbn13": "978-1718502703",
       "publish_date": "2023-01-10",
       "edition": 3,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -52,7 +55,8 @@
       "isbn13": "978-1593279929",
       "publish_date": "2019-11-12",
       "edition": 2,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -66,7 +70,8 @@
       "isbn13": "978-1491973899",
       "publish_date": "2017-05-02",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Software Engineering"
     }
   },
   {
@@ -80,7 +85,8 @@
       "isbn13": "978-0201633610",
       "publish_date": "1994-10-31",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Software Engineering"
     }
   },
   {
@@ -94,7 +100,8 @@
       "isbn13": "978-0135957059",
       "publish_date": "2019-09-13",
       "edition": 2,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Software Engineering"
     }
   },
   {
@@ -108,7 +115,8 @@
       "isbn13": "978-1718502703",
       "publish_date": "2023-01-10",
       "edition": 3,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -122,7 +130,8 @@
       "isbn13": "978-1098125974",
       "publish_date": "2022-11-08",
       "edition": 3,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Machine Learning"
     }
   },
   {
@@ -136,7 +145,8 @@
       "isbn13": "978-1572229167",
       "publish_date": "2005-01-01",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Database"
     }
   },
   {
@@ -150,7 +160,8 @@
       "isbn13": "978-1098104030",
       "publish_date": "2022-09-20",
       "edition": 3,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -164,7 +175,8 @@
       "isbn13": "978-1593279929",
       "publish_date": "2019-11-12",
       "edition": 2,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -178,7 +190,8 @@
       "isbn13": "978-1636100357",
       "publish_date": "2023-04-22",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -192,7 +205,8 @@
       "isbn13": "978-1647751074",
       "publish_date": "2020-08-01",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Poetry"
     }
   },
   {
@@ -206,7 +220,8 @@
       "isbn13": "978-1118008188",
       "publish_date": "2011-11-08",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -220,7 +235,8 @@
       "isbn13": "978-1530051120",
       "publish_date": "2016-07-10",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -234,7 +250,8 @@
       "isbn13": "978-1617292231",
       "publish_date": "2016-05-01",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -248,7 +265,8 @@
       "isbn13": "978-1465482211",
       "publish_date": "2020-01-07",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -262,7 +280,8 @@
       "isbn13": "978-1641521758",
       "publish_date": "2019-03-19",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -276,7 +295,8 @@
       "isbn13": "978-1524876067",
       "publish_date": "2022-10-25",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -290,7 +310,8 @@
       "isbn13": "978-1803234694",
       "publish_date": "2023-01-27",
       "edition": 2,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -304,7 +325,8 @@
       "isbn13": "978-1492052593",
       "publish_date": "2021-07-20",
       "edition": 2,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -318,7 +340,8 @@
       "isbn13": "978-1098109431",
       "publish_date": "2022-02-22",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -332,7 +355,8 @@
       "isbn13": "978-0137909100",
       "publish_date": "2022-08-07",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -346,7 +370,8 @@
       "isbn13": "978-1546488330",
       "publish_date": "2017-05-10",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -360,7 +385,8 @@
       "isbn13": "978-1423244233",
       "publish_date": "2020-05-01",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -374,7 +400,8 @@
       "isbn13": "978-1492056355",
       "publish_date": "2022-05-10",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -388,7 +415,8 @@
       "isbn13": "978-1838983147",
       "publish_date": "2021-02-22",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -402,7 +430,8 @@
       "isbn13": "978-1801071109",
       "publish_date": "2021-05-28",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -416,7 +445,8 @@
       "isbn13": "978-9083136608",
       "publish_date": "2021-02-01",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -430,7 +460,8 @@
       "isbn13": "978-1837630417",
       "publish_date": "2023-03-31",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Database"
     }
   },
   {
@@ -444,7 +475,8 @@
       "isbn13": "978-1803232577",
       "publish_date": "2022-12-30",
       "edition": 3,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -458,7 +490,8 @@
       "isbn13": "978-1801072328",
       "publish_date": "2022-08-26",
       "edition": 5,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Database"
     }
   },
   {
@@ -472,7 +505,8 @@
       "isbn13": "978-1803234618",
       "publish_date": "2023-01-20",
       "edition": 4,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -486,7 +520,8 @@
       "isbn13": "978-1800561649",
       "publish_date": "2021-05-31",
       "edition": 3,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Database"
     }
   },
   {
@@ -500,7 +535,8 @@
       "isbn13": "978-1801813044",
       "publish_date": "2021-09-30",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Database"
     }
   },
   {
@@ -514,7 +550,8 @@
       "isbn13": "978-1788297233",
       "publish_date": "2018-03-29",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Database"
     }
   },
   {
@@ -528,7 +565,8 @@
       "isbn13": "978-1509306978",
       "publish_date": "2019-07-02",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Database"
     }
   },
   {
@@ -542,7 +580,8 @@
       "isbn13": "978-1839211256",
       "publish_date": "2020-06-30",
       "edition": 3,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -556,7 +595,8 @@
       "isbn13": "978-1801078511",
       "publish_date": "2022-01-20",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Database"
     }
   },
   {
@@ -570,7 +610,8 @@
       "isbn13": "978-1098110208",
       "publish_date": "2022-09-06",
       "edition": 3,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -584,7 +625,8 @@
       "isbn13": "978-1804613498",
       "publish_date": "2022-11-25",
       "edition": 3,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Database"
     }
   },
   {
@@ -598,7 +640,8 @@
       "isbn13": "978-1804613399",
       "publish_date": "2023-02-10",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -612,7 +655,8 @@
       "isbn13": "978-1801811958",
       "publish_date": "2022-02-18",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Database"
     }
   },
   {
@@ -626,7 +670,8 @@
       "isbn13": "978-1839216503",
       "publish_date": "2020-07-09",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -640,7 +685,8 @@
       "isbn13": "978-1803249360",
       "publish_date": "2022-08-30",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Database"
     }
   },
   {
@@ -654,7 +700,8 @@
       "isbn13": "978-1492056706",
       "publish_date": "2020-05-12",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -668,7 +715,8 @@
       "isbn13": "978-0262539807",
       "publish_date": "2021-06-15",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -682,7 +730,8 @@
       "isbn13": "978-1800569195",
       "publish_date": "2022-04-14",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -696,7 +745,8 @@
       "isbn13": "978-1800562653",
       "publish_date": "2021-11-04",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -710,7 +760,8 @@
       "isbn13": "978-1837636877",
       "publish_date": "2022-11-29",
       "edition": 7,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -724,7 +775,8 @@
       "isbn13": "978-1803237060",
       "publish_date": "2022-10-19",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -738,7 +790,8 @@
       "isbn13": "978-1803236919",
       "publish_date": "2022-10-31",
       "edition": 3,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -752,7 +805,8 @@
       "isbn13": "978-1801819312",
       "publish_date": "2022-02-25",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Machine Learning"
     }
   },
   {
@@ -766,7 +820,8 @@
       "isbn13": "978-1803240091",
       "publish_date": "2022-08-30",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -780,7 +835,8 @@
       "isbn13": "978-1838987336",
       "publish_date": "2020-08-21",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -794,7 +850,8 @@
       "isbn13": "978-1801072168",
       "publish_date": "2022-01-21",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Machine Learning"
     }
   },
   {
@@ -808,7 +865,8 @@
       "isbn13": "978-1800203389",
       "publish_date": "2020-09-30",
       "edition": 3,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -822,7 +880,8 @@
       "isbn13": "978-1803237060",
       "publish_date": "2022-10-19",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -836,7 +895,8 @@
       "isbn13": "978-1801815925",
       "publish_date": "2021-10-28",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -850,7 +910,8 @@
       "isbn13": "978-1800569003",
       "publish_date": "2021-03-19",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Machine Learning"
     }
   },
   {
@@ -864,7 +925,8 @@
       "isbn13": "978-1636100005",
       "publish_date": "2021-01-22",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -878,7 +940,8 @@
       "isbn13": "978-1119745303",
       "publish_date": "2023-04-11",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -892,7 +955,8 @@
       "isbn13": "978-1803242712",
       "publish_date": "2022-09-19",
       "edition": 4,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -906,7 +970,8 @@
       "isbn13": "978-1801813433",
       "publish_date": "2022-11-15",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -920,7 +985,8 @@
       "isbn13": "978-1800562523",
       "publish_date": "2021-12-15",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -934,7 +1000,8 @@
       "isbn13": "978-1803237800",
       "publish_date": "2022-11-08",
       "edition": 7,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -948,7 +1015,8 @@
       "isbn13": "978-1491952023",
       "publish_date": "2020-06-23",
       "edition": 7,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -962,7 +1030,8 @@
       "isbn13": "978-1636100357",
       "publish_date": "2023-04-22",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -976,7 +1045,8 @@
       "isbn13": "978-1493223022",
       "publish_date": "2022-09-26",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -990,7 +1060,8 @@
       "isbn13": "978-1493222865",
       "publish_date": "2022-08-24",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1004,7 +1075,8 @@
       "isbn13": "978-1493222926",
       "publish_date": "2022-08-24",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1018,7 +1090,8 @@
       "isbn13": "978-1803234502",
       "publish_date": "2022-12-26",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1032,7 +1105,8 @@
       "isbn13": "978-1593279509",
       "publish_date": "2018-12-04",
       "edition": 3,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1046,7 +1120,8 @@
       "isbn13": "978-9332573901",
       "publish_date": "2016-01-01",
       "edition": 3,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1060,7 +1135,8 @@
       "isbn13": "978-0984782857",
       "publish_date": "2015-07-01",
       "edition": 6,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1074,7 +1150,8 @@
       "isbn13": "978-1316519332",
       "publish_date": "2022-05-26",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Machine Learning"
     }
   },
   {
@@ -1088,7 +1165,9 @@
       "isbn13": "978-9811660450",
       "publish_date": "2022-01-06",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Machine Learning"
+
     }
   },
   {
@@ -1102,7 +1181,8 @@
       "isbn13": "978-1718501850",
       "publish_date": "2021-12-21",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1116,7 +1196,8 @@
       "isbn13": "978-1800560413",
       "publish_date": "2021-12-29",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Database"
     }
   },
   {
@@ -1130,7 +1211,8 @@
       "isbn13": "978-1098108304",
       "publish_date": "2022-07-26",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Database"
     }
   },
   {
@@ -1144,7 +1226,8 @@
       "isbn13": "978-1098119447",
       "publish_date": "2023-02-07",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1158,7 +1241,8 @@
       "isbn13": "978-1449373320",
       "publish_date": "2017-05-02",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Database"
     }
   },
   {
@@ -1172,7 +1256,8 @@
       "isbn13": "978-1803240633",
       "publish_date": "2022-11-25",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Database"
     }
   },
   {
@@ -1186,7 +1271,8 @@
       "isbn13": "978-1098109431",
       "publish_date": "2022-02-22",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1200,7 +1286,8 @@
       "isbn13": "978-1119899921",
       "publish_date": "2022-09-27",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1214,7 +1301,8 @@
       "isbn13": "978-1647824198",
       "publish_date": "2022-11-15",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Machine Learning"
     }
   },
   {
@@ -1228,7 +1316,8 @@
       "isbn13": "978-1803234694",
       "publish_date": "2023-01-27",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1242,7 +1331,8 @@
       "isbn13": "978-3030393564",
       "publish_date": "2nd ed. 2020",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1256,7 +1346,8 @@
       "isbn13": "978-1098117818",
       "publish_date": "2022-09-13",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1270,7 +1361,8 @@
       "isbn13": "978-1492086895",
       "publish_date": "2021-11-30",
       "edition": 1,
-      "best_seller": "Yes"
+      "best_seller": "Yes",
+      "category": "Programming"
     }
   },
   {
@@ -1284,7 +1376,8 @@
       "isbn13": "978-1801073301\n",
       "publish_date": "2022-01-07",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1298,7 +1391,8 @@
       "isbn13": "978-1617292231",
       "publish_date": "2016-05-01",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1312,7 +1406,8 @@
       "isbn13": "978-1119770923",
       "publish_date": "2021-04-23",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1326,7 +1421,8 @@
       "isbn13": "978-0137909100",
       "publish_date": "2022-08-07",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1340,7 +1436,8 @@
       "isbn13": "978-1119705154",
       "publish_date": "2022-04-20",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1354,7 +1451,8 @@
       "isbn13": "978-1491910771",
       "publish_date": "2022-06-21",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1368,7 +1466,8 @@
       "isbn13": "978-1119559535",
       "publish_date": "2021-01-13",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1382,7 +1481,8 @@
       "isbn13": "978-1492078005",
       "publish_date": "2021-01-12",
       "edition": 2,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   },
   {
@@ -1396,7 +1496,8 @@
       "isbn13": "978-1801815994",
       "publish_date": "2022-05-26",
       "edition": 1,
-      "best_seller": "No"
+      "best_seller": "No",
+      "category": "Programming"
     }
   }
 ]
