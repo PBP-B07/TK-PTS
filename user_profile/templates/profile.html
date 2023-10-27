@@ -6,9 +6,11 @@
     <h2>Description</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed hendrerit dolor. Vestibulum vel fringilla orci, non varius nunc. Praesent vehicula, justo eu dictum consequat, risus libero interdum purus, sed dignissim quam lorem non nunc. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Proin in augue eu ex imperdiet consectetur vel in purus. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Vivamus vulputate augue sit amet est suscipit, eu tempus justo hendrerit.</p>
     <p style="font-weight: 300; font-style: italic;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <h2>Data Diri</h2>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit Profile by AJAX</button>
     <table id="profile"></table>
-
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit Product by AJAX</button>
+    <h2>History Ulasan</h2>
+    <div id="reviews" class = card-container></div>
 
     <!-- modal edit -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -39,24 +41,67 @@
         </div>
     </div>
 
+    <!-- modal read -->
+    <div class="modal fade" id="readModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Read</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-content" id ="readModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script>
+        async function openReadModal(id) {
+            // You need to create an instance of the modal
+            document.getElementById("readModalBody").innerHTML = ""
+            let item = await getReview(id)
+            let htmlString = `
+                <h1>${item[0].book__title}</h1>
+                <p>${item[0].star}</p>
+                <p>${item[0].description}</p>
+                <p>${item[0].date_added}</p>
+            `
+            document.getElementById("readModalBody").innerHTML = htmlString
+            const modal = new bootstrap.Modal(document.getElementById("readModal"));
+            modal.show();
+        }
+    
         async function getProfile() {
             return fetch("{% url 'user_profile:get_profile' %}").then((res) => res.json())
         }
-        function editProduct() {
+        async function getReviews() {
+            return fetch("{% url 'user_profile:get_reviews' %}").then((res) => res.json())
+        }
+        async function getReview(id){
+            return fetch(`get_review/${id}/`).then((res) => res.json())
+        }
+        async function editProfile() {
             fetch("{% url 'user_profile:edit_profile_ajax' %}", {
                 method: "POST",
                 body: new FormData(document.querySelector('#formEdit'))
-            }).then(refreshProducts)
+            }).then(refreshProfile)
 
             document.getElementById("form").reset()
             return false
         }
-        document.getElementById("button_edit").onclick = editProduct
-        async function refreshProducts() {
+        async function deleteReview(event, id) {
+            event.stopPropagation();
+            fetch(`delete_review/${id}/`, {
+                method: 'POST',
+            }).then(refreshReviews)
+        }
+        document.getElementById("button_edit").onclick = editProfile
+        async function refreshProfile() {
             document.getElementById("profile").innerHTML = ""
             let products = await getProfile()
-            console.log(products)
             let htmlString = `<tr>
                 <th>Name</th>
                 <th>Description</th>
@@ -70,7 +115,28 @@
             
             document.getElementById("profile").innerHTML = htmlString
         }
+        async function refreshReviews() {
+            document.getElementById("reviews").innerHTML = ""
+            let products = await getReviews()
+            let htmlString = ``
+            products.forEach((item) => {
+                htmlString += `
+                <div class="card">
+                    <div class="card-body" id="review-${item.pk}" onclick="openReadModal(${item.pk})">
+                        <p>${item.book__title}<p>
+                        <p>${item.star} Star</p>
+                        <p>${item.description}</p>
+                        <p>${item.date_added}</p>
+                        <a href="/book/${item.book__pk}" class="btn btn-primary">Lihat Buku</a>
+                        <a onclick="deleteReview(event, ${item.pk})" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>` 
+            })
 
-        refreshProducts()
+            document.getElementById("reviews").innerHTML = htmlString
+        }
+
+        refreshProfile()
+        refreshReviews()
     </script>
 {% endblock content %}
