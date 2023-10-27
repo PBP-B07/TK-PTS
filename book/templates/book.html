@@ -17,20 +17,12 @@
                             <li class="list-group-item"><strong>Publish Date:</strong> {{ book.publish_date }}</li>
                             <li class="list-group-item"><strong>Edition:</strong> {{ book.edition }}</li>
                             <li class="list-group-item"><strong>Best Seller:</strong> {{ book.best_seller }}</li>
+                            <li class="list-group-item"><strong>Category:</strong> {{ book.category }}</li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="scrollable">
-                    <h4>Reviews:</h4>
-                    <ul id="reviews-list">
-                        {% for review in reviews %}
-                            <li>{{ review.author }}: {{ review.text }}</li>
-                        {% endfor %}
-                    </ul>
-                    <button class="btn btn-primary" id="load-more-reviews">Lihat Review Lainnya</button>
-                </div>
                 <button class="btn btn-primary" id="edit-book">Edit Book</button>
             </div>
         </div>
@@ -78,6 +70,10 @@
                             <label for="edit-book-best_seller" class="col-form-label">Best Seller:</label>
                             <input type="text" class="form-control" id="edit-book-best_seller" name="best_seller">
                         </div>
+                        <div class="mb-3">
+                            <label for="edit-book-category" class="col-form-label">Category:</label>
+                            <input type="text" class="form-control" id="edit-book-category" name="category">
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -105,6 +101,7 @@
             const publishDateInput = document.getElementById("edit-book-publish_date");
             const editionInput = document.getElementById("edit-book-edition");
             const bestSellerInput = document.getElementById("edit-book-best_seller");
+            const categoryInput = document.getElementById("edit-book-category");
     
             titleInput.value = bookData.title;
             descriptionInput.value = bookData.description;
@@ -114,6 +111,7 @@
             publishDateInput.value = bookData.publish_date;
             editionInput.value = bookData.edition;
             bestSellerInput.value = bookData.best_seller;
+            categoryInput.value = bookData.category;
         }
     
         // Fungsi untuk mengirim data buku yang diedit ke server
@@ -126,6 +124,7 @@
             const publishDateInput = document.getElementById("edit-book-publish_date");
             const editionInput = document.getElementById("edit-book-edition");
             const bestSellerInput = document.getElementById("edit-book-best_seller");
+            const categoryInput = document.getElementById("edit-book-category");
     
             const formData = new FormData();
             formData.append("title", titleInput.value);
@@ -136,12 +135,13 @@
             formData.append("publish_date", publishDateInput.value);
             formData.append("edition", editionInput.value);
             formData.append("best_seller", bestSellerInput.value);
+            formData.append("category", categoryInput.value);
     
             fetch("{% url 'book:edit_book' book.id %}", {
                 method: "POST",
                 body: formData,
                 headers: {
-                    "X-CSRFToken": csrftoken, // Pastikan Anda memiliki variabel csrftoken yang telah didefinisikan sebelumnya
+                    "X-CSRFToken": csrftoken,
                 },
             }).then((response) => {
                 if (response.status === 201) {
@@ -165,56 +165,5 @@
         editButton.addEventListener("click", () => {
             editBook();
         });
-    
-        async function getReviews() {
-            return fetch("{% url 'book:get_reviews' book.id %}").then((res) => res.json());
-        }
-    
-        async function refreshReviews() {
-            const reviewsList = document.getElementById("reviews-list");
-            const reviews = await getReviews();
-    
-            reviewsList.innerHTML = "";
-            reviews.forEach((review) => {
-                const li = document.createElement("li");
-                li.textContent = `${review.author}: ${review.text}`;
-                reviewsList.appendChild(li);
-            });
-    
-            if (reviews.length === 0) {
-                // Semua review telah dimuat, sembunyikan tombol
-                loadMoreReviewsButton.style.display = "none";
-            }
-        }
-    
-        refreshReviews();
-    
-        const loadMoreReviewsButton = document.getElementById("load-more-reviews");
-        loadMoreReviewsButton.addEventListener("click", () => {
-            // Mengarahkan pengguna ke halaman review.html untuk melihat review lengkap
-            window.location.href = `/reviews/${book.id}`;
-        });
     </script>
-    
-
-    <!-- <a href="/">Back to Home</a> -->
-    <h1>{{ page}} </h1>
-    <h2>{{ book.title }}</h2>
-    <h4>Author</h4>
-    <p>{{ book.author }}</p>
-    <h4>Description</h4>
-    <p>{{ book.description }}</p>
-    <h4>ISBN-10</h4>
-    <p>{{ book.isbn10 }}</p>
-    <h4>ISBN-13</h4>
-    <p>{{ book.isbn13 }}</p>
-    <h4>Publish Date</h4>
-    <p>{{ book.publish_date }}</p>
-    <h4>Edition</h4>
-    <p>{{ book.edition }}</p>
-    <h4>Best Seller</h4>
-    <p>{{ book.best_seller }}</p>
-    <h4>Category</h4>
-    <p>{{ book.category }}</p>
-    <a href="/">Back to Home</a>
 {% endblock content %}
