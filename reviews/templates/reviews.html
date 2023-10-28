@@ -5,32 +5,32 @@
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>
-            .reviews-container {
+            .container .add-review-button {
+                text-align: center;
+            }
+            #reviews-container {
                 margin-top: 50px;
+                display: flex;
+                flex-direction: column-reverse;
             }
             .review-card {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
                 margin-right: auto;
                 margin-left: 10px;
+                margin-right: 10px;
                 margin-bottom: 25px;
-                /* background-color: #d8e5e6; Change this to your desired color */
                 color: rgb(31, 28, 28);
                 padding: 25px;
                 text-align: left;
             }
-            .star-info {
-                display: flex;
-                justify-content: space-between;
+            .left {
+                width: 20%;
+                margin-right: 40px;
             }
-            .star-info #zero-star {
-                margin-left: 15px;
-            }
-            .star-info #five-star {
-                margin-right: 15px;
-            }
-            /* .review-stars {
-                width: 50%;
-            } */
+            .review-desc {font-style: italic;}
         </style>
     </head>
     <body>
@@ -39,8 +39,20 @@
         <br>
         <h2 style="text-align: center;">Reviews of {{ book.title }} by {{ book.author }}</h2>
 
-        <div class="center-button">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Review</button>
+        <div class="add-review-button">
+            <button type="button" class="btn btn-primary" id="add-new-review" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Review</button>
+        </div>
+        <div class="filter-review">
+            <label for="select-filter">Filter reviews by:</label>
+            <select id="select-filter" onchange="filterReview()">
+                <option value="date">Date posted (newest-oldest)</option>
+                <option value="5">5 stars</option>
+                <option value="4">4 stars</option>
+                <option value="3">3 stars</option>
+                <option value="2">2 stars</option>
+                <option value="1">1 stars</option>
+                <option value="0">0 star</option>
+            </select>
         </div>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -55,11 +67,8 @@
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="rate" class="col-form-label">Rate (0-5 stars):</label>
-                                <input type="range" class="form-control" id="rate" name="rate" min="0" max="5" value="0" id="rating-slider"></input>
-                                <div class="star-info">
-                                    <p id="zero-star">0</p>
-                                    <p id="five-star">5</p>
-                                </div>
+                                <input type="range" class="form-control" id="star" name="star" min="0" max="5" value="0" id="rating-slider" onchange="refreshStarText()"></input>
+                                <p id="star-text">0 stars</p>
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="col-form-label">Description:</label>
@@ -78,22 +87,30 @@
     </div>
 
         <script>
-            const slider = document.getElementById("rating-slider");
-            const ratingText = document.getElementById("rating-text");
+            async function getReviews(filter ='') {
+                let url = "{% url 'reviews:get_reviews_json' book.pk %}?sort=date_added";
+                if (filter != '') {
+                    url += `&filter=${filter}`;
+                }
 
-            function updateSliderValue() {
-                const value = slider.value;
-                document.getElementById("rating-text").innerHTML = `${value} stars`
+                return fetch(url).then((res) => res.json());
             }
 
-            // Add an event listener to the range slider
-            // slider.addEventListener("DOMContentLoaded", function() {
-            //     // Update the text based on the current slider value
-            //     ratingText.textContent = this.value + " stars";
-            // });
+            async function getUserReviews() {
+                const userReviews = fetch("{% url 'reviews:get_user_review' book.pk %}").then((res) => res.json());
+                console.log(userReviews)
 
-            async function getReviews() {
-                return fetch("{% url 'reviews:get_reviews_json' book.pk %}").then((res) => res.json())
+                return userReviews;
+            }
+
+            function filterReview() {
+                const filter = document.getElementById("select-filter").value;
+                refreshReviews(filter);
+            }
+
+            function refreshStarText() {
+                const slider = document.getElementById("star");
+                document.getElementById("star-text").innerHTML = `${slider.value} stars`;
             }
 
             function generateStarRating(starCount) {
@@ -102,9 +119,17 @@
                 return filledStars + emptyStars;
             }
 
-            async function refreshReviews() {
+            async function checkReviewByUser() {
+                const reviews = await getUserReviews();
+                if (reviews.length > 0) {
+                    document.getElementById("add-new-review").disabled = true;
+                }
+            }
+
+            async function refreshReviews(filter = '') {
+                checkReviewByUser(); // cek apakah user udh pernah ngereview buku tsb atau belum
                 document.getElementById("reviews-container").innerHTML = ""
-                const reviews = await getReviews()
+                const reviews = await getReviews(filter);
                 console.log(reviews)
 
                 let htmlString = ``
@@ -112,24 +137,24 @@
                     const starRating = generateStarRating(review.star);
                     htmlString += `\n
                         <div class="review-card">
-                            <div class="user-review">
-                                <div class="review-top">
-                                    <div class="review-stars">
-                                        <h4>${starRating} (${review.star} stars)</h4>
-                                    </div>
-                                    <div class="review-date">
-                                        <h3>by ${review.profile__name}</h3>
-                                        <p>posted on ${review.date_added}</p>
-                                    </div>
+                            <div class="left">
+                                <div class="review-user">
+                                    <h4>by ${review.profile__name}</h4>
                                 </div>
-                                <div class="review-bottom">
-                                    <div class="review-desc">
-                                        <p>${review.description}</p>
-                                    </div>
-                                <div>
+                                <div class="review-date">
+                                    <p>posted on ${review.date_added}</p>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="review-stars">
+                                    <h5>${starRating} (${review.star} stars)</h5>
+                                </div>
+                                <div class="review-desc">
+                                    <p>"${review.description}"</p>
+                                </div>
                             </div>
                         </div>
-                    `
+                    `;
                 })
                 document.getElementById("reviews-container").innerHTML = htmlString
             }
@@ -138,15 +163,18 @@
             function addReview() {
                 fetch("{% url 'reviews:add_reviews_ajax' book.pk %}", {
                     method: "POST",
-                    body: new FormData(document.querySelector('#form'))
-                }).then(refreshReviews)
+                    body: new FormData(document.querySelector('#review-form'))
+                }).then(response => {
+                    const filter = document.getElementById("select-filter").value;
+                    document.getElementById("star-text").innerHTML = `0 stars`;
+                    refreshReviews(filter)
+                })
 
                 document.getElementById("review-form").reset()
                 return false
             }
 
             document.getElementById("submit-review").onclick = addReview
-            slider.onchange = updateSliderValue
         </script>
     </body>
 {% endblock content %}
