@@ -2,9 +2,249 @@
 
 {% block content %}
     {% include "header.html" %}
-    <h1 style="font-family: 'Abril Fatface', serif;">{{page}}</h1>
-    <h2 style="font-family: 'Poppins', sans-serif; font-weight: 800;">Description</h2>
-    <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed hendrerit dolor. Vestibulum vel fringilla orci, non varius nunc. Praesent vehicula, justo eu dictum consequat, risus libero interdum purus, sed dignissim quam lorem non nunc. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Proin in augue eu ex imperdiet consectetur vel in purus. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Vivamus vulputate augue sit amet est suscipit, eu tempus justo hendrerit.</p>
-    <p style="font-family: 'Poppins', sans-serif; font-weight: 300; font-style: italic;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
     <h1>{{page}}</h1>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Book</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="title" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="author" class="col-form-label">Author:</label>
+                            <input type="text" class="form-control" id="author" name="author" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="isbn10" class="col-form-label">ISBN-10:</label>
+                            <input type="text" class="form-control" id="isbn10" name="isbn10">
+                        </div>
+                        <div class="mb-3">
+                            <label for="isbn13" class="col-form-label">ISBN-13:</label>
+                            <input type="text" class="form-control" id="isbn13" name="isbn13">
+                        </div>
+                        <div class="mb-3">
+                            <label for="publish_date" class="col-form-label">Publish Date:</label>
+                            <input type="date" class="form-control" id="publish_date" name="publish_date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edition" class="col-form-label">Edition:</label>
+                            <input type="number" class="form-control" id="edition" name="edition">
+                        </div>
+                        <div class="mb-3">
+                            <label for="best_seller" class="col-form-label">Best Seller:</label>
+                            <input type="text" class="form-control" id="best_seller" name="best_seller">
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="col-form-label">Category:</label>
+                            <input type="text" class="form-control" id="category" name="category">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="action-container">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add Book
+    </button>
+
+    <div class="filter-container">
+        <label for="categoryFilter">Filter by Category:</label>
+        <select id="categoryFilter" onchange="filterByCategory()">
+            <option value="">All Categories</option>
+            <!-- Options will be populated dynamically -->
+        </select>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchBar" placeholder="Search products..." onkeyup="searchProducts()">
+    </div>
+</div>
+
+    <div id="product_cards" class="card-container"></div>
+
+
+
+
+    
+
+
+
+    <style>
+        .action-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-container,
+        .search-container {
+            margin: 0 20px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #searchBar {
+            padding: 10px;
+            width: 300px;
+        }
+    </style>
+
+    <script>
+        async function getProducts(query = '', category = '') {
+            let url = "{% url 'catalogue:get_product_json' %}?sort=title";
+            if (query) {
+                url += `&query=${query}`;
+            }
+            if (category) {
+                url += `&category=${category}`;
+            }
+            return fetch(url).then((res) => res.json());
+        }
+
+        async function refreshProducts(query = '', category = '') {
+            document.getElementById("product_cards").innerHTML = "";
+            const products = await getProducts(query, category);
+            displayProducts(products);
+        }
+
+        function displayProducts(products) {
+            const container = document.getElementById("product_cards");
+
+            products.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                // Membuat elemen <a> untuk mengarahkan ke halaman detail buku
+                const link = document.createElement('a');
+                link.href = `/books/${item.pk}/`;  // Asumsi bahwa URL mengikuti pola /book/<book_id>/
+                link.style.textDecoration = 'none';  // Menghapus underline dari link
+                link.style.color = 'inherit';  // Warna teks menjadi sama seperti teks lainnya
+
+                // Mengisi konten kartu buku
+                link.innerHTML = `
+                    <h3>${item.fields.title}</h3>
+                    <p><strong>Author:</strong> ${item.fields.author}</p>
+                    <p><strong>Publish Date:</strong> ${item.fields.publish_date}</p>
+                `;
+                
+            
+                // Menambahkan link ke kartu dan kartu ke container
+                card.appendChild(link);
+                container.appendChild(card);
+            });
+        }
+
+
+        function searchProducts() {
+            const query = document.getElementById('searchBar').value;
+            refreshProducts(query);
+        }
+
+        refreshProducts();
+
+
+        function addProduct() {
+            fetch("{% url 'catalogue:add_product_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            })
+            .then(response => {
+                console.log(response);
+                if (response.status === 201) {
+                    refreshProducts();
+                    populateCategories(); // <-- Tambahkan ini
+                    document.getElementById("form").reset();
+                } else {
+                    console.error('Failed to add the book.');
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+
+            return false;
+        }
+
+        document.getElementById("button_add").onclick = addProduct
+       
+        async function getCategories() {
+            const url = "{% url 'catalogue:get_categories' %}";
+            const response = await fetch(url);
+            const categories = await response.json();
+            const select = document.getElementById('categoryFilter');
+            
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.text = category;
+                select.add(option);
+            });
+        }
+
+        window.onload = function() {
+            populateCategories();
+        }
+
+        function filterByCategory() {
+            const selectedCategory = document.getElementById('categoryFilter').value;
+            const query = document.getElementById('searchBar').value;
+            refreshProducts(query, selectedCategory);
+        }
+
+        async function populateCategories() {
+            const url = "{% url 'catalogue:get_categories' %}";
+            const response = await fetch(url);
+            const categories = await response.json();
+            const select = document.getElementById('categoryFilter');
+            
+            // Menghapus semua opsi sebelumnya kecuali opsi pertama ("All Categories")
+            while (select.options.length > 1) {
+                select.remove(1);
+            }
+
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.text = category;
+                select.add(option);
+            });
+        }
+
+
+
+    </script>
+
 {% endblock content %}
