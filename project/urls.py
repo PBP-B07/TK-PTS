@@ -25,5 +25,5 @@ urlpatterns = [
     path('catalogue/', include('catalogue.urls')),
     path('autentifikasi/', include('autentifikasi.urls')),
     path('books/', include('book.urls')),
-    path('review/<int:id>/', include('reviews.urls')),
+    path('review/', include('reviews.urls')),
 ]
