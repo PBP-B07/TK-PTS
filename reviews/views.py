@@ -43,8 +43,14 @@ def add_reviews_ajax(request, id):
     if request.method == 'POST':
         user = request.user
         book = Book.objects.get(pk=id)
+        reviews = Review.objects.filter(book=book)
+
+        star = int(request.POST.get("star"))
+        rate = (book.rating*len(reviews)+star)/(len(reviews)+1)
+        book.rating = rate
+        book.save()
+
         description = request.POST.get("description")
-        star = request.POST.get("star")
         profile = Profile.objects.get(user=request.user)
 
         new_review = Review(user=user, profile=profile, book=book, description=description, star=star)
