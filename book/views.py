@@ -11,7 +11,7 @@ def show_main_book(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
 
     context = {
-        'page': 'Deskripsi',
+        'page': 'Book Description',
         'book': book, 
     }
 

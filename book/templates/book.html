@@ -23,6 +23,15 @@
                 </div>
             </div>
             <div class="col-md-6">
+                <div class="reviews-section" style="margin-bottom: 20px;">
+                    <h3>Recent Reviews</h3>
+                    <div class="reviews">
+                        <div class="review">
+                            <!-- Display up to 5 recent reviews here -->
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="view-reviews">View Full Reviews</button>
+                </div>
                 <button class="btn btn-primary" id="edit-book">Edit Book</button>
             </div>
         </div>
@@ -88,6 +97,46 @@
         // Fungsi untuk mengambil data buku
         async function getBookData() {
             return fetch("{% url 'book:show_main_book' book.id %}").then((res) => res.json());
+        }
+
+        // Function to load recent reviews
+        async function loadRecentReviews() {
+            const reviewsSection = document.querySelector(".reviews");
+            const response = await fetch(`{% url 'reviews:get_reviews_json' book.pk %}?sort=date&filter=5`);
+            const reviews = await response.json();
+
+            // Clear any previous reviews
+            reviewsSection.innerHTML = "";
+
+            reviews.slice(0, 5).forEach((review) => {
+                const starRating = generateStarRating(review.star);
+                const reviewElement = document.createElement("div");
+                reviewElement.classList.add("review");
+                reviewElement.innerHTML = `
+                    <h5>${starRating} (${review.star} stars)</h5>
+                    <p>by ${review.profile__name}</p>
+                    <p>${review.description}</p>
+                `;
+                reviewsSection.appendChild(reviewElement);
+            });
+        }
+
+        // Add an event listener to load recent reviews when the page loads
+        document.addEventListener("DOMContentLoaded", () => {
+            loadRecentReviews();
+        });
+
+        // Event listener for "View Full Reviews" button
+        const viewReviewsButton = document.getElementById("view-reviews");
+        viewReviewsButton.addEventListener("click", () => {
+            window.location.href = `{% url 'reviews:show_review' book.id %}`;
+        });
+
+        // Helper function to generate star ratings
+        function generateStarRating(starCount) {
+            const filledStars = '<i class="fa fa-star"></i>'.repeat(starCount);
+            const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(5 - starCount);
+            return filledStars + emptyStars;
         }
     
         // Fungsi untuk mengisi data buku ke dalam dialog pengeditan
