@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block meta %}
@@ -62,8 +63,8 @@
             .frame{
                 float: right;
                 max-width:50%; 
-                border: 2px solid #999999;
-                background-color: #999999;
+                border: 2px solid #d7d7d7;
+                background-color: #d7d7d7;
                 border-radius: 5px;
                 padding: 10px;
                 margin: 10px 0;
@@ -87,14 +88,27 @@
             display: table;
             }
 
-            .time-right {
-            float: right;
-            color: #ffffff;
+            .forum-container {
+                width: 50%;
             }
 
-            .time-left {
-            float: left;
-            color: #d6d4d4;
+            .chat-frame-container {
+                width: 50%;
+            }
+
+            .frame.chat-frame {
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                width: 100%;
+                height: 100%;
+            }
+            .reply{
+                border: 2px solid #8bd8ed;
+                background-color: #8bd8ed;
+                border-radius: 5px;
+                padding: 10px;
+                margin: 10px 0;
+                color: black;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             }
         </style>
     </head>
@@ -139,28 +153,15 @@
 
     <div class="row" id="forum_container">
     </div>
-    
-    <div class="frame">
-        <h2>Chat Messages</h2>
 
-        <div class="container">
-        <p>Hello. How are you today?</p>
-        <span class="time-right">11:00</span>
-        </div>
-
-        <div class="container darker">
-        <p>Hey! I'm fine. Thanks for asking!</p>
-        <span class="time-left">11:01</span>
-        </div>
-
-        <div class="container">
-        <p>Sweet! So, what do you wanna do today?</p>
-        <span class="time-right">11:02</span>
-        </div>
-
-        <div class="container darker">
-        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
-        <span class="time-left">11:05</span>
+    <div class="row" id="reply_container">
+        <div class="frame chat-frame">
+            <h1>Replies</h1>
+            <div id="reply_box"></div>
+                <form id="message_form">
+                    <input type="text" id="message_input" placeholder="Enter your message">
+                    <button type="submit">Send</button>
+                </form>
         </div>
     </div>
 
@@ -179,15 +180,14 @@
         const totalForums = forums.length
         for (const item of forums) {
             counter++
-            const isLastItem = counter === totalForums
             htmlString += `
-                <button class="row" id="forum_card">
-                    <div class="col s12 m6 l4 ${isLastItem ? 'last-item' : ''}">
+            <button class="row" id="forum_card" onclick="refreshReplies(${item.pk})" data-id="${item.id}">
+                    <div class="col s12 m6 l4">
                         <div class="card">  
                             <div class="card-content">
-                                <span class="card-title", style="font-family: 'Poppins', sans-serif; font-weight: bold;">${item.fields.subject}</span>
-                                <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">${item.fields.description}</p>
-                                <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">Date Added: ${item.fields.date_added}</p>
+                                <span class="card-title", style="font-family: 'Poppins', sans-serif; font-weight: bold;">${item.subject} by ${item.user__username}</span>
+                                <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">${item.description}</p>
+                                <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">Date Added: ${item.date_added}</p>
                             </div>
                         </div>
                     </div>
@@ -207,6 +207,60 @@
 
         document.getElementById("form").reset()
         return false
+    }
+
+    document.getElementById("button_add").onclick = addForum
+
+
+    async function getReplies(forum_id) {
+        console.log("halo")
+        console.log(forum_id)
+        console.log("halo")
+        const reply = fetch(`get-reply/${forum_id}/`).then((res) => res.json())
+        console.log(reply)
+        return reply
+    }
+
+    async function refreshReplies(forum_id) {
+        document.getElementById("reply_box").innerHTML = ""
+        const replies = await getReplies(forum_id)
+        console.log(replies)
+        let htmlString = ''
+        let counter = 0
+        const totalReplies = replies.length
+        for (const item of replies) {
+            counter++
+            const isLastItem = counter === totalReplies
+            htmlString += `
+                    <div class="reply-card">
+                        <h5>By ${item.user__username}</h5>
+                        <p class="reply">${item.message}</p>
+                    </div>
+            `
+    }
+    document.getElementById("reply_box").innerHTML = htmlString
+
+    // Add event listener to reply form
+    const messageForm = document.getElementById("message_form");
+        messageForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const messageInput = document.getElementById("message_input");
+            const message = messageInput.value;
+            addReply(forum_id, message);
+            messageInput.value = "";
+        });
+    }
+
+    // refreshReplies()
+
+    function addReply(forum_id, message) {
+        const formData = new FormData();
+        formData.append("forum_id", forum_id);
+        formData.append("message", message);
+        fetch("{% url 'forum:add_reply_ajax' book.pk %}", {
+            method: "POST",
+            body: formData
+        }).then(refreshReplies)
     }
 
     document.getElementById("button_add").onclick = addForum
