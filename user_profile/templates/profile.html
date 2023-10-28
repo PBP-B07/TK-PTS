@@ -12,7 +12,7 @@
     <h2>History Ulasan</h2>
     <div id="reviews" class = card-container></div>
 
-    <!-- modal edit -->
+    <!-- modal edit profile -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -57,6 +57,39 @@
             </div>
         </div>
     </div>
+
+    <!-- modal edit review -->
+    <div class="modal fade" id="editReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="review-editModalLabel"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="review-form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="review_rate" class="col-form-label">Rate (0-5 stars):</label>
+                            <input type="range" class="form-control" id="review_rate" name="review_rate" min="0" max="5" value="0" id="rating-slider"></input>
+                            <div class="star-info">
+                                <p id="zero-star">0</p>
+                                <p id="five-star">5</p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="review_description" class="col-form-label">{{ form_review.description.label_tag }}</label>
+                            <textarea class="form-control" id="review_description" name="review_description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="submit-review" data-bs-dismiss="modal">Edit Review</button>
+                </div>
+            </div>
+        </div>   
+    </div>
     
     <script>
         async function openReadModal(id) {
@@ -71,6 +104,18 @@
             `
             document.getElementById("readModalBody").innerHTML = htmlString
             const modal = new bootstrap.Modal(document.getElementById("readModal"));
+            modal.show();
+        }
+        async function openEditModal(event, id) {
+            event.stopPropagation();
+            let item = await getReview(id)
+            document.getElementById("review_rate").value = item[0].rate;
+            document.getElementById("review_description").textContent = item[0].description;
+            document.getElementById("review-editModalLabel").textContent = 'Edit Review for ' + item[0].book__title;
+            document.getElementById("submit-review").onclick = function() {
+                editReview(id);
+            };
+            const modal = new bootstrap.Modal(document.getElementById("editReviewModal"));
             modal.show();
         }
     
@@ -89,7 +134,16 @@
                 body: new FormData(document.querySelector('#formEdit'))
             }).then(refreshProfile)
 
-            document.getElementById("form").reset()
+            document.getElementById("formEdit").reset()
+            return false
+        }
+        async function editReview(id) {
+            fetch(`edit_review/${id}/`, {
+                method: "POST",
+                body: new FormData(document.querySelector('#review-form'))
+            }).then(refreshReviews)
+
+            document.getElementById("review-form").reset()
             return false
         }
         async function deleteReview(event, id) {
@@ -115,6 +169,9 @@
             
             document.getElementById("profile").innerHTML = htmlString
         }
+        function stopPropagation(event){
+            event.stopPropagation();
+        }
         async function refreshReviews() {
             document.getElementById("reviews").innerHTML = ""
             let products = await getReviews()
@@ -127,8 +184,9 @@
                         <p>${item.star} Star</p>
                         <p>${item.description}</p>
                         <p>${item.date_added}</p>
-                        <a href="/book/${item.book__pk}" class="btn btn-primary">Lihat Buku</a>
+                        <a href="/books/${item.book__pk}" onclick="stopPropagation(event)" class="btn btn-primary">Lihat Buku</a>
                         <a onclick="deleteReview(event, ${item.pk})" class="btn btn-danger">Delete</a>
+                        <button type="button" class="btn btn-primary" onclick="openEditModal(event, ${item.pk})">Edit</button>
                     </div>
                 </div>` 
             })

@@ -4,12 +4,17 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from user_profile.models import Profile
 from reviews.models import Review
+from book.models import Book
 from django.views.decorators.csrf import csrf_exempt
+from user_profile.forms import ReviewForm
 
 # Create your views here.
 def show_main(request):
+    form_review = ReviewForm(request.POST or None)
     context = {
         'page': 'user profile',
+        'form_review': form_review,
+
     }
 
     return render(request, "profile.html", context)
@@ -32,6 +37,21 @@ def edit_profile_ajax(request):
         profile.name = name
         profile.description = description
         profile.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+
+@csrf_exempt
+def edit_review_ajax(request,id):
+    if request.method == 'POST':
+        description = request.POST.get("review_description")
+        star = request.POST.get("review_star")
+
+        review = Review.objects.get(pk=id)
+        review.description = description
+        review.star = star
+        review.save()
 
         return HttpResponse(b"CREATED", status=201)
 

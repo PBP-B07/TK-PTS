@@ -1,5 +1,5 @@
 from django.urls import path
-from user_profile.views import show_main, get_profile_json, get_profile, edit_profile_ajax, get_reviews, delete_review, get_review_json
+from user_profile.views import show_main, get_profile_json, get_profile, edit_profile_ajax, get_reviews, delete_review, get_review_json, edit_review_ajax
 
 app_name = 'user_profile'
 
@@ -11,4 +11,5 @@ urlpatterns = [
     path('reviews/', get_reviews, name='get_reviews'),
     path('delete_review/<int:id>/', delete_review, name='delete_review'),
     path('get_review/<int:id>/', get_review_json, name='get_review_json'),
+    path('edit_review/<int:id>/', edit_review_ajax, name='edit_review_ajax'),
 ]
