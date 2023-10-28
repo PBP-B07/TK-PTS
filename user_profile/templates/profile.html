@@ -70,12 +70,9 @@
                     <form id="review-form" onsubmit="return false;">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label for="review_rate" class="col-form-label">Rate (0-5 stars):</label>
-                            <input type="range" class="form-control" id="review_rate" name="review_rate" min="0" max="5" value="0" id="rating-slider"></input>
-                            <div class="star-info">
-                                <p id="zero-star">0</p>
-                                <p id="five-star">5</p>
-                            </div>
+                            <label for="rate" class="col-form-label">Rate (0-5 stars):</label>
+                            <input type="range" class="form-control" id="star" name="star" min="0" max="5" value="0" id="rating-slider" onchange="refreshStarText()"></input>
+                            <p id="star-text">0 stars</p>
                         </div>
                         <div class="mb-3">
                             <label for="review_description" class="col-form-label">{{ form_review.description.label_tag }}</label>
@@ -109,7 +106,9 @@
         async function openEditModal(event, id) {
             event.stopPropagation();
             let item = await getReview(id)
-            document.getElementById("review_rate").value = item[0].rate;
+            console.log(item[0].star)
+            document.getElementById("star").value = item[0].star;
+            document.getElementById("star-text").textContent = item[0].star + ' stars';
             document.getElementById("review_description").textContent = item[0].description;
             document.getElementById("review-editModalLabel").textContent = 'Edit Review for ' + item[0].book__title;
             document.getElementById("submit-review").onclick = function() {
@@ -186,12 +185,16 @@
                         <p>${item.date_added}</p>
                         <a href="/books/${item.book__pk}" onclick="stopPropagation(event)" class="btn btn-primary">Lihat Buku</a>
                         <a onclick="deleteReview(event, ${item.pk})" class="btn btn-danger">Delete</a>
-                        <button type="button" class="btn btn-primary" onclick="openEditModal(event, ${item.pk})">Edit</button>
+                        <button id = "edit-review-${item.pk}"type="button" class="btn btn-primary" onclick="openEditModal(event, ${item.pk})">Edit</button>
                     </div>
                 </div>` 
             })
 
             document.getElementById("reviews").innerHTML = htmlString
+        }
+        function refreshStarText() {
+            const slider = document.getElementById("star");
+            document.getElementById("star-text").innerHTML = `${slider.value} stars`;
         }
 
         refreshProfile()

@@ -46,7 +46,7 @@ def edit_profile_ajax(request):
 def edit_review_ajax(request,id):
     if request.method == 'POST':
         description = request.POST.get("review_description")
-        star = request.POST.get("review_star")
+        star = request.POST.get("star")
 
         review = Review.objects.get(pk=id)
         review.description = description
