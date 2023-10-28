@@ -3,14 +3,15 @@
 {% block content %}
     {% include "header.html" %}
     <h1>{{page}}</h1>
-    <h2>Description</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed hendrerit dolor. Vestibulum vel fringilla orci, non varius nunc. Praesent vehicula, justo eu dictum consequat, risus libero interdum purus, sed dignissim quam lorem non nunc. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Proin in augue eu ex imperdiet consectetur vel in purus. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Vivamus vulputate augue sit amet est suscipit, eu tempus justo hendrerit.</p>
-    <p style="font-weight: 300; font-style: italic;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
     <h2>Data Diri</h2>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit Profile by AJAX</button>
     <table id="profile"></table>
-    <h2>History Ulasan</h2>
+    <h2>History Reviews</h2>
     <div id="reviews" class = card-container></div>
+    <h2>History Forums</h2>
+    <div id="forums" class = card-container></div>
+    <h2>History Replies</h2>
+    <div id="replies" class = card-container></div>
 
     <!-- modal edit profile -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -76,7 +77,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="review_description" class="col-form-label">{{ form_review.description.label_tag }}</label>
-                            <textarea class="form-control" id="review_description" name="review_description"></textarea>
+                            <!-- <textarea class="form-control" id="review_description" name="review_description"></textarea> -->
+                            {{ form_review.description }}
                         </div>
                     </form>
                 </div>
@@ -88,6 +90,18 @@
         </div>   
     </div>
     
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h2>Are you sure you want to delete this review?</h2>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="confirmDeleteBtn" data-bs-dismiss="modal">Yes, Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         async function openReadModal(id) {
             // You need to create an instance of the modal
@@ -103,10 +117,29 @@
             const modal = new bootstrap.Modal(document.getElementById("readModal"));
             modal.show();
         }
+        async function openRepliesModal(id) {
+            // You need to create an instance of the modal
+            document.getElementById("readModalBody").innerHTML = ""
+            let item = await getReply(id)
+            let user_pk = "{{ user.pk|safe }}"
+            let creator = ""
+                if (item[0].forum__user__pk == user_pk){
+                    creator = "You"
+                } else {
+                    creator = item.forum__user__username
+                }
+            let htmlString = `
+                <h1>${item[0].forum__subject}</h1>
+                <p>created by ${creator}</p>
+                <p style="font-weight: 300; font-style: italic;">${item[0].message}</p>
+            `
+            document.getElementById("readModalBody").innerHTML = htmlString
+            const modal = new bootstrap.Modal(document.getElementById("readModal"));
+            modal.show();
+        }
         async function openEditModal(event, id) {
             event.stopPropagation();
             let item = await getReview(id)
-            console.log(item[0].star)
             document.getElementById("star").value = item[0].star;
             document.getElementById("star-text").textContent = item[0].star + ' stars';
             document.getElementById("review_description").textContent = item[0].description;
@@ -117,6 +150,14 @@
             const modal = new bootstrap.Modal(document.getElementById("editReviewModal"));
             modal.show();
         }
+        async function openDeleteModal(event, id) {
+            event.stopPropagation();
+            document.getElementById("confirmDeleteBtn").onclick = function() {
+                deleteReview(id)
+            };
+            const modal = new bootstrap.Modal(document.getElementById("deleteModal"));
+            modal.show();
+        }
     
         async function getProfile() {
             return fetch("{% url 'user_profile:get_profile' %}").then((res) => res.json())
@@ -124,9 +165,19 @@
         async function getReviews() {
             return fetch("{% url 'user_profile:get_reviews' %}").then((res) => res.json())
         }
+        async function getForums() {
+            return fetch("{% url 'user_profile:get_forum' %}").then((res) => res.json())
+        }
+        async function getReplies() {
+            return fetch("{% url 'user_profile:get_reply' %}").then((res) => res.json())
+        }
         async function getReview(id){
             return fetch(`get_review/${id}/`).then((res) => res.json())
         }
+        async function getReply(id){
+            return fetch(`get_reply/${id}/`).then((res) => res.json())
+        }
+
         async function editProfile() {
             fetch("{% url 'user_profile:edit_profile_ajax' %}", {
                 method: "POST",
@@ -136,7 +187,10 @@
             document.getElementById("formEdit").reset()
             return false
         }
+        document.getElementById("button_edit").onclick = editProfile
+
         async function editReview(id) {
+            console.log(id)
             fetch(`edit_review/${id}/`, {
                 method: "POST",
                 body: new FormData(document.querySelector('#review-form'))
@@ -145,13 +199,12 @@
             document.getElementById("review-form").reset()
             return false
         }
-        async function deleteReview(event, id) {
-            event.stopPropagation();
+        async function deleteReview(id) {
             fetch(`delete_review/${id}/`, {
                 method: 'POST',
             }).then(refreshReviews)
         }
-        document.getElementById("button_edit").onclick = editProfile
+        
         async function refreshProfile() {
             document.getElementById("profile").innerHTML = ""
             let products = await getProfile()
@@ -179,18 +232,59 @@
                 htmlString += `
                 <div class="card">
                     <div class="card-body" id="review-${item.pk}" onclick="openReadModal(${item.pk})">
+                        <p>${item.book__rating} Tes<p>
                         <p>${item.book__title}<p>
                         <p>${item.star} Star</p>
                         <p>${item.description}</p>
                         <p>${item.date_added}</p>
                         <a href="/books/${item.book__pk}" onclick="stopPropagation(event)" class="btn btn-primary">Lihat Buku</a>
-                        <a onclick="deleteReview(event, ${item.pk})" class="btn btn-danger">Delete</a>
+                        <a onclick="openDeleteModal(event, ${item.pk})" class="btn btn-danger">Delete</a>
                         <button id = "edit-review-${item.pk}"type="button" class="btn btn-primary" onclick="openEditModal(event, ${item.pk})">Edit</button>
                     </div>
                 </div>` 
             })
 
             document.getElementById("reviews").innerHTML = htmlString
+        }
+        async function refreshForums() {
+            document.getElementById("forums").innerHTML = ""
+            let products = await getForums()
+            let htmlString = ``
+            products.forEach((item) => {
+                htmlString += `
+                <div class="card">
+                    <div class="card-body" id="forum-${item.pk}">
+                        <p>${item.subject} created by You<p>
+                        <p style="font-weight: 300; font-style: italic;">${item.description}</p>
+                        <p>${item.date_added}</p>
+                    </div>
+                </div>` 
+            })
+
+            document.getElementById("forums").innerHTML = htmlString
+        }
+        async function refreshReplies() {
+            document.getElementById("replies").innerHTML = ""
+            let products = await getReplies()
+            let htmlString = ``
+            let user_pk = "{{ user.pk|safe }}"
+            products.forEach((item) => {
+                let creator = ""
+                if (item.forum__user__pk == user_pk){
+                    creator = "You"
+                } else {
+                    creator = item.forum__user__username
+                }
+                htmlString += `
+                <div class="card">
+                    <div class="card-body" id="forum-${item.pk}" onclick="openRepliesModal(${item.pk})">
+                        <p>Your message on forum ${item.forum__subject} created by ${creator}<p>
+                        <p style="font-weight: 300; font-style: italic;">${item.message}</p>
+                    </div>
+                </div>` 
+            })
+
+            document.getElementById("replies").innerHTML = htmlString
         }
         function refreshStarText() {
             const slider = document.getElementById("star");
@@ -199,5 +293,7 @@
 
         refreshProfile()
         refreshReviews()
+        refreshForums()
+        refreshReplies()
     </script>
 {% endblock content %}
