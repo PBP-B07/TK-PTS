@@ -3,21 +3,22 @@
 {% block content %}
     {% include "header.html" %}
     <h1>{{ page }}</h1>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal">Add Event</button>
-
-    <div class="search-container">
-        <input type="text" id="searchBar" placeholder="Search products..." onkeyup="searchProducts()">
-    </div>
+    
+    <h2 style="text-align: center;">Review CS Books</h2> <!-- Add this line -->
 
 
     <div class="container">
-        <table id="event_table"></table>
+        <h2>Top Latest Reviews</h2>
         <table id="review_table"></table>
+        <h2>Latest Event</h2>
+        <table id="event_table"></table>
         <div class="book-box" id="bookBox"></div>
         <h5>Sesi terakhir login: 2023-10-31 13:45:00</h5>
         <a href="{% url 'autentifikasi:logout'%}">
             <button class="logout-button">Logout</button>
         </a>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal">Add Event</button>
+
     </div>
 
     <div id="book-list"></div>
@@ -31,6 +32,10 @@
             <div class="modal-body">
                 <form id="form" onsubmit="return false;">
                     {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="select-filter">Filter reviews by:</label>
+                        <select id="select-filter" onclick="populateCategories()">
+                        </select>
                     <div class="mb-3">
                         <label for="name" class="col-form-label">Title:</label>
                         <input type="text" class="form-control" id="title" name="title"></input>
@@ -49,13 +54,157 @@
     </div>
 </div>
 
+<style>
 
+    html, body {
+        background-color: #f2f2f2;
+        color: #333;
+      }
+      
+      /* Add some padding and margin to the container */
+      .container {
+        padding: 20px;
+        margin: 20px;
+      }
+      
+      /* Style the tables */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      
+      th, td {
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      
+      /* Style the buttons */
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+      
+      button:hover {
+        background-color: #0056b3;
+      }
+      
+      /* Style the modal */
+      .modal-content {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .modal-header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+      }
+      
+      .modal-title {
+        font-size: 18px;
+      }
+      
+      .modal-body {
+        padding: 20px;
+      }
+      
+      .modal-footer {
+        padding: 10px;
+        text-align: right;
+      }
+      
+      /* Style the logout button */
+      .logout-button {
+        background-color: #dc3545;
+      }
+      
+      .logout-button:hover {
+        background-color: #c82333;
+      }
+      
+      /* Style the book box */
+      .book-box {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      
+      /* Style the book description */
+      #bookDescription {
+        display: none;
+        margin-top: 10px;
+        font-style: italic;
+        color: #777;
+      }
+      
+      /* Style the review table */
+      #review_table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      
+      #review_table th, #review_table td {
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+      
+      #review_table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+
+      
+      
+      /* Add some spacing to the page */
+      h1, h5 {
+        margin-bottom: 10px;
+      }
+
+      
+      
+    </style>
 
     <script>
         // get event 
         async function getEvent() {
             return fetch("{% url 'homepage:get_event' %}").then((res) => res.json())
         }
+
+        function addProduct() {
+            fetch("{% url 'homepage:add_event_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            })
+            .then(response => {
+                console.log(response);
+                if (response.status === 201) {
+                    refreshProducts();
+                    populateCategories(); // <-- Tambahkan ini
+                    document.getElementById("form").reset();
+                } else {
+                    console.error('Failed to add the book.');
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+
+            return false;
+        }
+
+        document.getElementById("button_add").onclick = addProduct
 
         async function addEvent() {
             fetch("{% url 'homepage:add_event_ajax' %}", {
@@ -91,9 +240,7 @@
 
         // Panggil fungsi refreshEvents untuk menampilkan kartu-kartu event
         refreshEvents();
-    
-
-
+  
 
 
         // get BOOK 
@@ -164,6 +311,20 @@
         }
 
         refreshReview()
+
+        async function populateCategories() {
+        
+            const categories = await getBook();
+            const select = document.getElementById("select-filter");
+            console.log(categories)
+            // Menghapus semua opsi sebelumnya kecuali opsi pertama ("All Categories")
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.text = category.title;
+                select.add(option);
+            });
+        }
 
     </script>
 {% endblock content %}

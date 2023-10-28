@@ -25,7 +25,7 @@ def show_main(request):
     return render(request, "main.html", context)
 
 
-    
+   
 @csrf_exempt
 def create_event(request):
     if request.method == 'POST':
@@ -44,20 +44,13 @@ def create_event(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Metode permintaan tidak valid.'})
 
-def get_book(request):
-    book = Book.objects.filter(id=1)
-    return HttpResponse(serializers.serialize("json",book))
-
-def get_event(request):
-    bookEvent = BookEvent.objects.all()
-    return HttpResponse(serializers.serialize("json",bookEvent))
 
 @csrf_exempt
 def add_event_ajax(request):
     if request.method == 'POST':
         title = request.POST.get("title")
         description = request.POST.get("description")
-        book = Book.objects.get(pk=1)
+        book = Book.objects.get()
 
         new_event = BookEvent(title=title, description=description, book=book)
         new_event.save()
@@ -74,4 +67,13 @@ def get_latest_review(request):
 def get_review(request):
     review = Review.objects.all()
     return HttpResponse(serializers.serialize('json',review))
+
+
+def get_book(request):
+    book = Book.objects.all()
+    return HttpResponse(serializers.serialize("json",book))
+
+def get_event(request):
+    bookEvent = BookEvent.objects.filter(pk=1)
+    return HttpResponse(serializers.serialize("json",bookEvent))
 
