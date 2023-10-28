@@ -3,6 +3,7 @@
     "pk": 1,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "The Staff Engineer's Path",
       "description": "A Guide for Individual Contributors Navigating Growth and Change",
       "author": "Tanya Reilly",
@@ -18,6 +19,7 @@
     "pk": 2,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Cracking the Coding Interview",
       "description": "189 Programming Questions and Solutions",
       "author": "Gayle Laakmann McDowell",
@@ -33,6 +35,7 @@
     "pk": 3,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Python Crash Course, 3rd Edition",
       "description": "A Hands-On, Project-Based Introduction to Programming",
       "author": "Eric Matthes",
@@ -48,6 +51,7 @@
     "pk": 4,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Automate the Boring Stuff with Python, 2nd Edition",
       "description": "Practical Programming for Total Beginners",
       "author": "Al Sweigart",
@@ -63,6 +67,7 @@
     "pk": 5,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "The Manager's Path",
       "description": "A Guide for Tech Leaders Navigating Growth and Change",
       "author": "Camille Fournier",
@@ -78,6 +83,7 @@
     "pk": 6,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Design Patterns",
       "description": "Elements of Reusable Object-Oriented Software",
       "author": "Erich Gamma",
@@ -93,6 +99,7 @@
     "pk": 7,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "The Pragmatic Programmer",
       "description": "Your Journey To Mastery, 20th Anniversary Edition (2nd Edition)",
       "author": "David Thomas",
@@ -108,6 +115,7 @@
     "pk": 8,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Python Crash Course, 3rd Edition",
       "description": "A Hands-On, Project-Based Introduction to Programming",
       "author": " Eric Matthes",
@@ -123,6 +131,7 @@
     "pk": 9,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow",
       "description": "Concepts, Tools, and Techniques to Build Intelligent Systems",
       "author": "Aurélien Géron ",
@@ -138,6 +147,7 @@
     "pk": 10,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Sql Guide (Quick Study",
       "description": "SQL)",
       "author": "Inc. BarCharts",
@@ -153,6 +163,7 @@
     "pk": 11,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Python for Data Analysis",
       "description": "Data Wrangling with pandas, NumPy, and Jupyter",
       "author": "Wes McKinney",
@@ -168,6 +179,7 @@
     "pk": 12,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Automate the Boring Stuff with Python, 2nd Edition",
       "description": "Practical Programming for Total Beginners ",
       "author": " Al Sweigart",
@@ -183,6 +195,7 @@
     "pk": 13,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Python QuickStart Guide",
       "description": "The Simplified Beginner's Guide to Python Programming Using Hands-On Projects and Real-World Applications",
       "author": "Robert Oliver",
@@ -198,6 +211,7 @@
     "pk": 14,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "150 Most Famous Poems",
       "description": "Emily Dickinson, Robert Frost, William Shakespeare, Edgar Allan Poe, Walt Whitman and many more",
       "author": "Poetry House",
@@ -213,6 +227,7 @@
     "pk": 15,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "HTML and CSS",
       "description": "Design and Build Websites",
       "author": " Jon Duckett",
@@ -228,6 +243,7 @@
     "pk": 16,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Python for Everybody",
       "description": "Exploring Data in Python 3",
       "author": "Dr. Charles Russell Severance",
@@ -243,6 +259,7 @@
     "pk": 17,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Grokking Algorithms",
       "description": "An Illustrated Guide for Programmers and Other Curious People",
       "author": "Aditya Bhargava",
@@ -258,6 +275,7 @@
     "pk": 18,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Beginner's Step-by-Step Coding Course",
       "description": "Learn Computer Programming the Easy Way (DK Complete Courses)",
       "author": "DK",
@@ -273,6 +291,7 @@
     "pk": 19,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Coding for Kids",
       "description": "Python: Learn to Code with 50 Awesome Games and Activities",
       "author": "Adrienne Tacke",
@@ -288,6 +307,7 @@
     "pk": 20,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Escape from a Video Game",
       "description": "The Complete Series",
       "author": "Dustin Brady",
@@ -303,6 +323,7 @@
     "pk": 21,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Rust Web Programming",
       "description": "A hands-on guide to developing, packaging, and deploying fully functional Rust web applications, 2nd Edition",
       "author": "Maxwell Flitton",
@@ -318,6 +339,7 @@
     "pk": 22,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Programming Rust",
       "description": "Fast, Safe Systems Development",
       "author": "Jim Blandy",
@@ -333,6 +355,7 @@
     "pk": 23,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Command-Line Rust",
       "description": "A Project-Based Primer for Writing Rust CLIs",
       "author": "Ken Youens-Clark",
@@ -348,6 +371,7 @@
     "pk": 24,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Code",
       "description": "The Hidden Language of Computer Hardware and Software",
       "author": "Charles Petzold",
@@ -363,6 +387,7 @@
     "pk": 25,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Python (2nd Edition)",
       "description": "Learn Python in One Day and Learn It Well. Python for Beginners with Hands-on Project. (Learn Coding Fast with Hands-On Project Book 1)",
       "author": "Jamie Chan ",
@@ -378,6 +403,7 @@
     "pk": 26,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Python Standard Library",
       "description": "A Quickstudy Laminated Reference Guide",
       "author": "Berajah Jayne",
@@ -393,6 +419,7 @@
     "pk": 27,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Fluent Python",
       "description": "Clear, Concise, and Effective Programming",
       "author": "Luciano Ramalho ",
@@ -408,6 +435,7 @@
     "pk": 28,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Practical Discrete Mathematics",
       "description": "Discover math principles that fuel algorithms for computer science and machine learning with Python",
       "author": " Ryan T. White ",
@@ -423,6 +451,7 @@
     "pk": 29,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Expert Python Programming",
       "description": "Master Python by learning the best coding practices and advanced programming concepts, 4th Edition",
       "author": "Michal Jaworski ",
@@ -438,6 +467,7 @@
     "pk": 30,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Linear Algebra",
       "description": "Theory, Intuition, Code",
       "author": " Mike X Cohen ",
@@ -453,6 +483,7 @@
     "pk": 31,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Forecasting Time Series Data with Prophet",
       "description": "Build, improve, and optimize time series forecasting models using Meta's advanced forecasting tool, 2nd Edition",
       "author": "Greg Rafferty ",
@@ -468,6 +499,7 @@
     "pk": 32,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Functional Python Programming",
       "description": "Use a functional approach to write succinct, expressive, and efficient Python code, 3rd Edition",
       "author": "Steven F. Lott",
@@ -483,6 +515,7 @@
     "pk": 33,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Learning Tableau 2022",
       "description": "Create effective data visualizations, build interactive visual analytics, and improve your data storytelling capabilities, 5th Edition",
       "author": "Joshua N. Milligan",
@@ -498,6 +531,7 @@
     "pk": 34,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Mastering Python Networking",
       "description": "Utilize Python packages and frameworks for network automation, monitoring, cloud, and management, 4th Edition",
       "author": "Eric Chou",
@@ -513,6 +547,7 @@
     "pk": 35,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Mastering Tableau 2021",
       "description": "Implement advanced business intelligence techniques and analytics with Tableau, 3rd Edition",
       "author": "Marleen Meier",
@@ -528,6 +563,7 @@
     "pk": 36,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Microsoft Power BI Cookbook",
       "description": "Gain expertise in Power BI with over 90 hands-on recipes, tips, and use cases, 2nd Edition",
       "author": "Greg Deckler",
@@ -543,6 +579,7 @@
     "pk": 37,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Mastering Microsoft Power BI",
       "description": " Expert techniques for effective data analytics and business intelligence",
       "author": "Brett Powell",
@@ -558,6 +595,7 @@
     "pk": 38,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "The Definitive Guide to DAX",
       "description": "Business Intelligence for Microsoft Power BI, SQL Server Analysis Services, and Excel Second Edition (Business Skills)",
       "author": "Marco Russo",
@@ -573,6 +611,7 @@
     "pk": 39,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Mastering Kubernetes",
       "description": "Level up your container orchestration skills with Kubernetes to build, run, secure, and observe large-scale distributed apps, 3rd Edition",
       "author": "Gigi Sayfan ",
@@ -588,6 +627,7 @@
     "pk": 40,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Extreme DAX",
       "description": "Take your Power BI and Microsoft data analytics skills to the next level",
       "author": "Michiel Rozema",
@@ -603,6 +643,7 @@
     "pk": 41,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Kubernetes: Up and Running",
       "description": "Dive into the Future of Infrastructure",
       "author": "Brendan Burns",
@@ -618,6 +659,7 @@
     "pk": 42,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Microsoft Power BI Quick Start Guide",
       "description": "The ultimate beginner's guide to data modeling, visualization, digital storytelling, and more, 3rd Edition",
       "author": " Devin Knight",
@@ -633,6 +675,7 @@
     "pk": 43,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Becoming KCNA Certified",
       "description": "Build a strong foundation in cloud native and Kubernetes and pass the KCNA exam with ease",
       "author": "Dmitry Galkin",
@@ -648,6 +691,7 @@
     "pk": 44,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Learn Power BI",
       "description": "A comprehensive, step-by-step guide for beginners to learn real-world business intelligence, 2nd Edition",
       "author": "Greg Deckler ",
@@ -663,6 +707,7 @@
     "pk": 45,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Learn Kubernetes Security",
       "description": "Securely orchestrate, scale, and manage your microservices in Kubernetes deployments",
       "author": "Kaizhe Huang",
@@ -678,6 +723,7 @@
     "pk": 46,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "SharePoint Architect's Planning Guide",
       "description": "Create reusable architecture and governance to support collaboration with SharePoint and Microsoft 365",
       "author": "Patrick Tucker",
@@ -693,6 +739,7 @@
     "pk": 47,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Container Security",
       "description": "Fundamental Technology Concepts that Protect Containerized Applications",
       "author": "Liz Rice",
@@ -708,6 +755,7 @@
     "pk": 48,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "The Elements of Computing Systems, second edition",
       "description": "Building a Modern Computer from First Principles",
       "author": "Noam Nisan",
@@ -723,6 +771,7 @@
     "pk": 49,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Cloud Security Handbook",
       "description": "Find out how to effectively secure cloud environments using AWS, Azure, and GCP",
       "author": "Eyal Estrin",
@@ -738,6 +787,7 @@
     "pk": 50,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Microsoft Azure Security Technologies Certification and Beyond",
       "description": "Gain practical skills to secure your Azure environment and pass the AZ-500 exam",
       "author": "David Okeyode",
@@ -753,6 +803,7 @@
     "pk": 51,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Learning C# by Developing Games with Unity",
       "description": "Get to grips with coding in C# and build simple 3D games in Unity 2022 from the ground up, 7th Edition",
       "author": "Harrison Ferrone",
@@ -768,6 +819,7 @@
     "pk": 52,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Developing Solutions for Microsoft Azure AZ-204 Exam Guide",
       "description": "Discover the essentials for success when developing and maintaining cloud-based solutions on Azure",
       "author": "Paul Ivey",
@@ -783,6 +835,7 @@
     "pk": 53,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Hands-On Unity 2022 Game Development",
       "description": "Learn to use the latest Unity 2022 features to create your first video game in the simplest way possible, 3rd Edition",
       "author": "Nicolas Alejandro Borromeo",
@@ -798,6 +851,7 @@
     "pk": 54,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Machine Learning with PyTorch and Scikit-Learn",
       "description": "Develop machine learning and deep learning models with Python",
       "author": "Sebastian Raschka ",
@@ -813,6 +867,7 @@
     "pk": 55,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Azure for Developers",
       "description": "Implement rich Azure PaaS ecosystems using containers, serverless services, and storage solutions, 2nd Edition",
       "author": "Kamil Mrzyglod",
@@ -828,6 +883,7 @@
     "pk": 56,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Unity 2020 Mobile Game Development",
       "description": "Discover practical techniques and examples to create and deliver engaging games for Android and iOS, 2nd Edition",
       "author": "John P. Doran ",
@@ -843,6 +899,7 @@
     "pk": 57,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "The Machine Learning Solutions Architect Handbook",
       "description": "Create machine learning platforms to run solutions in an enterprise setting",
       "author": "David Ping",
@@ -858,6 +915,7 @@
     "pk": 58,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Unity 2020 By Example",
       "description": "A project-based guide to building 2D, 3D, augmented reality, and virtual reality games from scratch, 3rd Edition",
       "author": "Robert Wells",
@@ -873,6 +931,7 @@
     "pk": 59,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Developing Solutions for Microsoft Azure AZ-204 Exam Guide",
       "description": "Discover the essentials for success when developing and maintaining cloud-based solutions on Azure",
       "author": "Paul Ivey",
@@ -888,6 +947,7 @@
     "pk": 60,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Python GUI Programming with Tkinter",
       "description": "Design and build functional and user-friendly GUI applications, 2nd Edition",
       "author": "Alan D. Moore ",
@@ -903,6 +963,7 @@
     "pk": 61,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "AWS Certified Machine Learning Specialty",
       "description": "MLS-C01 Certification Guide: The definitive guide to passing the MLS-C01 exam on the very first attempt",
       "author": "Somanath Nanda",
@@ -918,6 +979,7 @@
     "pk": 62,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "HTML and CSS QuickStart Guide",
       "description": "The Simplified Beginners Guide to Developing a Strong Coding Foundation, Building Responsive Websites, and Mastering ... Web Design (QuickStart Guides™ - Technology)",
       "author": "David DuRocher",
@@ -933,6 +995,7 @@
     "pk": 63,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Blue Fox",
       "description": "Arm Assembly Internals and Reverse Engineering",
       "author": "Maria Markstedter",
@@ -948,6 +1011,7 @@
     "pk": 64,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Responsive Web Design with HTML5 and CSS",
       "description": "Build future-proof responsive websites using the latest HTML5 and CSS techniques, 4th Edition",
       "author": "Ben Frain",
@@ -963,6 +1027,7 @@
     "pk": 65,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Apps and Services with .NET 7",
       "description": "Build practical projects with Blazor, .NET MAUI, gRPC, GraphQL, and other enterprise technologies",
       "author": "Mark J. Price",
@@ -978,6 +1043,7 @@
     "pk": 66,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "JavaScript from Beginner to Professional",
       "description": "Learn JavaScript quickly by building fun, interactive, and dynamic web apps, games, and pages",
       "author": " Laurence Lars Svekis",
@@ -993,6 +1059,7 @@
     "pk": 67,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "C# 11 and .NET 7 – Modern Cross-Platform Development Fundamentals",
       "description": "Start building websites and services with ASP.NET Core 7, Blazor, and EF Core 7, 7th Edition",
       "author": " Mark J. Price",
@@ -1008,6 +1075,7 @@
     "pk": 68,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "JavaScript",
       "description": "The Definitive Guide: Master the World's Most-Used Programming Language",
       "author": "David Flanagan",
@@ -1023,6 +1091,7 @@
     "pk": 69,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Python QuickStart Guide",
       "description": "The Simplified Beginner's Guide to Python Programming Using Hands-On Projects and Real-World Applications",
       "author": " Robert Oliver",
@@ -1038,6 +1107,7 @@
     "pk": 70,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Python 3",
       "description": "The Comprehensive Guide to Hands-On Python Programming",
       "author": "Johannes Ernesti",
@@ -1053,6 +1123,7 @@
     "pk": 71,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "JavaScript",
       "description": "The Comprehensive Guide to Learning Professional JavaScript Programming (The Rheinwerk Computing)",
       "author": " Philip Ackermann",
@@ -1068,6 +1139,7 @@
     "pk": 72,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Node.js",
       "description": "The Comprehensive Guide to Server-Side JavaScript Programming",
       "author": "Sebastian Springer",
@@ -1083,6 +1155,7 @@
     "pk": 73,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "React Key Concepts",
       "description": "Consolidate your knowledge of React's core features",
       "author": "Maximilian Schwarzmuller",
@@ -1098,6 +1171,7 @@
     "pk": 74,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Eloquent JavaScript, 3rd Edition",
       "description": "A Modern Introduction to Programming",
       "author": "Marijn Haverbeke",
@@ -1113,6 +1187,7 @@
     "pk": 75,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Computer Systems",
       "description": "A Programmer's Perspective, 3 Edition",
       "author": "David R. O'Hallaron Randal E. Bryant",
@@ -1128,6 +1203,7 @@
     "pk": 76,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Cracking the Coding Interview",
       "description": "189 Programming Questions and Solutions",
       "author": " Gayle Laakmann McDowell",
@@ -1143,6 +1219,7 @@
     "pk": 77,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "The Principles of Deep Learning Theory",
       "description": "An Effective Theory Approach to Understanding Neural Networks",
       "author": "Daniel A. Roberts",
@@ -1158,6 +1235,7 @@
     "pk": 78,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Geometry of Deep Learning",
       "description": "A Signal Processing Perspective (Mathematics in Industry, 37)",
       "author": "Jong Chul Ye",
@@ -1174,6 +1252,7 @@
     "pk": 79,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Rust for Rustaceans",
       "description": "Idiomatic Programming for Experienced Developers",
       "author": "Jon Gjengset",
@@ -1189,6 +1268,7 @@
     "pk": 80,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Data Engineering with AWS",
       "description": "Learn how to design and build cloud-based data transformation pipelines using AWS",
       "author": " Gareth Eagar",
@@ -1204,6 +1284,7 @@
     "pk": 81,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Fundamentals of Data Engineering",
       "description": "Plan and Build Robust Data Systems",
       "author": " Joe Reis",
@@ -1219,6 +1300,7 @@
     "pk": 82,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Rust Atomics and Locks",
       "description": "Low-Level Concurrency in Practice",
       "author": " Mara Bos ",
@@ -1234,6 +1316,7 @@
     "pk": 83,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Designing Data-Intensive Applications",
       "description": "The Big Ideas Behind Reliable, Scalable, and Maintainable Systems",
       "author": "Martin Kleppmann",
@@ -1249,6 +1332,7 @@
     "pk": 84,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Microsoft Certified Azure Data Fundamentals (Exam DP-900) Certification Guide",
       "description": "The comprehensive guide to passing the DP-900 exam on your first attempt",
       "author": "Marcelo Leite",
@@ -1264,6 +1348,7 @@
     "pk": 85,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Command-Line Rust",
       "description": "A Project-Based Primer for Writing Rust CLIs",
       "author": "Ken Youens-Clark",
@@ -1279,6 +1364,7 @@
     "pk": 86,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Age of Invisible Machines",
       "description": "A Practical Guide to Creating a Hyperautomated Ecosystem of Intelligent Digital Workers",
       "author": " Robb Wilson",
@@ -1294,6 +1380,7 @@
     "pk": 87,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Power and Prediction",
       "description": "The Disruptive Economics of Artificial Intelligence",
       "author": " Ajay Agrawal",
@@ -1309,6 +1396,7 @@
     "pk": 88,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Rust Web Programming",
       "description": "A hands-on guide to developing, packaging, and deploying fully functional Rust web applications, 2nd Edition",
       "author": "Maxwell Flitton",
@@ -1324,6 +1412,7 @@
     "pk": 89,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Guide to Competitive Programming",
       "description": "Learning and Improving Algorithms Through Contests (Undergraduate Topics in Computer Science)",
       "author": "Antti Laaksonen ",
@@ -1339,6 +1428,7 @@
     "pk": 90,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Programming C# 10",
       "description": "Build Cloud, Web, and Desktop Applications",
       "author": "Ian Griffiths",
@@ -1354,6 +1444,7 @@
     "pk": 91,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Software Architecture",
       "description": "The Hard Parts: Modern Trade-Off Analyses for Distributed Architectures",
       "author": " Neal Ford",
@@ -1369,6 +1460,7 @@
     "pk": 92,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Microsoft Azure Fundamentals Certification and Beyond",
       "description": "Simplified cloud concepts and core Azure fundamentals for absolute beginners to pass the AZ-900 exam",
       "author": " Steve Miles",
@@ -1384,6 +1476,7 @@
     "pk": 93,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Grokking Algorithms",
       "description": "An Illustrated Guide for Programmers and Other Curious People",
       "author": "Aditya Bhargava",
@@ -1399,6 +1492,7 @@
     "pk": 94,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Microsoft Certified Azure Fundamentals Study Guide",
       "description": "Exam AZ-900",
       "author": "Jim Boyce",
@@ -1414,6 +1508,7 @@
     "pk": 95,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Code",
       "description": "The Hidden Language of Computer Hardware and Software",
       "author": " Charles Petzold",
@@ -1429,6 +1524,7 @@
     "pk": 96,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "MCA Microsoft Certified Associate Azure Administrator Study Guide",
       "description": "Exam AZ-104",
       "author": " Rithin Skaria",
@@ -1444,6 +1540,7 @@
     "pk": 97,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Head First Java",
       "description": "A Brain-Friendly Guide",
       "author": " Kathy Sierra ",
@@ -1459,6 +1556,7 @@
     "pk": 98,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Microsoft Azure Architect Technologies and Design Complete Study Guide",
       "description": "Microsoft Azure Architect Technologies and Design Complete Study Guide",
       "author": " William Panek",
@@ -1474,6 +1572,7 @@
     "pk": 99,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Head First Design Patterns",
       "description": "Building Extensible and Maintainable Object-Oriented Software 2nd Edition",
       "author": "Eric Freeman",
@@ -1489,6 +1588,7 @@
     "pk": 100,
     "model": "book.book",
     "fields": {
+      "rating": 0,
       "title": "Microsoft Security, Compliance, and Identity Fundamentals Exam Ref SC-900",
       "description": "Familiarize yourself with security, identity, and compliance in Microsoft 365 and Azure",
       "author": "Dwayne Natwick",

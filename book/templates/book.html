@@ -2,103 +2,129 @@
 
 {% block content %}
     {% include "header.html" %}
-    <div class="container mt-4">
-        <h1>{{ page }}</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h2>{{ book.title }}</h2>
-                        <p>{{ book.description }}</p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Author:</strong> {{ book.author }}</li>
-                            <li class="list-group-item"><strong>ISBN-10:</strong> {{ book.isbn10 }}</li>
-                            <li class="list-group-item"><strong>ISBN-13:</strong> {{ book.isbn13 }}</li>
-                            <li class="list-group-item"><strong>Publish Date:</strong> {{ book.publish_date }}</li>
-                            <li class="list-group-item"><strong>Edition:</strong> {{ book.edition }}</li>
-                            <li class="list-group-item"><strong>Best Seller:</strong> {{ book.best_seller }}</li>
-                            <li class="list-group-item"><strong>Category:</strong> {{ book.category }}</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="reviews-section" style="margin-bottom: 20px;">
-                    <h3>Recent Reviews</h3>
-                    <div class="reviews">
-                        <div class="review">
-                            <!-- Display up to 5 recent reviews here -->
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            .star-rating {
+                display: inline-block;
+                font-size: 24px;
+                /* color: #ffc107; */
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container mt-4">
+            <h1>{{ page }}</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2>{{ book.title }}</h2>
+                            <p>{{ book.description }}</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Author:</strong> {{ book.author }}</li>
+                                <li class="list-group-item"><strong>ISBN-10:</strong> {{ book.isbn10 }}</li>
+                                <li class="list-group-item"><strong>ISBN-13:</strong> {{ book.isbn13 }}</li>
+                                <li class="list-group-item"><strong>Publish Date:</strong> {{ book.publish_date }}</li>
+                                <li class="list-group-item"><strong>Edition:</strong> {{ book.edition }}</li>
+                                <li class="list-group-item"><strong>Best Seller:</strong> {{ book.best_seller }}</li>
+                                <li class="list-group-item"><strong>Category:</strong> {{ book.category }}</li>
+                            </ul>
                         </div>
                     </div>
-                    <button class="btn btn-primary" id="view-reviews">View Full Reviews</button>
                 </div>
-                <button class="btn btn-primary" id="edit-book">Edit Book</button>
-            </div>
-        </div>
-    </div>
-        <!-- Modal edit book -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Book</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formEdit" onsubmit="return false;">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="edit-book-title" class="col-form-label">Title:</label>
-                            <input type="text" class="form-control" id="edit-book-title" name="title" required>
+                <div class="col-md-6">
+                    <div class="reviews-section" style="margin-bottom: 20px;">
+                        <h3>Average Rating</h3>
+                        <div class="average-rating">
+                            <span class="star-rating">
+                                {{ book.average_rating|default:0 }} 
+                            </span>
                         </div>
-                        <div class="mb-3">
-                            <label for="edit-book-description" class="col-form-label">Description:</label>
-                            <textarea class="form-control" id="edit-book-description" name="description"></textarea>
+                        <h3>Recent Reviews</h3>
+                        <div class="reviews">
+                            {% for review in reviews %}
+                            <div class="review">
+                                <h5>
+                                    <span class="star-rating">
+                                        {{ review.star }}
+                                    </span>
+                                </h5>
+                                <p>by {{ review.profile__name }}</p>
+                                <p>{{ review.description }}</p>
+                            </div>
+                            {% endfor %}
                         </div>
-                        <div class="mb-3">
-                            <label for="edit-book-author" class="col-form-label">Author:</label>
-                            <input type="text" class="form-control" id="edit-book-author" name="author" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-isbn10" class="col-form-label">ISBN-10:</label>
-                            <input type="text" class="form-control" id="edit-book-isbn10" name="isbn10">
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-isbn13" class="col-form-label">ISBN-13:</label>
-                            <input type="text" class="form-control" id="edit-book-isbn13" name="isbn13">
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-publish_date" class="col-form-label">Publish Date:</label>
-                            <input type="date" class="form-control" id="edit-book-publish_date" name="publish_date" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-edition" class="col-form-label">Edition:</label>
-                            <input type="number" class="form-control" id="edit-book-edition" name="edition">
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-best_seller" class="col-form-label">Best Seller:</label>
-                            <input type="text" class="form-control" id="edit-book-best_seller" name="best_seller">
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-category" class="col-form-label">Category:</label>
-                            <input type="text" class="form-control" id="edit-book-category" name="category">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal">Edit</button>
+                        <button class="btn btn-primary" id="view-reviews">View Full Reviews</button>
+                    </div>
+                    <button class="btn btn-primary" id="edit-book">Edit Book</button>
                 </div>
             </div>
         </div>
-    </div>
-    
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Book</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formEdit" onsubmit="return false;">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="edit-book-title" class="col-form-label">Title:</label>
+                                <input type="text" class="form-control" id="edit-book-title" name="title" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-description" class="col-form-label">Description:</label>
+                                <textarea class="form-control" id="edit-book-description" name="description"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-author" class="col-form-label">Author:</label>
+                                <input type="text" class="form-control" id="edit-book-author" name="author" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-isbn10" class="col-form-label">ISBN-10:</label>
+                                <input type="text" class="form-control" id="edit-book-isbn10" name="isbn10">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-isbn13" class="col-form-label">ISBN-13:</label>
+                                <input type="text" class="form-control" id="edit-book-isbn13" name="isbn13">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-publish_date" class="col-form-label">Publish Date:</label>
+                                <input type="date" class="form-control" id="edit-book-publish_date" name="publish_date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-edition" class="col-form-label">Edition:</label>
+                                <input type="number" class="form-control" id="edit-book-edition" name="edition">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-best_seller" class="col-form-label">Best Seller:</label>
+                                <input type="text" class="form-control" id="edit-book-best_seller" name="best_seller">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-category" class="col-form-label">Category:</label>
+                                <input type="text" class="form-control" id="edit-book-category" name="category">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+        
     <script>
         // Fungsi untuk mengambil data buku
         async function getBookData() {
             return fetch("{% url 'book:show_main_book' book.id %}").then((res) => res.json());
         }
-
+        
         // Function to load recent reviews
         async function loadRecentReviews() {
             const reviewsSection = document.querySelector(".reviews");
@@ -119,6 +145,11 @@
                 `;
                 reviewsSection.appendChild(reviewElement);
             });
+
+            // Calculate and display the average rating
+            const averageRating = calculateAverageRating(reviews);
+            const averageRatingElement = document.querySelector(".average-rating .star-rating");
+            averageRatingElement.innerHTML = generateStarRating(Math.round(averageRating));
         }
 
         // Add an event listener to load recent reviews when the page loads
@@ -132,11 +163,24 @@
             window.location.href = `{% url 'reviews:show_review' book.id %}`;
         });
 
-        // Helper function to generate star ratings
         function generateStarRating(starCount) {
-            const filledStars = '<i class="fa fa-star"></i>'.repeat(starCount);
-            const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(5 - starCount);
-            return filledStars + emptyStars;
+            const filledStars = '<i class="fa fa-star"></i>'.repeat(Math.floor(starCount));
+            const halfStar = starCount % 1 !== 0 ? '<i class="fa fa-star-half-o"></i>' : '';
+            const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(Math.floor(5 - starCount));
+            return filledStars + halfStar + emptyStars;
+        }
+
+        function calculateAverageRating(reviews) {
+            if (reviews.length === 0) {
+                return 0;
+            }
+
+            let totalRating = 0;
+            reviews.forEach((review) => {
+                totalRating += review.star;
+            });
+
+            return (totalRating / reviews.length).toFixed(2);
         }
     
         // Fungsi untuk mengisi data buku ke dalam dialog pengeditan
