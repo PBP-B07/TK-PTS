@@ -2,98 +2,267 @@
 
 {% block content %}
     {% include "header.html" %}
-    <div class="container mt-4">
-        <h1>{{ page }}</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h2>{{ book.title }}</h2>
-                        <p>{{ book.description }}</p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Author:</strong> {{ book.author }}</li>
-                            <li class="list-group-item"><strong>ISBN-10:</strong> {{ book.isbn10 }}</li>
-                            <li class="list-group-item"><strong>ISBN-13:</strong> {{ book.isbn13 }}</li>
-                            <li class="list-group-item"><strong>Publish Date:</strong> {{ book.publish_date }}</li>
-                            <li class="list-group-item"><strong>Edition:</strong> {{ book.edition }}</li>
-                            <li class="list-group-item"><strong>Best Seller:</strong> {{ book.best_seller }}</li>
-                        </ul>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            .star-rating {
+                display: inline-block;
+                font-size: 24px;
+                color: #ffc107;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container mt-4">
+            <h1>{{ page }}</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card" style="margin-bottom: 50px;">
+                        <div class="card-body">
+                            <h2>{{ book.title }}</h2>
+                            <p>{{ book.description }}</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Author:</strong> {{ book.author }}</li>
+                                <li class="list-group-item"><strong>ISBN-10:</strong> {{ book.isbn10 }}</li>
+                                <li class="list-group-item"><strong>ISBN-13:</strong> {{ book.isbn13 }}</li>
+                                <li class="list-group-item"><strong>Publish Date:</strong> {{ book.publish_date }}</li>
+                                <li class="list-group-item"><strong>Edition:</strong> {{ book.edition }}</li>
+                                <li class="list-group-item"><strong>Best Seller:</strong> {{ book.best_seller }}</li>
+                                <li class="list-group-item"><strong>Category:</strong> {{ book.category }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="reviews-section" style="margin-bottom: 40px;">
+                        <h2>Average Rating</h3>
+                        <div class="average-rating" style="margin-bottom: 30px;">
+                            <span class="star-rating">
+                                <span>{{ book.rating }}</span> 
+                            </span>
+                            <h2>{{ book.rating }} Stars</h2>
+                        </div>
+                        <h3>Recent Reviews</h3>
+                        <p id="total-reviews"></p>
+                        <div class="reviews" style="margin-bottom: 20px;">
+                            {% for review in reviews %}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <span class="star-rating">
+                                            {{ review.star }}
+                                        </span>
+                                    </h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">by {{ review.profile__name }}</h6>
+                                    <p class="card-text">{{ review.description }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="btn btn-primary" id="view-reviews" style="margin-bottom: 35px;">View Full Reviews</button>
+                        <h3>Recent Forums</h3>
+                        <p id="total-forums"></p>
+                        <div class="forums" style="margin-bottom: 20px;">
+                            {% for forum in forums|slice:":-2" %}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ forum.subject }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">by {{ forum.user__username }}</h6>
+                                    <p class="card-text">{{ forum.description }}</p>
+                                    <p class="card-text">Posted on: {{ forum.date_added }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="btn btn-primary" id="view-forums">View All Forums</button>
+                    </div>
+                    <button class="btn btn-primary" id="edit-book">Edit Book</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Book</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formEdit" onsubmit="return false;">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="edit-book-title" class="col-form-label">Title:</label>
+                                <input type="text" class="form-control" id="edit-book-title" name="title" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-description" class="col-form-label">Description:</label>
+                                <textarea class="form-control" id="edit-book-description" name="description"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-author" class="col-form-label">Author:</label>
+                                <input type="text" class="form-control" id="edit-book-author" name="author" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-isbn10" class="col-form-label">ISBN-10:</label>
+                                <input type="text" class="form-control" id="edit-book-isbn10" name="isbn10">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-isbn13" class="col-form-label">ISBN-13:</label>
+                                <input type="text" class="form-control" id="edit-book-isbn13" name="isbn13">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-publish_date" class="col-form-label">Publish Date:</label>
+                                <input type="date" class="form-control" id="edit-book-publish_date" name="publish_date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-edition" class="col-form-label">Edition:</label>
+                                <input type="number" class="form-control" id="edit-book-edition" name="edition">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-best_seller" class="col-form-label">Best Seller:</label>
+                                <input type="text" class="form-control" id="edit-book-best_seller" name="best_seller">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-book-category" class="col-form-label">Category:</label>
+                                <input type="text" class="form-control" id="edit-book-category" name="category">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal">Edit</button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="scrollable">
-                    <h4>Reviews:</h4>
-                    <ul id="reviews-list">
-                        {% for review in reviews %}
-                            <li>{{ review.author }}: {{ review.text }}</li>
-                        {% endfor %}
-                    </ul>
-                    <button class="btn btn-primary" id="load-more-reviews">Lihat Review Lainnya</button>
-                </div>
-                <button class="btn btn-primary" id="edit-book">Edit Book</button>
-            </div>
         </div>
-    </div>
-        <!-- Modal edit book -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Book</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formEdit" onsubmit="return false;">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="edit-book-title" class="col-form-label">Title:</label>
-                            <input type="text" class="form-control" id="edit-book-title" name="title" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-description" class="col-form-label">Description:</label>
-                            <textarea class="form-control" id="edit-book-description" name="description"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-author" class="col-form-label">Author:</label>
-                            <input type="text" class="form-control" id="edit-book-author" name="author" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-isbn10" class="col-form-label">ISBN-10:</label>
-                            <input type="text" class="form-control" id="edit-book-isbn10" name="isbn10">
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-isbn13" class="col-form-label">ISBN-13:</label>
-                            <input type="text" class="form-control" id="edit-book-isbn13" name="isbn13">
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-publish_date" class="col-form-label">Publish Date:</label>
-                            <input type="date" class="form-control" id="edit-book-publish_date" name="publish_date" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-edition" class="col-form-label">Edition:</label>
-                            <input type="number" class="form-control" id="edit-book-edition" name="edition">
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-book-best_seller" class="col-form-label">Best Seller:</label>
-                            <input type="text" class="form-control" id="edit-book-best_seller" name="best_seller">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal">Edit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+    </body>
+        
     <script>
         // Fungsi untuk mengambil data buku
         async function getBookData() {
-            return fetch("{% url 'book:show_main_book' book.id %}").then((res) => res.json());
+            let book_pk = "{{ book.pk|safe }}"
+            return fetch(`../${book_pk}/`).then((res) => res.json());
         }
-    
+
+        async function getReviews() {
+            let book_pk = "{{ book.pk|safe }}"
+            return fetch(`../../review/get-reviews-json/${book_pk}/`).then((res) => res.json())
+        }
+
+        async function getForums() {
+            let book_pk = "{{ book.pk|safe }}"
+            return fetch(`../../forum/get-forum/${book_pk}/`).then((res) => res.json())
+        }
+
+        async function getReviewsLength() {
+            const reviews = await getReviews();
+            document.getElementById("total-reviews").innerHTML = `Total Reviews: ${reviews.length}`
+        }
+
+        async function getForumsLength() {
+            const forums = await getForums();
+            document.getElementById("total-forums").innerHTML = `Total Forums: ${forums.length}`
+        }
+        
+        // Function to load recent reviews as cards
+        async function loadRecentReviews() {
+            const reviewsSection = document.querySelector(".reviews");
+            const reviews = await getReviews();
+            const reviewsLength = reviews.length;
+            reviews.reverse();
+
+            // Clear any previous reviews
+            reviewsSection.innerHTML = "";
+
+            reviews.slice(0, 3).forEach((review) => {
+                const starRating = generateStarRating(review.star);
+                const reviewCard = document.createElement("div");
+                reviewCard.classList.add("card", "mb-3");
+                reviewCard.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <span class="star-rating">
+                                ${starRating} (${review.star} Stars)
+                            </span>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-muted">by ${review.profile__name}</h6>
+                        <p class="card-text">${review.description}</p>
+                    </div>
+                `;
+                reviewsSection.appendChild(reviewCard);
+            });
+
+            // Calculate and display the average rating
+            const averageRating = calculateAverageRating(reviews);
+            const averageRatingElement = document.querySelector(".average-rating .star-rating");
+            if (averageRating === "None") {
+                averageRatingElement.innerHTML = "0 Stars";
+            } else {
+                averageRatingElement.innerHTML = generateStarRating(Math.round(averageRating));
+            }
+        }
+        
+        function generateStarRating(starCount) {
+            const filledStars = '<i class="fa fa-star"></i>'.repeat(Math.floor(starCount));
+            const halfStar = starCount % 1 !== 0 ? '<i class="fa fa-star-half-o"></i>' : '';
+            const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(Math.floor(5 - starCount));
+            return filledStars + halfStar + emptyStars;
+        }
+        
+        function calculateAverageRating(reviews) {
+            if (reviews.length === 0) {
+                return 0;
+            }
+            
+            let totalRating = 0;
+            reviews.forEach((review) => {
+                totalRating += review.star;
+            });
+            
+            return (totalRating / reviews.length).toFixed(2);
+        }
+        getReviewsLength();
+        loadRecentReviews();
+
+        // Event listener for "View Full Reviews" button
+        const viewReviewsButton = document.getElementById("view-reviews");
+        viewReviewsButton.addEventListener("click", () => {
+            window.location.href = `{% url 'reviews:show_review' book.id %}`;
+        });
+
+        // Function to load recent forums as cards
+        async function loadRecentForums() {
+            const forumsSection = document.querySelector(".forums");
+            const forums = await getForums();
+            forums.reverse();
+
+            // Clear any previous forums
+            forumsSection.innerHTML = "";
+
+            forums.slice(0, 2).forEach((forum) => {
+                const forumCard = document.createElement("div");
+                forumCard.classList.add("card", "mb-3");
+                forumCard.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="card-title">${forum.subject} by ${forum.user__username}</h5>
+                        <p class="card-text">${forum.description}</p>
+                        <p class="card-text">Posted on: ${forum.date_added}</p>
+                    </div>
+                `;
+                forumsSection.appendChild(forumCard);
+            });
+        }
+
+        getForumsLength();
+        loadRecentForums();
+
+        // Event listener for "View All Forums" button
+        const viewForumsButton = document.getElementById("view-forums");
+        viewForumsButton.addEventListener("click", () => {
+            window.location.href = `{% url 'forum:show_forum' book.id %}`;
+        });
+        
         // Fungsi untuk mengisi data buku ke dalam dialog pengeditan
         async function fillEditBookDialog() {
             const bookData = await getBookData();
@@ -105,6 +274,7 @@
             const publishDateInput = document.getElementById("edit-book-publish_date");
             const editionInput = document.getElementById("edit-book-edition");
             const bestSellerInput = document.getElementById("edit-book-best_seller");
+            const categoryInput = document.getElementById("edit-book-category");
     
             titleInput.value = bookData.title;
             descriptionInput.value = bookData.description;
@@ -114,6 +284,7 @@
             publishDateInput.value = bookData.publish_date;
             editionInput.value = bookData.edition;
             bestSellerInput.value = bookData.best_seller;
+            categoryInput.value = bookData.category;
         }
     
         // Fungsi untuk mengirim data buku yang diedit ke server
@@ -126,6 +297,7 @@
             const publishDateInput = document.getElementById("edit-book-publish_date");
             const editionInput = document.getElementById("edit-book-edition");
             const bestSellerInput = document.getElementById("edit-book-best_seller");
+            const categoryInput = document.getElementById("edit-book-category");
     
             const formData = new FormData();
             formData.append("title", titleInput.value);
@@ -136,13 +308,12 @@
             formData.append("publish_date", publishDateInput.value);
             formData.append("edition", editionInput.value);
             formData.append("best_seller", bestSellerInput.value);
+            formData.append("category", categoryInput.value);
     
             fetch("{% url 'book:edit_book' book.id %}", {
                 method: "POST",
                 body: formData,
-                headers: {
-                    "X-CSRFToken": csrftoken, // Pastikan Anda memiliki variabel csrftoken yang telah didefinisikan sebelumnya
-                },
+                
             }).then((response) => {
                 if (response.status === 201) {
                     // Sukses, tutup dialog pengeditan
@@ -165,56 +336,5 @@
         editButton.addEventListener("click", () => {
             editBook();
         });
-    
-        async function getReviews() {
-            return fetch("{% url 'book:get_reviews' book.id %}").then((res) => res.json());
-        }
-    
-        async function refreshReviews() {
-            const reviewsList = document.getElementById("reviews-list");
-            const reviews = await getReviews();
-    
-            reviewsList.innerHTML = "";
-            reviews.forEach((review) => {
-                const li = document.createElement("li");
-                li.textContent = `${review.author}: ${review.text}`;
-                reviewsList.appendChild(li);
-            });
-    
-            if (reviews.length === 0) {
-                // Semua review telah dimuat, sembunyikan tombol
-                loadMoreReviewsButton.style.display = "none";
-            }
-        }
-    
-        refreshReviews();
-    
-        const loadMoreReviewsButton = document.getElementById("load-more-reviews");
-        loadMoreReviewsButton.addEventListener("click", () => {
-            // Mengarahkan pengguna ke halaman review.html untuk melihat review lengkap
-            window.location.href = `/reviews/${book.id}`;
-        });
     </script>
-    
-
-    <!-- <a href="/">Back to Home</a> -->
-    <h1>{{ page}} </h1>
-    <h2>{{ book.title }}</h2>
-    <h4>Author</h4>
-    <p>{{ book.author }}</p>
-    <h4>Description</h4>
-    <p>{{ book.description }}</p>
-    <h4>ISBN-10</h4>
-    <p>{{ book.isbn10 }}</p>
-    <h4>ISBN-13</h4>
-    <p>{{ book.isbn13 }}</p>
-    <h4>Publish Date</h4>
-    <p>{{ book.publish_date }}</p>
-    <h4>Edition</h4>
-    <p>{{ book.edition }}</p>
-    <h4>Best Seller</h4>
-    <p>{{ book.best_seller }}</p>
-    <h4>Category</h4>
-    <p>{{ book.category }}</p>
-    <a href="/">Back to Home</a>
 {% endblock content %}
