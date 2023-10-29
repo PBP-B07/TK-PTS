@@ -8,7 +8,7 @@
             .star-rating {
                 display: inline-block;
                 font-size: 24px;
-                /* color: #ffc107; */
+                color: #ffc107;
             }
         </style>
     </head>
@@ -35,29 +35,47 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="reviews-section" style="margin-bottom: 50px;">
+                    <div class="reviews-section" style="margin-bottom: 40px;">
                         <h2>Average Rating</h3>
                         <div class="average-rating" style="margin-bottom: 30px;">
                             <span class="star-rating">
                                 <span>{{ book.rating }}</span> 
                             </span>
-                            <p>{{ book.rating }} stars</p>
+                            <h2>{{ book.rating }} Stars</h2>
                         </div>
                         <h3>Recent Reviews</h3>
+                        <p id="total-reviews"></p>
                         <div class="reviews" style="margin-bottom: 20px;">
                             {% for review in reviews %}
-                            <div class="review">
-                                <h5>
-                                    <span class="star-rating">
-                                        {{ review.star }}
-                                    </span>
-                                </h5>
-                                <h5>by {{ review.profile__name }}</h5>
-                                <h5>{{ review.description }}</h5>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <span class="star-rating">
+                                            {{ review.star }}
+                                        </span>
+                                    </h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">by {{ review.profile__name }}</h6>
+                                    <p class="card-text">{{ review.description }}</p>
+                                </div>
                             </div>
                             {% endfor %}
                         </div>
-                        <button class="btn btn-primary" id="view-reviews">View Full Reviews</button>
+                        <button class="btn btn-primary" id="view-reviews" style="margin-bottom: 35px;">View Full Reviews</button>
+                        <h3>Recent Forums</h3>
+                        <p id="total-forums"></p>
+                        <div class="forums" style="margin-bottom: 20px;">
+                            {% for forum in forums|slice:":-2" %}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ forum.subject }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">by {{ forum.user__username }}</h6>
+                                    <p class="card-text">{{ forum.description }}</p>
+                                    <p class="card-text">Posted on: {{ forum.date_added }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="btn btn-primary" id="view-forums">View All Forums</button>
                     </div>
                     <button class="btn btn-primary" id="edit-book">Edit Book</button>
                 </div>
@@ -131,11 +149,27 @@
             let book_pk = "{{ book.pk|safe }}"
             return fetch(`../../review/get-reviews-json/${book_pk}/`).then((res) => res.json())
         }
+
+        async function getForums() {
+            let book_pk = "{{ book.pk|safe }}"
+            return fetch(`../../forum/get-forum/${book_pk}/`).then((res) => res.json())
+        }
+
+        async function getReviewsLength() {
+            const reviews = await getReviews();
+            document.getElementById("total-reviews").innerHTML = `Total Reviews: ${reviews.length}`
+        }
+
+        async function getForumsLength() {
+            const forums = await getForums();
+            document.getElementById("total-forums").innerHTML = `Total Forums: ${forums.length}`
+        }
         
-        // Function to load recent reviews
+        // Function to load recent reviews as cards
         async function loadRecentReviews() {
             const reviewsSection = document.querySelector(".reviews");
             const reviews = await getReviews();
+            const reviewsLength = reviews.length;
             reviews.reverse();
 
             // Clear any previous reviews
@@ -143,14 +177,20 @@
 
             reviews.slice(0, 3).forEach((review) => {
                 const starRating = generateStarRating(review.star);
-                const reviewElement = document.createElement("div");
-                reviewElement.classList.add("review");
-                reviewElement.innerHTML = `
-                    <h5>${starRating} (${review.star} stars)</h5>
-                    <p>by ${review.profile__name}</p>
-                    <p>${review.description}</p>
+                const reviewCard = document.createElement("div");
+                reviewCard.classList.add("card", "mb-3");
+                reviewCard.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <span class="star-rating">
+                                ${starRating} (${review.star} Stars)
+                            </span>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-muted">by ${review.profile__name}</h6>
+                        <p class="card-text">${review.description}</p>
+                    </div>
                 `;
-                reviewsSection.appendChild(reviewElement);
+                reviewsSection.appendChild(reviewCard);
             });
 
             // Calculate and display the average rating
@@ -182,13 +222,45 @@
             
             return (totalRating / reviews.length).toFixed(2);
         }
-
+        getReviewsLength();
         loadRecentReviews();
 
         // Event listener for "View Full Reviews" button
         const viewReviewsButton = document.getElementById("view-reviews");
         viewReviewsButton.addEventListener("click", () => {
             window.location.href = `{% url 'reviews:show_review' book.id %}`;
+        });
+
+        // Function to load recent forums as cards
+        async function loadRecentForums() {
+            const forumsSection = document.querySelector(".forums");
+            const forums = await getForums();
+            forums.reverse();
+
+            // Clear any previous forums
+            forumsSection.innerHTML = "";
+
+            forums.slice(0, 2).forEach((forum) => {
+                const forumCard = document.createElement("div");
+                forumCard.classList.add("card", "mb-3");
+                forumCard.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="card-title">${forum.subject} by ${forum.user__username}</h5>
+                        <p class="card-text">${forum.description}</p>
+                        <p class="card-text">Posted on: ${forum.date_added}</p>
+                    </div>
+                `;
+                forumsSection.appendChild(forumCard);
+            });
+        }
+
+        getForumsLength();
+        loadRecentForums();
+
+        // Event listener for "View All Forums" button
+        const viewForumsButton = document.getElementById("view-forums");
+        viewForumsButton.addEventListener("click", () => {
+            window.location.href = `{% url 'forum:show_forum' book.id %}`;
         });
         
         // Fungsi untuk mengisi data buku ke dalam dialog pengeditan
@@ -241,9 +313,7 @@
             fetch("{% url 'book:edit_book' book.id %}", {
                 method: "POST",
                 body: formData,
-                headers: {
-                    "X-CSRFToken": csrftoken,
-                },
+                
             }).then((response) => {
                 if (response.status === 201) {
                     // Sukses, tutup dialog pengeditan
