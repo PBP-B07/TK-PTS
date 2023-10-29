@@ -77,10 +77,6 @@
             display: table;
             }
 
-            .forum-container {
-                width: 50%;
-            }
-
             .chat-frame-container {
                 width: 100%;
             }
@@ -89,6 +85,7 @@
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
                 width: 100%;
                 height: 100%;
+                position: relative;
             }
             .reply{
                 border: 2px solid #8bd8ed;
@@ -105,11 +102,26 @@
                 clear: both;
             }
             .input{
-                width: 92%; 
+                width: calc(100%-25px);
                 box-sizing: border-box; 
                 border: 5px solid #d7d7d7; 
                 padding: 10px;
                 border-color: #d7d7d7; 
+            }
+            #reply_box{
+                height:75%;
+            }
+            #message_form{
+                position: absolute; /* Position absolutely within chat-frame */
+                bottom: 0; /* Stick to the bottom of the chat-frame */
+                display: flex;
+                width: 100%;
+                background-color: white; /* Adjust the background color as needed */
+                border-top: 1px solid #d7d7d7; /* Add a border to separate it from the chat-frame */
+                padding: 10px;
+            }
+            #form_container{
+                height: auto;
             }
         </style>
     </head>
@@ -157,13 +169,11 @@
         <div id="forum_container">
         </div>
         <div id="reply_container">
-        <div class="frame chat-frame">
-            <h1>Replies</h1>
-            <div id="reply_box"></div>
-                <form id="message_form">
-                    <input type="text" class="input" id="message_input" placeholder="Enter your reply message">
-                    <button type="submit" id="input_message">Send</button>
-                </form>
+            <div class="frame chat-frame">
+                <h1>Replies</h1>
+                <div id="reply_box"></div>
+                <div id="form_container"></div>
+            </div>
         </div>
     </div>
 
@@ -177,6 +187,7 @@
     async function refreshForums() {
         document.getElementById("forum_container").innerHTML = ""
         const forums = await getForums()
+        forums.reverse()
         let htmlString = ''
         let counter = 0
         const totalForums = forums.length
@@ -194,6 +205,7 @@
                         </div>
                     </div>
                 </button>
+
             `
         }
         document.getElementById("forum_container").innerHTML = htmlString
@@ -235,31 +247,38 @@
             `
         }
     document.getElementById("reply_box").innerHTML = htmlString
-
+    document.getElementById("form_container").innerHTML = `
+                <form id="message_form">
+                    <input type="text" class="input" id="message_input" placeholder="Enter your reply message">
+                    <button type="submit" id="input_message")>Send</button>
+                </form>
+        `
     // Add event listener to reply form
     const messageForm = document.getElementById("message_form");
         messageForm.addEventListener("submit", function (event) {
             event.preventDefault();
-            const messageInput = document.getElementById("message_input");
-            const message = messageInput.value;
-            const forum_id = "forum_id_value";  // Gantilah dengan nilai forum_id yang sesuai
-            addReply(forum_id, message);
-            messageInput.value = "";
+            addReply(forum_id);
         });
     }
 
     // refreshReplies()
 
-    function addReply(forum_id, message) {
-        const formData = new FormData();
-        formData.append("forum_id", forum_id);
-        formData.append("message", message);
-        fetch("{% url 'forum:add_reply_ajax' book.pk %}", {
+    function addReply(forum_id) {
+        const message = document.getElementById("message_input").value;
+        fetch(`create-reply-ajax/${forum_id}/`, {
             method: "POST",
-            body: formData
-        }).then(refreshReplies(forum_id))
+            body: JSON.stringify({ forum_id: forum_id, message: message }),
+        })
+            .then((response) => {
+                if (response.status === 201) {
+                    // If the reply is created successfully, refresh the replies.
+                    refreshReplies(forum_id);
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
     }
 
-    document.getElementById("message_form").onclick = addReply
 </script>
 {% endblock content %}

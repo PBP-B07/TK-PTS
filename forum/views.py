@@ -1,3 +1,4 @@
+import json
 from book.models import Book
 from forum.models import Forum, Reply
 from django.http import HttpResponseNotFound, JsonResponse
@@ -44,14 +45,15 @@ def add_forum_ajax(request,id):
     return HttpResponseNotFound()
 
 @csrf_exempt
-def add_reply_ajax(request,id):
+def add_reply_ajax(request,bookid,id):
     if request.method == 'POST':
-        message = request.POST.get("message")
+        data = json.loads(request.body.decode('utf-8'))
+        message = data.get("message")
         user = request.user
-        book = Book.objects.get(pk=id)
-        forum = Forum.objects.filter(pk=id)
+        book = Book.objects.get(pk=bookid)
+        forum = Forum.objects.get(pk=id)
 
-        new_reply = Reply(message=message, user=user, book=book, forum=forum)
+        new_reply = Reply(message=message, user=user, forum=forum)
         new_reply.save()
 
         return HttpResponse(b"CREATED", status=201)
