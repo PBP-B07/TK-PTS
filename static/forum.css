@@ -1,5 +1,5 @@
-body {
-    background: white; /* Change this to your desired color */
+    body {
+        background: white; /* Change this to your desired color */
     }
     #forum_container{
         flex-direction: column-reverse;
