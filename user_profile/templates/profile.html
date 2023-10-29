@@ -2,16 +2,73 @@
 
 {% block content %}
     {% include "header.html" %}
-    <h1>{{page}}</h1>
-    <h2>Data Diri</h2>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit Profile by AJAX</button>
-    <table id="profile"></table>
-    <h2>History Reviews</h2>
-    <div id="reviews" class = card-container></div>
-    <h2>History Forums</h2>
-    <div id="forums" class = card-container></div>
-    <h2>History Replies</h2>
-    <div id="replies" class = card-container></div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .scroll-container {
+            height: 200px; /* Adjust the height as needed */
+            overflow-y: scroll;
+            border: 1px solid #ddd; /* Add a border with a light gray color */
+            border-radius: 5px; /* Add rounded corners */
+            padding: 10px; /* Add some padding to the container */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            width: 12px; /* Width of the scrollbar */
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background-color: #888; /* Color of the scrollbar thumb */
+            border-radius: 6px; /* Rounded corners for the scrollbar thumb */
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb:hover {
+            background-color: #555; /* Color of the scrollbar thumb on hover */
+        }
+        .overflow-text{
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+        .card-special:hover {
+        background-color: rgba(0, 0, 0, 0.1); /* Adjust the color and opacity as desired */
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h1>{{ page }}</h1>
+            </div>
+        </div>
+        <div class="row" style = "margin:20px 0;">
+            <div class="col-md-4">
+                <h2>Data Diri</h2>
+                <div id="profile"></div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit Profile</button>
+            </div>
+            <div class="col-md-8">
+                <h2>History Reviews</h2>
+                <div class="scroll-container">
+                    <div id="reviews" class="card-container"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style = "margin:20px 0;">
+            <div class="col-md-4">
+                <h2>History Forums</h2>
+                <div class="scroll-container">
+                    <div id="forums" class="card-container"></div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h2>History Replies</h2>
+                <div class="scroll-container">
+                    <div id="replies" class="card-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- modal edit profile -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -107,11 +164,13 @@
             // You need to create an instance of the modal
             document.getElementById("readModalBody").innerHTML = ""
             let item = await getReview(id)
+            const bookStarRating = generateStarRating(item[0].book__rating);
+            const userStarRating = generateStarRating(item[0].star);
             let htmlString = `
-                <h1>${item[0].book__title}</h1>
-                <p>${item[0].star}</p>
-                <p>${item[0].description}</p>
-                <p>${item[0].date_added}</p>
+                <h1>${item[0].book__title} ${bookStarRating}</h1>
+                <p>You rated ${userStarRating} ${item[0].star} Star</p>
+                <p style="font-style: italic; font-weight: 300px;>You commented "${item[0].description}"</p>
+                <p class="text-secondary">${item[0].date_added}</p>
             `
             document.getElementById("readModalBody").innerHTML = htmlString
             const modal = new bootstrap.Modal(document.getElementById("readModal"));
@@ -129,9 +188,12 @@
                     creator = item.forum__user__username
                 }
             let htmlString = `
-                <h1>${item[0].forum__subject}</h1>
-                <p>created by ${creator}</p>
-                <p style="font-weight: 300; font-style: italic;">${item[0].message}</p>
+                <div class="card mb-2">
+                    <div class="card-body d-flex flex-column">
+                        <p class="my-0">You replied "${item[0].message}"</p>
+                        <p class="text-secondary my-0" style="font-size: 12px; text-align: right">on forum ${item[0].forum__subject} created by ${creator}</p>
+                    </div>
+                </div>
             `
             document.getElementById("readModalBody").innerHTML = htmlString
             const modal = new bootstrap.Modal(document.getElementById("readModal"));
@@ -208,15 +270,14 @@
         async function refreshProfile() {
             document.getElementById("profile").innerHTML = ""
             let products = await getProfile()
-            let htmlString = `<tr>
-                <th>Name</th>
-                <th>Description</th>
-            </tr>`
+            let htmlString = ""
+            let username = "{{ user.username|safe }}"
             products.forEach((item) => {
-                htmlString += `\n<tr>
-                <td>${item.fields.name}</td>
-                <td>${item.fields.description}</td>
-            </tr>` 
+                htmlString += `
+                <h2 style="font-size: 20px">Welcome ${username} (${item.fields.name}),</h2> 
+                <p>you describe yourself as:</p>
+                <p style="font-style: italic; font-weight: 300px;">${item.fields.description}</p>
+                ` 
             })
             
             document.getElementById("profile").innerHTML = htmlString
@@ -229,19 +290,30 @@
             let products = await getReviews()
             let htmlString = ``
             products.forEach((item) => {
+                const userStarRating = generateStarRating(item.star);
+                const bookStarRating = generateStarRating(item.book__rating);
                 htmlString += `
-                <div class="card">
+                <div class="card card-special mb-2">
+                    <div class="card-head"></div>
                     <div class="card-body" id="review-${item.pk}" onclick="openReadModal(${item.pk})">
-                        <p>${item.book__rating} Tes<p>
-                        <p>${item.book__title}<p>
-                        <p>${item.star} Star</p>
-                        <p>${item.description}</p>
-                        <p>${item.date_added}</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-8">
+                                <h2 class="overflow-text" style="font-size: 28px;">${item.book__title}</h2>
+                            </div><div class="col-4 d-flex justify-content-end">
+                                <p style="font-size: 24px;">${bookStarRating} ${item.book__rating} Star</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-0">
+                            <p> You rated ${userStarRating} ${item.star} Star</p>
+                            <p class="text-secondary">${item.date_added}</p>
+                        </div>
+                        <p class="overflow-text" style="font-style: italic; font-weight: 300px;">You commented "${item.description}"</p>
                         <a href="/books/${item.book__pk}" onclick="stopPropagation(event)" class="btn btn-primary">Lihat Buku</a>
                         <a onclick="openDeleteModal(event, ${item.pk})" class="btn btn-danger">Delete</a>
-                        <button id = "edit-review-${item.pk}"type="button" class="btn btn-primary" onclick="openEditModal(event, ${item.pk})">Edit</button>
+                        <button id="edit-review-${item.pk}" type="button" class="btn btn-primary" onclick="openEditModal(event, ${item.pk})">Edit</button>
                     </div>
-                </div>` 
+                </div>
+` 
             })
 
             document.getElementById("reviews").innerHTML = htmlString
@@ -252,11 +324,17 @@
             let htmlString = ``
             products.forEach((item) => {
                 htmlString += `
-                <div class="card">
+                <div class="card mb-2">
                     <div class="card-body" id="forum-${item.pk}">
-                        <p>${item.subject} created by You<p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-8">
+                                <h2 style="font-size: 24px;">${item.subject}</h2>
+                            </div><div class="col-4 d-flex justify-content-end">
+                                <p class="text-secondary" style="font-size: 12px;">created by You</p>
+                            </div>
+                        </div>
                         <p style="font-weight: 300; font-style: italic;">${item.description}</p>
-                        <p>${item.date_added}</p>
+                        <p class="text-secondary">${item.date_added}</p>
                     </div>
                 </div>` 
             })
@@ -276,12 +354,12 @@
                     creator = item.forum__user__username
                 }
                 htmlString += `
-                <div class="card">
-                    <div class="card-body" id="forum-${item.pk}" onclick="openRepliesModal(${item.pk})">
-                        <p>Your message on forum ${item.forum__subject} created by ${creator}<p>
-                        <p style="font-weight: 300; font-style: italic;">${item.message}</p>
+                <div class="card card-special mb-2">
+                    <div class="card-body d-flex flex-column" id="forum-${item.pk}" onclick="openRepliesModal(${item.pk})">
+                        <p class="overflow-text my-0">You replied "${item.message}"</p>
+                        <p class="text-secondary my-0" style="font-size: 12px; text-align: right">on forum ${item.forum__subject} created by ${creator}</p>
                     </div>
-                </div>` 
+                </div>`
             })
 
             document.getElementById("replies").innerHTML = htmlString
@@ -289,6 +367,12 @@
         function refreshStarText() {
             const slider = document.getElementById("star");
             document.getElementById("star-text").innerHTML = `${slider.value} stars`;
+        }
+        function generateStarRating(starCount) {
+            starCount = Math.round(starCount)
+            const filledStars = '<i class="fa fa-star"></i>'.repeat(starCount);
+            const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(5 - starCount);
+            return filledStars + emptyStars;
         }
 
         refreshProfile()
