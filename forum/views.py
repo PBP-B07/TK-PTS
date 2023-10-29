@@ -61,7 +61,10 @@ def add_reply_ajax(request,bookid,id):
         user = request.user
         book = Book.objects.get(pk=bookid)
         forum = Forum.objects.get(pk=id)
-
+        
+        forum.total_reply +=1 
+        forum.save()
+        
         if message:
             new_reply = Reply(message=message, user=user, forum=forum)
             new_reply.save()

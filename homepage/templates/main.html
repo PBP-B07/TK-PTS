@@ -1,35 +1,62 @@
 {% extends 'base.html' %}
-
+{%load static%}
 {% block content %}
     {% include "header.html" %}
-    <h1>{{ page }}</h1>
+
+    <link rel="stylesheet" href="{% static 'homepage.css' %}"> 
+
+    <script src="{% static 'homepage.js' %}"></script>
     
-    <h2 style="text-align: center;">Review CS Books</h2> <!-- Add this line -->
+    <h2 style="text-align: center;">Review CS Books</h2>
+    <h1 style="text-align: center;font-size: 21px;">Selamat Datang {{username}}</h2>
 
     <div class="container">
-        <h2>Top Latest Reviews</h2>
-        <table id="review_table"></table>
-        
-        <h2>Latest Event</h2>
-        <table id="event_table"></table>
-        <div class="book-box" id="bookBox"></div>
-        <h5>Sesi terakhir login: 2023-10-31 13:45:00</h5>
-        <a href="{% url 'autentifikasi:logout'%}">
-            <button class="logout-button">Logout</button>
-        </a>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal">Add Event</button>
+        <div class="container-review">
+            <h2>Top Latest Reviews</h2>
+            <table id="review_table"></table>
+        </div>
 
+        <div class="container-event">
+            <h2>Latest Event</h2>
+            <table id="event_table"></table>
+        </div>
+
+        <div class ="container-forum">
+            <h2>Latest Forum From {{ username }}</h2>
+            <table id="forum_table"></table>
+        </div>
+
+        <div class ="container-busiest">
+            <h2>Busiest Forum From {{ username }}</h2>
+            <table id="busiest_table"></table>
+        </div>
+
+        <div class ="recomended">
+            <h2>Recomended Forum From All User</h2>
+            <table id="recomended_forum"></table>
+        </div>
+
+        <div class ="not-recomended">
+            <h2>Not Recomended Forum From All User</h2>
+            <table id="not_recomended_forum"></table>
+        </div>
+
+
+        <h5>Sesi terakhir login: {{last_login}}</h5>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal">Add Event</button>
     </div>
 
-    <div class="card_text">
-    <img class ="img_deg" src="https://i.ibb.co/D8thd62/Whats-App-Image-2023-10-29-at-00-58-37-2bf19a12.jpg">
-    <h2>About UlasBuku</h2>
-    <p>"UlasBuku adalah platform online di mana para pecinta Computer Science
+    
+    <div id="card_text" class="card_text">
+        <img class ="img_deg" src="https://i.ibb.co/D8thd62/Whats-App-Image-2023-10-29-at-00-58-37-2bf19a12.jpg">
+        <h2>About UlasBuku</h2>
+        <p>"UlasBuku adalah platform online di mana para pecinta Computer Science
         dapat memberikan ulasan jujur tentang buku-buku yang mereka baca.
         Tujuannya untuk membantu orang lain menghindari kesalahan dan memastikan nilai setiap pembelian buku.
         Dengan pertumbuhan pengguna, kami terus hadirkan fitur baru.
         Kami meluncurkan forum diskusi untuk anggota berbagi konsep dari buku yang mereka baca,
         bertukar perspektif, dan bantuan dalam topik sulit."</p>
+        </div>
 
     <div id="review_table" data-username="{{ username }}" data-pk="{{ pk }}"></div>
     <div id="book-list"></div>
@@ -43,19 +70,13 @@
             <div class="modal-body">
                 <form id="form" onsubmit="return false;">
                     {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="select-filter">Filter reviews by:</label>
-                        <select name="select-filter" id="select-filter" onclick="populateCategories()">
-                        </select>
                     
                     <div class="mb-3">
-                        <label for="name" class="col-form-label">Title:</label>
-                        <input type="text" class="form-control" id="title" name="title"></input>
+                        <label for="select-filter">Event by:</label>
+                        <select name="select-filter" id="select-filter" onclick="populateCategories()">
+                        </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="description" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="description" name="description"></textarea>
-                    </div>
+                        {{form.as_table}}
                 </form>
             </div>
             <div class="modal-footer">
@@ -66,152 +87,16 @@
     </div>
 </div>
 
-<style>
 
-    .img_deg{
-        float: right;
-        width: 20%;
-    }
-
-    .card_text{
-        position: absolute;
-        width: 80%;
-        left: 12%;
-        background-color: skyblue;
-        padding: 30px;
-
-    }
-      
-    html, body {
-        background-color: #f2f2f2;
-        color: #333;
-      }
-      
-      /* Add some padding and margin to the container */
-      .container {
-        padding: 20px;
-        margin: 20px;
-      }
-      
-      /* Style the tables */
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-      }
-      
-      th, td {
-        padding: 10px;
-        border: 1px solid #ccc;
-      }
-      
-      th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-      }
-      
-      /* Style the buttons */
-      button {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-      }
-      
-      button:hover {
-        background-color: #0056b3;
-      }
-      
-      /* Style the modal */
-      .modal-content {
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      
-      .modal-header {
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px;
-      }
-      
-      .modal-title {
-        font-size: 18px;
-      }
-      
-      .modal-body {
-        padding: 20px;
-      }
-      
-      .modal-footer {
-        padding: 10px;
-        text-align: right;
-      }
-      
-      /* Style the logout button */
-      .logout-button {
-        background-color: #dc3545;
-      }
-      
-      .logout-button:hover {
-        background-color: #c82333;
-      }
-      
-      /* Style the book box */
-      .book-box {
-        background-color: #fff;
-        border: 1px solid #ccc;
-        padding: 20px;
-        margin-bottom: 20px;
-      }
-      
-      /* Style the book description */
-      #bookDescription {
-        display: none;
-        margin-top: 10px;
-        font-style: italic;
-        color: #777;
-      }
-      
-      /* Style the review table */
-      #review_table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-      }
-      
-      #review_table th, #review_table td {
-        padding: 10px;
-        border: 1px solid #ccc;
-      }
-      
-      #review_table th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-      }
-
-      
-      
-      /* Add some spacing to the page */
-      h1, h5 {
-        margin-bottom: 10px;
-      }
-
-      
-      
-    </style>
 
     <script>
-        // get event 
+        // get event dari user
         async function getEvent() {
             const events = fetch("{% url 'homepage:get_event' %}").then((res) => res.json())
-            console.log(events)
             return events
         }
 
         async function addEvent() {
-            console.log("hi")
             fetch("{% url 'homepage:add_event_ajax' %}", {
                 method: "POST",
                 body: new FormData(document.querySelector('#form'))
@@ -223,7 +108,6 @@
         
         document.getElementById("button_add").onclick = addEvent
         
-    
         async function refreshEvents() {
             const eventsContainer = document.getElementById("event_table");
             eventsContainer.innerHTML = ""; 
@@ -239,7 +123,7 @@
                 htmlString += `\n<tr>
                 <td>${item.title}</td>
                 <td>${item.description}</td>
-                <td>${item.book__title}</td>
+                <td><a href="/books/${item.book__pk}/">${item.book__title}</td>
 
             </tr>` 
             })
@@ -247,59 +131,19 @@
             document.getElementById("event_table").innerHTML = htmlString
         }
 
-        // Panggil fungsi refreshEvents untuk menampilkan kartu-kartu event
         refreshEvents();
-  
-
-
-
 
         // get BOOK 
+        // untuk menampilkan filter berdasarkan title 
         async function getBook() {
             return fetch("{% url 'homepage:get_book' %}").then((res) => res.json())
         }
-    
-        async function refreshProducts() {
-            document.getElementById("bookBox").innerHTML = "";
-            const products = await getBook(); // Pastikan fungsi getBook mengembalikan data buku dari server
-            let htmlString = '';
-        
-            products.forEach((item) => {
-                htmlString += `<div>
-                    <strong>Title:</strong> "${item.fields.title}"<br>
-                    <strong>Author:</strong> "${item.fields.author}"<br>
-                    <strong>Description:</strong> "${item.fields.description}"<br>
-                    <a href="{% url 'homepage:book_detail' book_id=1 %}">Detail</a>
-                </div>`;
-            });
-        
-            document.getElementById("bookBox").innerHTML = htmlString;
-        }
-        
-    
-        refreshProducts()
-    
-        var bookBox = document.getElementById('bookBox');
-        var bookDescription = document.getElementById('bookDescription');
-    
-        bookBox.addEventListener('click', function() {
-            if (bookDescription.style.display === 'none' || bookDescription.style.display === '') {
-                bookDescription.style.display = 'block';
-            } else {
-                bookDescription.style.display = 'none';
-            }
-        });
     
         function logout() {
             alert('Logout berhasil!');
         }
 
-
-
-
-
-
-        // get review
+        // get review terbaru berdasarkan urutan star 
         async function getReview() {
             return fetch("{% url 'homepage:get_review' %}?sort=star").then((res) => res.json())
         }
@@ -308,8 +152,6 @@
             document.getElementById("review_table").innerHTML = "";
             const reviews = await getReview();
 
-            console.log(reviews) 
-            console.log({{pk}}) 
             let htmlString = `<tr>
                 <th>User</th>
                 <th>Title</th>
@@ -320,7 +162,7 @@
             reviews.forEach((review) => {
                 htmlString += `\n<tr>
                 <td>${review.profile__name}</td>
-                <td>${review.book__title}</td>
+                <td><a href="/books/${review.book__pk}/">${review.book__title}</td>
                 <td>${review.star}/5</td>
                 <td>${review.description}</td>
                 
@@ -332,11 +174,7 @@
 
         refreshReview()
 
-
-
-
-
-
+        // get kategori untuk setiap title di modal 
         async function getCategories() {
             const url = "{% url 'homepage:get_categories' %}";
             const response = await fetch(url);
@@ -362,8 +200,6 @@
 
         async function populateCategories() {
             const books = await getBook();
-            console.log(books)
-            console.log("halo")
             const select = document.getElementById("select-filter");
             // Menghapus semua opsi sebelumnya kecuali opsi pertama ("All Categories")
             books.forEach(book => {
@@ -374,7 +210,130 @@
             });
         }
 
+
+        // get forum terbaru 
+        async function getForum() {
+            return fetch("{% url 'homepage:get_forum' %}").then((res) => res.json())
+        }
+
+        async function refreshForum(){
+            document.getElementById("forum_table").innerHTML = "";
+            const forums = await getForum();
+            
+            let htmlString = `<tr>
+                <th>Title</th>
+                <th>Subject</th>
+                <th>Description</th>
+               
+            </tr>`
+            forums.forEach((forum) => {
+                htmlString += `\n<tr>
+                <td><a href="/books/${forum.book__pk}/">${forum.book__title}</td>
+                <td>${forum.subject}</td>
+                <td>${forum.description}</td>
+                
+            </tr>` 
+            })
+        
+            document.getElementById("forum_table").innerHTML = htmlString;
+        }
+
+        refreshForum()
+
+        // get busiest forum 
+        async function getBusiestforum() {
+            return fetch("{% url 'homepage:get_busiest_forum' %}").then((res) => res.json())
+        }
+
+        async function refreshBusiest(){
+            document.getElementById("busiest_table").innerHTML = "";
+            const forums = await getBusiestforum();
+            
+            let htmlString = `<tr>
+                <th>Title</th>
+                <th>Subject</th>
+                <th>Description</th>
+               
+            </tr>`
+            forums.forEach((forum) => {
+                htmlString += `\n<tr>
+                <td><a href="/books/${forum.book__pk}/">${forum.book__title}</td>
+                <td>${forum.subject}</td>
+                <td>${forum.description}</td>
+                
+            </tr>` 
+            })
+        
+            document.getElementById("busiest_table").innerHTML = htmlString;
+        }
+
+        refreshBusiest()
+
+
+        // get recomended forum dari seluruh user 
+        async function getRecomended() {
+            return fetch("{% url 'homepage:get_recomended_forum' %}").then((res) => res.json())
+        }
+
+        async function refreshRecomended(){
+            document.getElementById("recomended_forum").innerHTML = "";
+            const forums = await getRecomended();
+            
+            let htmlString = `<tr>
+                <th>Title</th>
+                <th>User</th>
+                <th>Subject</th>
+                <th>Description</th>
+               
+            </tr>`
+            forums.forEach((forum) => {
+                htmlString += `\n<tr>
+                <td><a href="/books/${forum.book__pk}/">${forum.book__title}</td>
+                <td>${forum.user__username}</td>
+                <td>${forum.subject}</td>
+                <td>${forum.description}</td>
+                
+            </tr>` 
+            })
+        
+            document.getElementById("recomended_forum").innerHTML = htmlString;
+        }
+
+        refreshRecomended()
+
+
+
+        // get not recomended forum dari seluruh user 
+        async function getNotrecomended() {
+            return fetch("{% url 'homepage:get_not_recomended_forum' %}").then((res) => res.json())
+        }
+
+        async function refreshNotrecomended(){
+            document.getElementById("not_recomended_forum").innerHTML = "";
+            const forums = await getNotrecomended();
+            
+            let htmlString = `<tr>
+                <th>Title</th>
+                <th>User</th>
+                <th>Subject</th>
+                <th>Description</th>
+               
+            </tr>`
+            forums.forEach((forum) => {
+                htmlString += `\n<tr>
+                <td><a href="/books/${forum.book__pk}/">${forum.book__title}</td>
+                <td>${forum.user__username}</td>
+                <td>${forum.subject}</td>
+                <td>${forum.description}</td>
+                
+            </tr>` 
+            })
+        
+            document.getElementById("not_recomended_forum").innerHTML = htmlString;
+        }
+
+        refreshNotrecomended()
+
+
     </script>
 {% endblock content %}
-
-
