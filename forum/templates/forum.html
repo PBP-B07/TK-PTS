@@ -44,6 +44,7 @@
 
             .center-align {
                 text-align: center;
+                margin-top: 30px;
             }
 
             .row{
@@ -60,22 +61,17 @@
                 padding: 10px;
             }
             .container {
-            border: 2px solid #8bd8ed;
-            background-color: #8bd8ed;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 10px 0;
-            }
-
-            .darker {
-            border-color: #2f97b4;
-            background-color: #2f97b4;
+                border: 2px solid #8bd8ed;
+                background-color: #8bd8ed;
+                border-radius: 5px;
+                padding: 10px;
+                margin: 10px 0;
             }
 
             .container::after {
-            content: "";
-            clear: both;
-            display: table;
+                content: "";
+                clear: both;
+                display: table;
             }
 
             .chat-frame-container {
@@ -87,10 +83,11 @@
                 width: 100%;
                 height: 100%;
                 position: relative;
+                margin-bottom: 10px;
             }
             .reply{
-                border: 2px solid #8bd8ed;
-                background-color: #8bd8ed;
+                border: 2px solid #ffffff;
+                background-color: #ffffff;
                 border-radius: 5px;
                 padding: 10px;
                 margin: 10px 0;
@@ -103,26 +100,28 @@
                 clear: both;
             }
             .input{
-                width: calc(100%-25px);
-                box-sizing: border-box; 
-                border: 5px solid #d7d7d7; 
-                padding: 10px;
-                border-color: #d7d7d7; 
+                border: 5px solid #ffffff; 
+                border-color: #ffffff; 
             }
             #reply_box{
                 height:75%;
             }
             #message_form{
-                position: absolute; /* Position absolutely within chat-frame */
-                bottom: 0; /* Stick to the bottom of the chat-frame */
+                border-radius: 5px;
                 display: flex;
-                width: 100%;
-                background-color: white; /* Adjust the background color as needed */
-                border-top: 1px solid #d7d7d7; /* Add a border to separate it from the chat-frame */
+                background-color: #d7d7d7; /* Adjust the background color as needed */
                 padding: 10px;
             }
             #form_container{
-                height: auto;
+                width: 100%;
+            }
+            .chat-frame-container {
+                width: 100%;
+                max-height: 400px; /* Set a fixed height or max-height for scrolling */
+                overflow-y: auto; /* Enable vertical scrolling when content overflows */
+            }
+            .input_message{
+                text-align: right;
             }
         </style>
     </head>
@@ -148,14 +147,7 @@
                 <div class="modal-body">
                     <form id="form" onsubmit="return false;">
                         {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="subject" class="col-form-label">Subject:</label>
-                            <input type="text" class="form-control" id="subject" name="subject"></input>
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="col-form-label">Description:</label>
-                            <textarea class="form-control" id="description" name="description"></textarea>
-                        </div>
+                        {{form.as_p}}
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -170,11 +162,11 @@
         <div id="forum_container">
         </div>
         <div id="reply_container">
-            <div class="frame chat-frame">
+            <div class="frame chat-frame chat-frame-container">
                 <h1>Replies</h1>
                 <div id="reply_box"></div>
-                <div id="form_container"></div>
             </div>
+            <div id="form_container"></div>
         </div>
     </div>
 
@@ -250,8 +242,8 @@
     document.getElementById("reply_box").innerHTML = htmlString
     document.getElementById("form_container").innerHTML = `
                 <form id="message_form">
-                    <input type="text" class="input" id="message_input" placeholder="Enter your reply message">
-                    <button type="submit" id="input_message")>Send</button>
+                    <input type="textarea" class="input" id="message_input" placeholder="Enter your reply message"></input>
+                    <button type="submit" id="input_message" class="input_message")>Send</button>
                 </form>
         `
     // Add event listener to reply form
