@@ -1,0 +1,159 @@
+/* Reset some default styles */
+body, h1, h2, h3, p, ul, li, table {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Global styles */
+.img_deg {
+    float: right;
+    width: 20%;
+}
+
+.card_text {
+    position: absolute;
+    width: 80%;
+    left: 12%;
+    background-color: skyblue;
+    padding: 30px;
+}
+
+.container-forum h2:hover,
+.container-review h2:hover,
+.container-event h2:hover,
+.container-busiest h2:hover,
+.recomended h2:hover,
+.not-recomended h2:hover {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: all 0.1s ease;
+}
+
+/* Container styles */
+html, body {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.container {
+    padding: 20px;
+    margin: 20px;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* Button styles */
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Modal styles */
+.modal-content {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+}
+
+.modal-title {
+    font-size: 18px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 10px;
+    text-align: right;
+}
+
+/* Logout button styles */
+.logout-button {
+    background-color: #dc3545;
+}
+
+.logout-button:hover {
+    background-color: #c82333;
+}
+
+/* Book box styles */
+.book-box {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Book description styles */
+#bookDescription {
+    display: none;
+    margin-top: 10px;
+    font-style: italic;
+    color: #777;
+}
+
+/* Review table styles */
+#review_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#review_table th, #review_table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+#review_table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* Additional spacing styles */
+h1, h5 {
+    margin-bottom: 10px;
+}
+
+/* Card styles */
+.card {
+    width: 270px;
+    height: 150px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
