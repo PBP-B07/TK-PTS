@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import BookEvent
 from book.models import Book
+from forum.models import Forum 
 from django.db.models import Q
 
 # Create your views here.
@@ -19,7 +20,8 @@ def show_main(request):
         'page': 'homepage',
         'last_login': request.COOKIES['last_login'],
         'username': request.user.username,
-        'pk' : request.user.pk
+        'pk' : request.user.pk,
+        'book' : Book.objects.all()
     }
 
     return render(request, "main.html", context)
@@ -44,14 +46,13 @@ def create_event(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Metode permintaan tidak valid.'})
 
-
 @csrf_exempt
 def add_event_ajax(request):
     if request.method == 'POST':
         title = request.POST.get("title")
         description = request.POST.get("description")
-        book = Book.objects.get()
-
+        book_title = request.POST.get("select-filter")
+        book = Book.objects.get(title=book_title)
         new_event = BookEvent(title=title, description=description, book=book)
         new_event.save()
 
@@ -60,20 +61,48 @@ def add_event_ajax(request):
     return HttpResponseNotFound()
 
 
-def get_latest_review(request):
-    reviews = Review.objects.filter(user=request.user.pk)
-    return HttpResponse(serializers.serialize('json',reviews))
-
 def get_review(request):
-    review = Review.objects.all()
-    return HttpResponse(serializers.serialize('json',review))
-
+    review = Review.objects.order_by('-star')[:3].values(
+        'profile__name', 'book__title', 'star', 'description'
+    )
+    return JsonResponse(list(review), safe=False)
 
 def get_book(request):
     book = Book.objects.all()
     return HttpResponse(serializers.serialize("json",book))
 
 def get_event(request):
-    bookEvent = BookEvent.objects.filter(pk=1)
-    return HttpResponse(serializers.serialize("json",bookEvent))
+    bookEvent = BookEvent.objects.all().values('book__title','title','description','book')
+    return JsonResponse(list(bookEvent), safe=False)
 
+def get_product_json(request):
+    query = request.GET.get('query', '')  # mendapatkan query pencarian dari parameter GET
+    category = request.GET.get('category', '')  # mendapatkan kategori dari parameter GET
+    
+    # Memulai dengan semua buku
+    books = Book.objects.all()
+    
+    # Jika ada query pencarian, filter buku yang judulnya mengandung query
+    if query:
+        books = books.filter(title__icontains=query)
+    
+    # Jika ada kategori yang dipilih, filter buku berdasarkan kategori
+    if category:
+        books = books.filter(category__iexact=category)  # Assuming your field name is 'category'
+    
+    # Mengurutkan buku berdasarkan judul
+    books = books.order_by('title')
+    
+    # Mengonversi queryset ke format JSON dan mengembalikannya sebagai respons
+    books_json = serializers.serialize('json', books)
+    return HttpResponse(books_json)
+
+def get_categories_json(request):
+    categories = Book.objects.values_list('category', flat=True).distinct()
+    return JsonResponse(list(categories), safe=False)
+
+def get_forum(request):
+    forum = Forum.objects.order_by('-star')[:3].values(
+        'profile__name', 'book__title', 'star', 'description'
+    )
+    return JsonResponse(list(forum), safe=False)

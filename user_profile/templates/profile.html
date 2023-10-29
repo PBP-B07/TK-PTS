@@ -3,14 +3,17 @@
 {% block content %}
     {% include "header.html" %}
     <h1>{{page}}</h1>
-    <h2>Description</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed hendrerit dolor. Vestibulum vel fringilla orci, non varius nunc. Praesent vehicula, justo eu dictum consequat, risus libero interdum purus, sed dignissim quam lorem non nunc. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Proin in augue eu ex imperdiet consectetur vel in purus. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Sed auctor hendrerit purus, ac aliquet urna sollicitudin a. Vivamus vulputate augue sit amet est suscipit, eu tempus justo hendrerit.</p>
-    <p style="font-weight: 300; font-style: italic;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <h2>Data Diri</h2>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit Profile by AJAX</button>
     <table id="profile"></table>
+    <h2>History Reviews</h2>
+    <div id="reviews" class = card-container></div>
+    <h2>History Forums</h2>
+    <div id="forums" class = card-container></div>
+    <h2>History Replies</h2>
+    <div id="replies" class = card-container></div>
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit Product by AJAX</button>
-
-    <!-- modal edit -->
+    <!-- modal edit profile -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -39,24 +42,172 @@
         </div>
     </div>
 
+    <!-- modal read -->
+    <div class="modal fade" id="readModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Read</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-content" id ="readModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal edit review -->
+    <div class="modal fade" id="editReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="review-editModalLabel"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="review-form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="rate" class="col-form-label">Rate (0-5 stars):</label>
+                            <input type="range" class="form-control" id="star" name="star" min="0" max="5" value="0" id="rating-slider" onchange="refreshStarText()"></input>
+                            <p id="star-text">0 stars</p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="review_description" class="col-form-label">{{ form_review.description.label_tag }}</label>
+                            <!-- <textarea class="form-control" id="review_description" name="review_description"></textarea> -->
+                            {{ form_review.description }}
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="submit-review" data-bs-dismiss="modal">Edit Review</button>
+                </div>
+            </div>
+        </div>   
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h2>Are you sure you want to delete this review?</h2>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="confirmDeleteBtn" data-bs-dismiss="modal">Yes, Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
+        async function openReadModal(id) {
+            // You need to create an instance of the modal
+            document.getElementById("readModalBody").innerHTML = ""
+            let item = await getReview(id)
+            let htmlString = `
+                <h1>${item[0].book__title}</h1>
+                <p>${item[0].star}</p>
+                <p>${item[0].description}</p>
+                <p>${item[0].date_added}</p>
+            `
+            document.getElementById("readModalBody").innerHTML = htmlString
+            const modal = new bootstrap.Modal(document.getElementById("readModal"));
+            modal.show();
+        }
+        async function openRepliesModal(id) {
+            // You need to create an instance of the modal
+            document.getElementById("readModalBody").innerHTML = ""
+            let item = await getReply(id)
+            let user_pk = "{{ user.pk|safe }}"
+            let creator = ""
+                if (item[0].forum__user__pk == user_pk){
+                    creator = "You"
+                } else {
+                    creator = item.forum__user__username
+                }
+            let htmlString = `
+                <h1>${item[0].forum__subject}</h1>
+                <p>created by ${creator}</p>
+                <p style="font-weight: 300; font-style: italic;">${item[0].message}</p>
+            `
+            document.getElementById("readModalBody").innerHTML = htmlString
+            const modal = new bootstrap.Modal(document.getElementById("readModal"));
+            modal.show();
+        }
+        async function openEditModal(event, id) {
+            event.stopPropagation();
+            let item = await getReview(id)
+            document.getElementById("star").value = item[0].star;
+            document.getElementById("star-text").textContent = item[0].star + ' stars';
+            document.getElementById("review_description").textContent = item[0].description;
+            document.getElementById("review-editModalLabel").textContent = 'Edit Review for ' + item[0].book__title;
+            document.getElementById("submit-review").onclick = function() {
+                editReview(id);
+            };
+            const modal = new bootstrap.Modal(document.getElementById("editReviewModal"));
+            modal.show();
+        }
+        async function openDeleteModal(event, id) {
+            event.stopPropagation();
+            document.getElementById("confirmDeleteBtn").onclick = function() {
+                deleteReview(id)
+            };
+            const modal = new bootstrap.Modal(document.getElementById("deleteModal"));
+            modal.show();
+        }
+    
         async function getProfile() {
             return fetch("{% url 'user_profile:get_profile' %}").then((res) => res.json())
         }
-        function editProduct() {
+        async function getReviews() {
+            return fetch("{% url 'user_profile:get_reviews' %}").then((res) => res.json())
+        }
+        async function getForums() {
+            return fetch("{% url 'user_profile:get_forum' %}").then((res) => res.json())
+        }
+        async function getReplies() {
+            return fetch("{% url 'user_profile:get_reply' %}").then((res) => res.json())
+        }
+        async function getReview(id){
+            return fetch(`get_review/${id}/`).then((res) => res.json())
+        }
+        async function getReply(id){
+            return fetch(`get_reply/${id}/`).then((res) => res.json())
+        }
+
+        async function editProfile() {
             fetch("{% url 'user_profile:edit_profile_ajax' %}", {
                 method: "POST",
                 body: new FormData(document.querySelector('#formEdit'))
-            }).then(refreshProducts)
+            }).then(refreshProfile)
 
-            document.getElementById("form").reset()
+            document.getElementById("formEdit").reset()
             return false
         }
-        document.getElementById("button_edit").onclick = editProduct
-        async function refreshProducts() {
+        document.getElementById("button_edit").onclick = editProfile
+
+        async function editReview(id) {
+            console.log(id)
+            fetch(`edit_review/${id}/`, {
+                method: "POST",
+                body: new FormData(document.querySelector('#review-form'))
+            }).then(refreshReviews)
+
+            document.getElementById("review-form").reset()
+            return false
+        }
+        async function deleteReview(id) {
+            fetch(`delete_review/${id}/`, {
+                method: 'POST',
+            }).then(refreshReviews)
+        }
+        
+        async function refreshProfile() {
             document.getElementById("profile").innerHTML = ""
             let products = await getProfile()
-            console.log(products)
             let htmlString = `<tr>
                 <th>Name</th>
                 <th>Description</th>
@@ -70,7 +221,79 @@
             
             document.getElementById("profile").innerHTML = htmlString
         }
+        function stopPropagation(event){
+            event.stopPropagation();
+        }
+        async function refreshReviews() {
+            document.getElementById("reviews").innerHTML = ""
+            let products = await getReviews()
+            let htmlString = ``
+            products.forEach((item) => {
+                htmlString += `
+                <div class="card">
+                    <div class="card-body" id="review-${item.pk}" onclick="openReadModal(${item.pk})">
+                        <p>${item.book__rating} Tes<p>
+                        <p>${item.book__title}<p>
+                        <p>${item.star} Star</p>
+                        <p>${item.description}</p>
+                        <p>${item.date_added}</p>
+                        <a href="/books/${item.book__pk}" onclick="stopPropagation(event)" class="btn btn-primary">Lihat Buku</a>
+                        <a onclick="openDeleteModal(event, ${item.pk})" class="btn btn-danger">Delete</a>
+                        <button id = "edit-review-${item.pk}"type="button" class="btn btn-primary" onclick="openEditModal(event, ${item.pk})">Edit</button>
+                    </div>
+                </div>` 
+            })
 
-        refreshProducts()
+            document.getElementById("reviews").innerHTML = htmlString
+        }
+        async function refreshForums() {
+            document.getElementById("forums").innerHTML = ""
+            let products = await getForums()
+            let htmlString = ``
+            products.forEach((item) => {
+                htmlString += `
+                <div class="card">
+                    <div class="card-body" id="forum-${item.pk}">
+                        <p>${item.subject} created by You<p>
+                        <p style="font-weight: 300; font-style: italic;">${item.description}</p>
+                        <p>${item.date_added}</p>
+                    </div>
+                </div>` 
+            })
+
+            document.getElementById("forums").innerHTML = htmlString
+        }
+        async function refreshReplies() {
+            document.getElementById("replies").innerHTML = ""
+            let products = await getReplies()
+            let htmlString = ``
+            let user_pk = "{{ user.pk|safe }}"
+            products.forEach((item) => {
+                let creator = ""
+                if (item.forum__user__pk == user_pk){
+                    creator = "You"
+                } else {
+                    creator = item.forum__user__username
+                }
+                htmlString += `
+                <div class="card">
+                    <div class="card-body" id="forum-${item.pk}" onclick="openRepliesModal(${item.pk})">
+                        <p>Your message on forum ${item.forum__subject} created by ${creator}<p>
+                        <p style="font-weight: 300; font-style: italic;">${item.message}</p>
+                    </div>
+                </div>` 
+            })
+
+            document.getElementById("replies").innerHTML = htmlString
+        }
+        function refreshStarText() {
+            const slider = document.getElementById("star");
+            document.getElementById("star-text").innerHTML = `${slider.value} stars`;
+        }
+
+        refreshProfile()
+        refreshReviews()
+        refreshForums()
+        refreshReplies()
     </script>
 {% endblock content %}
