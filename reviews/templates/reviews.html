@@ -73,15 +73,7 @@
                     <div class="modal-body">
                         <form id="review-form" onsubmit="return false;">
                             {% csrf_token %}
-                            <div class="mb-3">
-                                <label for="rate" class="col-form-label">Rate (0-5 stars):</label>
-                                <input type="range" class="form-control" id="star" name="star" min="0" max="5" value="0" id="rating-slider" onchange="refreshStarText()"></input>
-                                <p id="star-text">0 stars</p>
-                            </div>
-                            <div class="mb-3">
-                                <label for="description" class="col-form-label">Description:</label>
-                                <textarea class="form-control" id="description" name="description"></textarea>
-                            </div>
+                            {{form.as_p}}
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -116,10 +108,10 @@
                 refreshReviews(filter);
             }
 
-            function refreshStarText() {
-                const slider = document.getElementById("star");
-                document.getElementById("star-text").innerHTML = `${slider.value} stars`;
-            }
+            // function refreshStarText() {
+            //     const slider = document.getElementById("star");
+            //     document.getElementById("star-text").innerHTML = `${slider.value} stars`;
+            // }
 
             function generateStarRating(starCount) {
                 const filledStars = '<i class="fa fa-star"></i>'.repeat(starCount);
@@ -174,7 +166,6 @@
                     body: new FormData(document.querySelector('#review-form'))
                 }).then(response => {
                     const filter = document.getElementById("select-filter").value;
-                    document.getElementById("star-text").innerHTML = `0 stars`;
                     refreshReviews(filter)
                 })
 
