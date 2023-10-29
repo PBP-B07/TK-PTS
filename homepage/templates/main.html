@@ -294,8 +294,6 @@
         async function refreshReview(){
             document.getElementById("review_table").innerHTML = "";
             const reviews = await getLatestreview();
-            console.log(reviews) 
-            console.log({{pk}}) 
             let htmlString = `<tr>
                 <th>User</th>
                 <th>Description</th>

@@ -34,6 +34,11 @@
                 margin-left: 10px;
             }
             .review-desc {font-style: italic;}
+            .filter-review {
+                text-align: center;
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
         </style>
     </head>
     <body>
@@ -42,9 +47,6 @@
         <br>
         <h2 style="text-align: center;">Reviews of {{ book.title }} by {{ book.author }}</h2>
 
-        <div class="add-review-button">
-            <button type="button" class="btn btn-primary" id="add-new-review" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Review</button>
-        </div>
         <div class="filter-review">
             <label for="select-filter">Filter reviews by:</label>
             <select id="select-filter" onchange="filterReview()">
@@ -56,6 +58,9 @@
                 <option value="1">1 stars</option>
                 <option value="0">0 star</option>
             </select>
+        </div>
+        <div class="add-review-button">
+            <button type="button" class="btn btn-primary" id="add-new-review" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Review</button>
         </div>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
