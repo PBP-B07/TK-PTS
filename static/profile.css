@@ -1,0 +1,30 @@
+.scroll-container {
+    height: 200px; /* Adjust the height as needed */
+    overflow-y: scroll;
+    border: 1px solid #ddd; /* Add a border with a light gray color */
+    border-radius: 5px; /* Add rounded corners */
+    padding: 10px; /* Add some padding to the container */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+}
+
+.scroll-container::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 6px; /* Rounded corners for the scrollbar thumb */
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color of the scrollbar thumb on hover */
+}
+.overflow-text{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+.card-special:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Adjust the color and opacity as desired */
+}
