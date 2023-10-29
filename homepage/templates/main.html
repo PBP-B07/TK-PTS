@@ -2,11 +2,379 @@
 
 {% block content %}
     {% include "header.html" %}
-    <h1>{{page}}</h1>
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-    <a href="{% url 'autentifikasi:logout' %}">
-        <button>
-            Logout
-        </button>
-    </a>
+    <h1>{{ page }}</h1>
+    
+    <h2 style="text-align: center;">Review CS Books</h2> <!-- Add this line -->
+
+    <div class="container">
+        <h2>Top Latest Reviews</h2>
+        <table id="review_table"></table>
+        
+        <h2>Latest Event</h2>
+        <table id="event_table"></table>
+        <div class="book-box" id="bookBox"></div>
+        <h5>Sesi terakhir login: 2023-10-31 13:45:00</h5>
+        <a href="{% url 'autentifikasi:logout'%}">
+            <button class="logout-button">Logout</button>
+        </a>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal">Add Event</button>
+
+    </div>
+
+    <div class="card_text">
+    <img class ="img_deg" src="https://i.ibb.co/D8thd62/Whats-App-Image-2023-10-29-at-00-58-37-2bf19a12.jpg">
+    <h2>About UlasBuku</h2>
+    <p>"UlasBuku adalah platform online di mana para pecinta Computer Science
+        dapat memberikan ulasan jujur tentang buku-buku yang mereka baca.
+        Tujuannya untuk membantu orang lain menghindari kesalahan dan memastikan nilai setiap pembelian buku.
+        Dengan pertumbuhan pengguna, kami terus hadirkan fitur baru.
+        Kami meluncurkan forum diskusi untuk anggota berbagi konsep dari buku yang mereka baca,
+        bertukar perspektif, dan bantuan dalam topik sulit."</p>
+
+    <div id="review_table" data-username="{{ username }}" data-pk="{{ pk }}"></div>
+    <div id="book-list"></div>
+    <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="select-filter">Filter reviews by:</label>
+                        <select name="select-filter" id="select-filter" onclick="populateCategories()">
+                        </select>
+                    
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Title:</label>
+                        <input type="text" class="form-control" id="title" name="title"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Event</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    .img_deg{
+        float: right;
+        width: 20%;
+    }
+
+    .card_text{
+        position: absolute;
+        width: 80%;
+        left: 12%;
+        background-color: skyblue;
+        padding: 30px;
+
+    }
+      
+    html, body {
+        background-color: #f2f2f2;
+        color: #333;
+      }
+      
+      /* Add some padding and margin to the container */
+      .container {
+        padding: 20px;
+        margin: 20px;
+      }
+      
+      /* Style the tables */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      
+      th, td {
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      
+      /* Style the buttons */
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+      
+      button:hover {
+        background-color: #0056b3;
+      }
+      
+      /* Style the modal */
+      .modal-content {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .modal-header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+      }
+      
+      .modal-title {
+        font-size: 18px;
+      }
+      
+      .modal-body {
+        padding: 20px;
+      }
+      
+      .modal-footer {
+        padding: 10px;
+        text-align: right;
+      }
+      
+      /* Style the logout button */
+      .logout-button {
+        background-color: #dc3545;
+      }
+      
+      .logout-button:hover {
+        background-color: #c82333;
+      }
+      
+      /* Style the book box */
+      .book-box {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      
+      /* Style the book description */
+      #bookDescription {
+        display: none;
+        margin-top: 10px;
+        font-style: italic;
+        color: #777;
+      }
+      
+      /* Style the review table */
+      #review_table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      
+      #review_table th, #review_table td {
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+      
+      #review_table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+
+      
+      
+      /* Add some spacing to the page */
+      h1, h5 {
+        margin-bottom: 10px;
+      }
+
+      
+      
+    </style>
+
+    <script>
+        // get event 
+        async function getEvent() {
+            const events = fetch("{% url 'homepage:get_event' %}").then((res) => res.json())
+            console.log(events)
+            return events
+        }
+
+        async function addEvent() {
+            console.log("hi")
+            fetch("{% url 'homepage:add_event_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshEvents)
+    
+            document.getElementById("form").reset()
+            return false
+        }
+        
+        document.getElementById("button_add").onclick = addEvent
+        
+    
+        async function refreshEvents() {
+            const eventsContainer = document.getElementById("event_table");
+            eventsContainer.innerHTML = ""; 
+
+            const events = await getEvent();
+            events.reverse(); 
+            let htmlString = `<tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Book Title</th>
+            </tr>`
+            events.forEach((item) => {
+                htmlString += `\n<tr>
+                <td>${item.title}</td>
+                <td>${item.description}</td>
+                <td>${item.book__title}</td>
+
+            </tr>` 
+            })
+            
+            document.getElementById("event_table").innerHTML = htmlString
+        }
+
+        // Panggil fungsi refreshEvents untuk menampilkan kartu-kartu event
+        refreshEvents();
+  
+
+
+
+
+        // get BOOK 
+        async function getBook() {
+            return fetch("{% url 'homepage:get_book' %}").then((res) => res.json())
+        }
+    
+        async function refreshProducts() {
+            document.getElementById("bookBox").innerHTML = "";
+            const products = await getBook(); // Pastikan fungsi getBook mengembalikan data buku dari server
+            let htmlString = '';
+        
+            products.forEach((item) => {
+                htmlString += `<div>
+                    <strong>Title:</strong> "${item.fields.title}"<br>
+                    <strong>Author:</strong> "${item.fields.author}"<br>
+                    <strong>Description:</strong> "${item.fields.description}"<br>
+                    <a href="{% url 'homepage:book_detail' book_id=1 %}">Detail</a>
+                </div>`;
+            });
+        
+            document.getElementById("bookBox").innerHTML = htmlString;
+        }
+        
+    
+        refreshProducts()
+    
+        var bookBox = document.getElementById('bookBox');
+        var bookDescription = document.getElementById('bookDescription');
+    
+        bookBox.addEventListener('click', function() {
+            if (bookDescription.style.display === 'none' || bookDescription.style.display === '') {
+                bookDescription.style.display = 'block';
+            } else {
+                bookDescription.style.display = 'none';
+            }
+        });
+    
+        function logout() {
+            alert('Logout berhasil!');
+        }
+
+
+
+
+
+
+        // get review
+        async function getReview() {
+            return fetch("{% url 'homepage:get_review' %}?sort=star").then((res) => res.json())
+        }
+
+        async function refreshReview(){
+            document.getElementById("review_table").innerHTML = "";
+            const reviews = await getReview();
+
+            console.log(reviews) 
+            console.log({{pk}}) 
+            let htmlString = `<tr>
+                <th>User</th>
+                <th>Title</th>
+                <th>Rate</th>
+                <th>Description</th>
+               
+            </tr>`
+            reviews.forEach((review) => {
+                htmlString += `\n<tr>
+                <td>${review.profile__name}</td>
+                <td>${review.book__title}</td>
+                <td>${review.star}/5</td>
+                <td>${review.description}</td>
+                
+            </tr>` 
+            })
+        
+            document.getElementById("review_table").innerHTML = htmlString;
+        }
+
+        refreshReview()
+
+
+
+
+
+
+        async function getCategories() {
+            const url = "{% url 'homepage:get_categories' %}";
+            const response = await fetch(url);
+            const categories = await response.json();
+            const select = document.getElementById('categoryFilter');
+            
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.text = category;
+                select.add(option);
+            });
+        }
+
+        window.onload = function() {
+            populateCategories();
+        }
+
+        function filterByCategory() {
+            const selectedCategory = document.getElementById('categoryFilter').value;
+            refreshProducts(selectedCategory);
+        }
+
+        async function populateCategories() {
+            const books = await getBook();
+            console.log(books)
+            console.log("halo")
+            const select = document.getElementById("select-filter");
+            // Menghapus semua opsi sebelumnya kecuali opsi pertama ("All Categories")
+            books.forEach(book => {
+                const option = document.createElement('option');
+                option.value = book.fields.title;
+                option.text = book.fields.title;
+                select.add(option);
+            });
+        }
+
+    </script>
 {% endblock content %}
+
+
