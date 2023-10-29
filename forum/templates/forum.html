@@ -8,11 +8,15 @@
             background: white; /* Change this to your desired color */
             }
             #forum_container{
-                max-width: 50%;
                 flex-direction: column-reverse;
+                float: left;
+                box-sizing: border-box; 
+                width:50%;
             }
             #reply_container{
-                max-width:50%;
+                float: right;
+                box-sizing: border-box; 
+                width:50%;
             }
             button{
                 background: none;
@@ -36,14 +40,6 @@
                 margin-bottom: 50px;
                 border-radius: 15px;
             }
-            .last-item .card {
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-                margin-right: auto;
-                margin-left: 10px;
-                margin-bottom: 25px;
-                background-color: #0096FF; /* Change this to your desired color */
-                color: white;
-            }
 
             .center-align {
                 text-align: center;
@@ -52,21 +48,15 @@
             .row{
                 display: flex;
                 justify-content: space-between;
-            }
-
-            #page {
-            margin: 0 auto;
-            max-width: 800px;
-            padding: 0 20px;
+                width:100%;
             }
             .frame{
                 float: right;
-                max-width:50%; 
-                border: 2px solid #999999;
-                background-color: #999999;
+                max-width:100%; 
+                border: 2px solid #d7d7d7;
+                background-color: #d7d7d7;
                 border-radius: 5px;
                 padding: 10px;
-                margin: 10px 0;
             }
             .container {
             border: 2px solid #8bd8ed;
@@ -87,14 +77,51 @@
             display: table;
             }
 
-            .time-right {
-            float: right;
-            color: #ffffff;
+            .chat-frame-container {
+                width: 100%;
             }
 
-            .time-left {
-            float: left;
-            color: #d6d4d4;
+            .frame.chat-frame {
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                width: 100%;
+                height: 100%;
+                position: relative;
+            }
+            .reply{
+                border: 2px solid #8bd8ed;
+                background-color: #8bd8ed;
+                border-radius: 5px;
+                padding: 10px;
+                margin: 10px 0;
+                color: black;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            }
+            .clearfix::after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            .input{
+                width: calc(100%-25px);
+                box-sizing: border-box; 
+                border: 5px solid #d7d7d7; 
+                padding: 10px;
+                border-color: #d7d7d7; 
+            }
+            #reply_box{
+                height:75%;
+            }
+            #message_form{
+                position: absolute; /* Position absolutely within chat-frame */
+                bottom: 0; /* Stick to the bottom of the chat-frame */
+                display: flex;
+                width: 100%;
+                background-color: white; /* Adjust the background color as needed */
+                border-top: 1px solid #d7d7d7; /* Add a border to separate it from the chat-frame */
+                padding: 10px;
+            }
+            #form_container{
+                height: auto;
             }
         </style>
     </head>
@@ -103,7 +130,8 @@
 {% block content %}
 <body>
 
-    <h1 class="center-align">Forum Discussion of {{book.title}} by {{book.author}} </h1>
+    <h1 class="center-align">Forum</h1>
+    <h2 class="center-align"> Forum Discussion of {{book.title}} by {{book.author}}</h2>
 
     <div class="center-button">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Forum</button>
@@ -137,30 +165,15 @@
         </div>
     </div>
 
-    <div class="row" id="forum_container">
-    </div>
-    
-    <div class="frame">
-        <h2>Chat Messages</h2>
-
-        <div class="container">
-        <p>Hello. How are you today?</p>
-        <span class="time-right">11:00</span>
+    <div class="row clearfix">
+        <div id="forum_container">
         </div>
-
-        <div class="container darker">
-        <p>Hey! I'm fine. Thanks for asking!</p>
-        <span class="time-left">11:01</span>
-        </div>
-
-        <div class="container">
-        <p>Sweet! So, what do you wanna do today?</p>
-        <span class="time-right">11:02</span>
-        </div>
-
-        <div class="container darker">
-        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
-        <span class="time-left">11:05</span>
+        <div id="reply_container">
+            <div class="frame chat-frame">
+                <h1>Replies</h1>
+                <div id="reply_box"></div>
+                <div id="form_container"></div>
+            </div>
         </div>
     </div>
 
@@ -174,24 +187,25 @@
     async function refreshForums() {
         document.getElementById("forum_container").innerHTML = ""
         const forums = await getForums()
+        forums.reverse()
         let htmlString = ''
         let counter = 0
         const totalForums = forums.length
         for (const item of forums) {
             counter++
-            const isLastItem = counter === totalForums
             htmlString += `
-                <button class="row" id="forum_card">
-                    <div class="col s12 m6 l4 ${isLastItem ? 'last-item' : ''}">
+            <button class="row" id="forum_card" onclick="refreshReplies(${item.pk})" data-id="${item.id}">
+                    <div class="col s12 m6 l4">
                         <div class="card">  
                             <div class="card-content">
-                                <span class="card-title", style="font-family: 'Poppins', sans-serif; font-weight: bold;">${item.fields.subject}</span>
-                                <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">${item.fields.description}</p>
-                                <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">Date Added: ${item.fields.date_added}</p>
+                                <h5 class="card-title", style="font-family: 'Poppins', sans-serif; font-weight: bold;">${item.subject} by ${item.user__username}</h5>
+                                <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">${item.description}</p>
+                                <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">Posted on: ${item.date_added}</p>
                             </div>
                         </div>
                     </div>
                 </button>
+
             `
         }
         document.getElementById("forum_container").innerHTML = htmlString
@@ -210,5 +224,61 @@
     }
 
     document.getElementById("button_add").onclick = addForum
+
+
+    async function getReplies(forum_id) {
+        const reply = fetch(`get-reply/${forum_id}/`).then((res) => res.json())
+        return reply
+    }
+
+    async function refreshReplies(forum_id) {
+        document.getElementById("reply_box").innerHTML = ""
+        const replies = await getReplies(forum_id)
+        let htmlString = ''
+        let counter = 0
+        const totalReplies = replies.length
+        for (const item of replies) {
+            counter++
+            htmlString += `
+                    <div class="reply-card">
+                        <h5>By ${item.user__username}</h5>
+                        <p class="reply">${item.message}</p>
+                    </div>
+            `
+        }
+    document.getElementById("reply_box").innerHTML = htmlString
+    document.getElementById("form_container").innerHTML = `
+                <form id="message_form">
+                    <input type="text" class="input" id="message_input" placeholder="Enter your reply message">
+                    <button type="submit" id="input_message")>Send</button>
+                </form>
+        `
+    // Add event listener to reply form
+    const messageForm = document.getElementById("message_form");
+        messageForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            addReply(forum_id);
+        });
+    }
+
+    // refreshReplies()
+
+    function addReply(forum_id) {
+        const message = document.getElementById("message_input").value;
+        fetch(`create-reply-ajax/${forum_id}/`, {
+            method: "POST",
+            body: JSON.stringify({ forum_id: forum_id, message: message }),
+        })
+            .then((response) => {
+                if (response.status === 201) {
+                    // If the reply is created successfully, refresh the replies.
+                    refreshReplies(forum_id);
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    }
+
 </script>
 {% endblock content %}

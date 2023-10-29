@@ -6,10 +6,10 @@
     
     <h2 style="text-align: center;">Review CS Books</h2> <!-- Add this line -->
 
-
     <div class="container">
         <h2>Top Latest Reviews</h2>
         <table id="review_table"></table>
+        
         <h2>Latest Event</h2>
         <table id="event_table"></table>
         <div class="book-box" id="bookBox"></div>
@@ -21,6 +21,17 @@
 
     </div>
 
+    <div class="card_text">
+    <img class ="img_deg" src="https://i.ibb.co/D8thd62/Whats-App-Image-2023-10-29-at-00-58-37-2bf19a12.jpg">
+    <h2>About UlasBuku</h2>
+    <p>"UlasBuku adalah platform online di mana para pecinta Computer Science
+        dapat memberikan ulasan jujur tentang buku-buku yang mereka baca.
+        Tujuannya untuk membantu orang lain menghindari kesalahan dan memastikan nilai setiap pembelian buku.
+        Dengan pertumbuhan pengguna, kami terus hadirkan fitur baru.
+        Kami meluncurkan forum diskusi untuk anggota berbagi konsep dari buku yang mereka baca,
+        bertukar perspektif, dan bantuan dalam topik sulit."</p>
+
+    <div id="review_table" data-username="{{ username }}" data-pk="{{ pk }}"></div>
     <div id="book-list"></div>
     <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -34,8 +45,9 @@
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="select-filter">Filter reviews by:</label>
-                        <select id="select-filter" onclick="populateCategories()">
+                        <select name="select-filter" id="select-filter" onclick="populateCategories()">
                         </select>
+                    
                     <div class="mb-3">
                         <label for="name" class="col-form-label">Title:</label>
                         <input type="text" class="form-control" id="title" name="title"></input>
@@ -56,6 +68,20 @@
 
 <style>
 
+    .img_deg{
+        float: right;
+        width: 20%;
+    }
+
+    .card_text{
+        position: absolute;
+        width: 80%;
+        left: 12%;
+        background-color: skyblue;
+        padding: 30px;
+
+    }
+      
     html, body {
         background-color: #f2f2f2;
         color: #333;
@@ -179,38 +205,17 @@
     <script>
         // get event 
         async function getEvent() {
-            return fetch("{% url 'homepage:get_event' %}").then((res) => res.json())
+            const events = fetch("{% url 'homepage:get_event' %}").then((res) => res.json())
+            console.log(events)
+            return events
         }
-
-        function addProduct() {
-            fetch("{% url 'homepage:add_event_ajax' %}", {
-                method: "POST",
-                body: new FormData(document.querySelector('#form'))
-            })
-            .then(response => {
-                console.log(response);
-                if (response.status === 201) {
-                    refreshProducts();
-                    populateCategories(); // <-- Tambahkan ini
-                    document.getElementById("form").reset();
-                } else {
-                    console.error('Failed to add the book.');
-                }
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-
-            return false;
-        }
-
-        document.getElementById("button_add").onclick = addProduct
 
         async function addEvent() {
+            console.log("hi")
             fetch("{% url 'homepage:add_event_ajax' %}", {
                 method: "POST",
                 body: new FormData(document.querySelector('#form'))
-            }).then(refreshProducts)
+            }).then(refreshEvents)
     
             document.getElementById("form").reset()
             return false
@@ -224,14 +229,18 @@
             eventsContainer.innerHTML = ""; 
 
             const events = await getEvent();
+            events.reverse(); 
             let htmlString = `<tr>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Book Title</th>
             </tr>`
             events.forEach((item) => {
                 htmlString += `\n<tr>
-                <td>${item.fields.title}</td>
-                <td>${item.fields.description}</td>
+                <td>${item.title}</td>
+                <td>${item.description}</td>
+                <td>${item.book__title}</td>
+
             </tr>` 
             })
             
@@ -241,6 +250,8 @@
         // Panggil fungsi refreshEvents untuk menampilkan kartu-kartu event
         refreshEvents();
   
+
+
 
 
         // get BOOK 
@@ -286,24 +297,33 @@
 
 
 
+
+
         // get review
-        async function getLatestreview() {
-            return fetch("{% url 'homepage:get_latest_review' %}").then((res) => res.json())
+        async function getReview() {
+            return fetch("{% url 'homepage:get_review' %}?sort=star").then((res) => res.json())
         }
 
         async function refreshReview(){
             document.getElementById("review_table").innerHTML = "";
-            const reviews = await getLatestreview();
+            const reviews = await getReview();
+
             console.log(reviews) 
             console.log({{pk}}) 
             let htmlString = `<tr>
                 <th>User</th>
+                <th>Title</th>
+                <th>Rate</th>
                 <th>Description</th>
+               
             </tr>`
             reviews.forEach((review) => {
                 htmlString += `\n<tr>
-                <td>{{username}}</td>
-                <td>${review.fields.description}</td>
+                <td>${review.profile__name}</td>
+                <td>${review.book__title}</td>
+                <td>${review.star}/5</td>
+                <td>${review.description}</td>
+                
             </tr>` 
             })
         
@@ -312,21 +332,47 @@
 
         refreshReview()
 
-        async function populateCategories() {
-        
-            const categories = await getBook();
-            const select = document.getElementById("select-filter");
-            console.log(categories)
-            // Menghapus semua opsi sebelumnya kecuali opsi pertama ("All Categories")
+
+
+
+
+
+        async function getCategories() {
+            const url = "{% url 'homepage:get_categories' %}";
+            const response = await fetch(url);
+            const categories = await response.json();
+            const select = document.getElementById('categoryFilter');
+            
             categories.forEach(category => {
                 const option = document.createElement('option');
                 option.value = category;
-                option.text = category.title;
+                option.text = category;
+                select.add(option);
+            });
+        }
+
+        window.onload = function() {
+            populateCategories();
+        }
+
+        function filterByCategory() {
+            const selectedCategory = document.getElementById('categoryFilter').value;
+            refreshProducts(selectedCategory);
+        }
+
+        async function populateCategories() {
+            const books = await getBook();
+            console.log(books)
+            console.log("halo")
+            const select = document.getElementById("select-filter");
+            // Menghapus semua opsi sebelumnya kecuali opsi pertama ("All Categories")
+            books.forEach(book => {
+                const option = document.createElement('option');
+                option.value = book.fields.title;
+                option.text = book.fields.title;
                 select.add(option);
             });
         }
 
     </script>
 {% endblock content %}
-
-
