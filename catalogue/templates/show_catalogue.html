@@ -1,8 +1,17 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
     {% include "header.html" %}
-    <h1>{{page}}</h1>
+
+    <link rel="stylesheet" href="{% static 'show_catalogue.css' %}"> <!-- Referensi ke file CSS -->
+
+    <!-- ... (kode HTML lainnya) ... -->
+
+    <script src="{% static 'show_catalogue.js' %}"></script> <!-- Referensi ke file JavaScript -->
+
+
+
+    <h1 class="text-center">{{page}}</h1>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -50,6 +59,10 @@
                             <label for="category" class="col-form-label">Category:</label>
                             <input type="text" class="form-control" id="category" name="category">
                         </div>
+                         <div class="mb-3">
+                            <label for="rating" class="col-form-label">Rating:</label>
+                            <input type="number" class="form-control" id="rating" name="rating" value="0" readonly>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -60,119 +73,71 @@
         </div>
     </div>
 
-<div class="action-container">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Add Book
-    </button>
-
-    <div class="filter-container">
-        <label for="categoryFilter">Filter by Category:</label>
-        <select id="categoryFilter" onchange="filterByCategory()">
-            <option value="">All Categories</option>
-            <!-- Options will be populated dynamically -->
-        </select>
+    <!-- Button trigger modal -->
+    <div class="row justify-content-center mb-3">
+        <div class="fixed-width">
+            <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Add Book
+            </button>
+        </div>
     </div>
 
-    <div class="search-container">
-        <input type="text" id="searchBar" placeholder="Search products..." onkeyup="searchProducts()">
+    <!-- Dropdown for category filter -->
+    <div class="row justify-content-center mb-3">
+        <div class="fixed-width">
+            <label for="categoryFilter" class="me-2 d-block">Filter by Category:</label>
+            <select id="categoryFilter" class="form-select" onchange="filterByCategory()">
+                <option value="">All Categories</option>
+                <!-- Options will be populated dynamically -->
+            </select>
+        </div>
     </div>
-</div>
 
-    <div id="product_cards" class="card-container"></div>
+    <!-- Search bar -->
+    <div class="row justify-content-center mb-3">
+        <div class="fixed-width">
+            <input type="text" id="searchBar" class="form-control" placeholder="Search products..." onkeyup="searchProducts()">
+        </div>
+    </div>
+
+    <!-- Dropdown for sorting -->
+    <div class="row justify-content-center mb-3">
+        <div class="fixed-width">
+            <label for="sortRating" class="me-2 d-block">Sort by Rating:</label>
+            <select id="sortRating" class="form-select" onchange="sortProducts()">
+                <option value="">Select</option>
+                <option value="desc">Highest to Lowest</option>
+                <option value="asc">Lowest to Highest</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="product_cards" class="card-container container"></div>
 
 
 
     <style>
-        .action-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .filter-container,
-        .search-container {
-            margin: 0 20px;
-        }
-
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .card {
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 20px;
-            width: 300px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        #searchBar {
-            padding: 10px;
-            width: 300px;
-        }
     </style>
 
 
 
 
     <script>
-        async function getProducts(query = '', category = '') {
-            let url = "{% url 'catalogue:get_product_json' %}?sort=title";
+        async function getProducts(query = '', category = '', sort = '') {
+            let url = "{% url 'catalogue:get_product_json' %}?";
             if (query) {
                 url += `&query=${query}`;
             }
             if (category) {
                 url += `&category=${category}`;
             }
+            if (sort) {
+                url += `&sort=${sort}`;
+            }
             return fetch(url).then((res) => res.json());
         }
 
-        async function refreshProducts(query = '', category = '') {
-            document.getElementById("product_cards").innerHTML = "";
-            const products = await getProducts(query, category);
-            displayProducts(products);
-        }
-
-        function displayProducts(products) {
-            const container = document.getElementById("product_cards");
-
-            products.forEach((item) => {
-                const card = document.createElement('div');
-                card.className = 'card';
-
-                // Membuat elemen <a> untuk mengarahkan ke halaman detail buku
-                const link = document.createElement('a');
-                link.href = `/books/${item.pk}/`;  // Asumsi bahwa URL mengikuti pola /book/<book_id>/
-                link.style.textDecoration = 'none';  // Menghapus underline dari link
-                link.style.color = 'inherit';  // Warna teks menjadi sama seperti teks lainnya
-
-                // Mengisi konten kartu buku
-                link.innerHTML = `
-                    <h3>${item.fields.title}</h3>
-                    <p><strong>Author:</strong> ${item.fields.author}</p>
-                    <p><strong>Publish Date:</strong> ${item.fields.publish_date}</p>
-                `;
-                
-            
-                // Menambahkan link ke kartu dan kartu ke container
-                card.appendChild(link);
-                container.appendChild(card);
-            });
-        }
-
-
-        function searchProducts() {
-            const query = document.getElementById('searchBar').value;
-            refreshProducts(query);
-        }
-
         refreshProducts();
-
 
         function addProduct() {
             fetch("{% url 'catalogue:add_product_ajax' %}", {
@@ -210,16 +175,6 @@
                 option.text = category;
                 select.add(option);
             });
-        }
-
-        window.onload = function() {
-            populateCategories();
-        }
-
-        function filterByCategory() {
-            const selectedCategory = document.getElementById('categoryFilter').value;
-            const query = document.getElementById('searchBar').value;
-            refreshProducts(query, selectedCategory);
         }
 
         async function populateCategories() {
