@@ -18,7 +18,7 @@
             <h1>{{ page }}</h1>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card">
+                    <div class="card" style="margin-bottom: 50px;">
                         <div class="card-body">
                             <h2>{{ book.title }}</h2>
                             <p>{{ book.description }}</p>
@@ -35,15 +35,16 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="reviews-section" style="margin-bottom: 20px;">
-                        <h3>Average Rating</h3>
-                        <div class="average-rating">
+                    <div class="reviews-section" style="margin-bottom: 50px;">
+                        <h2>Average Rating</h3>
+                        <div class="average-rating" style="margin-bottom: 30px;">
                             <span class="star-rating">
-                                {{ book.average_rating|default:0 }} 
+                                <span>{{ book.rating }}</span> 
                             </span>
+                            <p>{{ book.rating }} stars</p>
                         </div>
                         <h3>Recent Reviews</h3>
-                        <div class="reviews">
+                        <div class="reviews" style="margin-bottom: 20px;">
                             {% for review in reviews %}
                             <div class="review">
                                 <h5>
@@ -51,8 +52,8 @@
                                         {{ review.star }}
                                     </span>
                                 </h5>
-                                <p>by {{ review.profile__name }}</p>
-                                <p>{{ review.description }}</p>
+                                <h5>by {{ review.profile__name }}</h5>
+                                <h5>{{ review.description }}</h5>
                             </div>
                             {% endfor %}
                         </div>
@@ -122,19 +123,25 @@
     <script>
         // Fungsi untuk mengambil data buku
         async function getBookData() {
-            return fetch("{% url 'book:show_main_book' book.id %}").then((res) => res.json());
+            let book_pk = "{{ book.pk|safe }}"
+            return fetch(`../${book_pk}/`).then((res) => res.json());
+        }
+
+        async function getReviews() {
+            let book_pk = "{{ book.pk|safe }}"
+            return fetch(`../../review/get-reviews-json/${book_pk}/`).then((res) => res.json())
         }
         
         // Function to load recent reviews
         async function loadRecentReviews() {
             const reviewsSection = document.querySelector(".reviews");
-            const response = await fetch(`{% url 'reviews:get_reviews_json' book.pk %}?sort=date&filter=5`);
-            const reviews = await response.json();
+            const reviews = await getReviews();
+            reviews.reverse();
 
             // Clear any previous reviews
             reviewsSection.innerHTML = "";
 
-            reviews.slice(0, 5).forEach((review) => {
+            reviews.slice(0, 3).forEach((review) => {
                 const starRating = generateStarRating(review.star);
                 const reviewElement = document.createElement("div");
                 reviewElement.classList.add("review");
@@ -149,40 +156,41 @@
             // Calculate and display the average rating
             const averageRating = calculateAverageRating(reviews);
             const averageRatingElement = document.querySelector(".average-rating .star-rating");
-            averageRatingElement.innerHTML = generateStarRating(Math.round(averageRating));
+            if (averageRating === "None") {
+                averageRatingElement.innerHTML = "0 Stars";
+            } else {
+                averageRatingElement.innerHTML = generateStarRating(Math.round(averageRating));
+            }
         }
-
-        // Add an event listener to load recent reviews when the page loads
-        document.addEventListener("DOMContentLoaded", () => {
-            loadRecentReviews();
-        });
-
-        // Event listener for "View Full Reviews" button
-        const viewReviewsButton = document.getElementById("view-reviews");
-        viewReviewsButton.addEventListener("click", () => {
-            window.location.href = `{% url 'reviews:show_review' book.id %}`;
-        });
-
+        
         function generateStarRating(starCount) {
             const filledStars = '<i class="fa fa-star"></i>'.repeat(Math.floor(starCount));
             const halfStar = starCount % 1 !== 0 ? '<i class="fa fa-star-half-o"></i>' : '';
             const emptyStars = '<i class="fa fa-star-o"></i>'.repeat(Math.floor(5 - starCount));
             return filledStars + halfStar + emptyStars;
         }
-
+        
         function calculateAverageRating(reviews) {
             if (reviews.length === 0) {
                 return 0;
             }
-
+            
             let totalRating = 0;
             reviews.forEach((review) => {
                 totalRating += review.star;
             });
-
+            
             return (totalRating / reviews.length).toFixed(2);
         }
-    
+
+        loadRecentReviews();
+
+        // Event listener for "View Full Reviews" button
+        const viewReviewsButton = document.getElementById("view-reviews");
+        viewReviewsButton.addEventListener("click", () => {
+            window.location.href = `{% url 'reviews:show_review' book.id %}`;
+        });
+        
         // Fungsi untuk mengisi data buku ke dalam dialog pengeditan
         async function fillEditBookDialog() {
             const bookData = await getBookData();

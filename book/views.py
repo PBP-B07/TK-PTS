@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 
 from book.models import Book
+from forum.models import Forum
 # from reviews.models import Review
 
 def show_main_book(request, book_id):
@@ -38,3 +39,8 @@ def edit_book(request, book_id):
         return HttpResponse(status=201)  # Berhasil mengedit buku
 
     return HttpResponse(status=400)  # Gagal mengedit buku
+
+def get_forum(request, book_id):
+    book = Book.objects.filter(pk=book_id)
+    forum = Forum.objects.filter(book=book).values('book__title', 'pk', 'subject', 'description', 'date_added')
+    return JsonResponse(list(forum), safe=False)
