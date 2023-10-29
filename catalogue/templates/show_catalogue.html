@@ -5,13 +5,14 @@
 
     <link rel="stylesheet" href="{% static 'show_catalogue.css' %}"> <!-- Referensi ke file CSS -->
 
-    <!-- ... (kode HTML lainnya) ... -->
-
     <script src="{% static 'show_catalogue.js' %}"></script> <!-- Referensi ke file JavaScript -->
 
 
-
+    <h5 class="text-center">{{username}} terakhir login pada</h5>
+    <h5 class="text-center">{{last_login}}</h5>
     <h1 class="text-center">{{page}}</h1>
+
+
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -23,46 +24,7 @@
                 <div class="modal-body">
                     <form id="form" onsubmit="return false;">
                         {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="title" class="col-form-label">Title:</label>
-                            <input type="text" class="form-control" id="title" name="title" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="col-form-label">Description:</label>
-                            <textarea class="form-control" id="description" name="description"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="author" class="col-form-label">Author:</label>
-                            <input type="text" class="form-control" id="author" name="author" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="isbn10" class="col-form-label">ISBN-10:</label>
-                            <input type="text" class="form-control" id="isbn10" name="isbn10">
-                        </div>
-                        <div class="mb-3">
-                            <label for="isbn13" class="col-form-label">ISBN-13:</label>
-                            <input type="text" class="form-control" id="isbn13" name="isbn13">
-                        </div>
-                        <div class="mb-3">
-                            <label for="publish_date" class="col-form-label">Publish Date:</label>
-                            <input type="date" class="form-control" id="publish_date" name="publish_date" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edition" class="col-form-label">Edition:</label>
-                            <input type="number" class="form-control" id="edition" name="edition">
-                        </div>
-                        <div class="mb-3">
-                            <label for="best_seller" class="col-form-label">Best Seller:</label>
-                            <input type="text" class="form-control" id="best_seller" name="best_seller">
-                        </div>
-                        <div class="mb-3">
-                            <label for="category" class="col-form-label">Category:</label>
-                            <input type="text" class="form-control" id="category" name="category">
-                        </div>
-                         <div class="mb-3">
-                            <label for="rating" class="col-form-label">Rating:</label>
-                            <input type="number" class="form-control" id="rating" name="rating" value="0" readonly>
-                        </div>
+                        {{ form.as_p }}
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -93,13 +55,6 @@
         </div>
     </div>
 
-    <!-- Search bar -->
-    <div class="row justify-content-center mb-3">
-        <div class="fixed-width">
-            <input type="text" id="searchBar" class="form-control" placeholder="Search products..." onkeyup="searchProducts()">
-        </div>
-    </div>
-
     <!-- Dropdown for sorting -->
     <div class="row justify-content-center mb-3">
         <div class="fixed-width">
@@ -112,11 +67,19 @@
         </div>
     </div>
 
+    <!-- Search bar -->
+    <div class="row justify-content-center mb-3">
+        <div class="fixed-width">
+            <input type="text" id="searchBar" class="form-control" placeholder="Search products..." onkeyup="searchProducts()">
+        </div>
+    </div>
+
     <div id="product_cards" class="card-container container"></div>
 
 
 
     <style>
+
     </style>
 
 
@@ -195,6 +158,8 @@
                 select.add(option);
             });
         }
+
+
 
 
 

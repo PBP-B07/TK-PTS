@@ -4,31 +4,38 @@
     <title>Register</title>
 {% endblock meta %}
 
-{% block content %}  
+{% block content %}
 
-<div class = "login">
-    
-    <h1>Register</h1>  
+<style>
+</style>
 
-        <form method="POST" >   
-            <table>  
-                {{ form.as_table }}
-                {{ form_profile.as_table}}  
-                <tr>  
-                    <td></td>
-                    <td><input type="submit" name="submit" value="Daftar"/></td>  
-                </tr>  
-            </table>  
-        </form>
-
-    {% if messages %}  
-        <ul>   
-            {% for message in messages %}  
-                <li>{{ message }}</li>  
-                {% endfor %}  
-        </ul>   
-    {% endif %}
-
-</div>  
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">Register</h1>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <table class="table">
+                            {{ form.as_table }}
+                            {{ form_profile.as_table }}
+                        </table>
+                        <div class="text-center">
+                            <input type="submit" name="submit" value="Daftar" class="btn btn-primary"/>
+                        </div>
+                    </form>
+                    {% if messages %}
+                        <ul>
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
