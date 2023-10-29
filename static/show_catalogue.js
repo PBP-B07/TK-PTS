@@ -37,6 +37,7 @@ function displayProducts(products) {
             <h3>${item.fields.title}</h3>
             <p><strong>Author:</strong> ${item.fields.author}</p>
             <p><strong>Publish Date:</strong> ${item.fields.publish_date}</p>
+            <p><strong>Category:</strong> ${item.fields.category}</p>
             <p><strong>Rating:</strong> ${item.fields.rating}</p>
         `;
 

@@ -6,38 +6,73 @@
 
 {% block content %}
 
-<div class = "login">
+<style>
+    .login-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50vh; /* Takes the full viewport height */
+    }
 
-    <h1>Login</h1>
+    .login {
+        text-align: center;
+    }
 
-    <form method="POST" action="">
-        <table>
-            <tr>
-                <td>Username: </td>
-                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
-            </tr>
-                    
-            <tr>
-                <td>Password: </td>
-                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
-            </tr>
+    .btn-container {
+        text-align: center;
+    }
 
-            <tr>
-                <td></td>
-                <td><input class="btn login_btn" type="submit" value="Login"></td>
-            </tr>
-        </table>
-    </form>
+    .login_btn {
+        background-color: #4CAF50; /* Green background */
+        color: white; /* White text */
+        padding: 10px 20px; /* Some padding */
+        border: none; /* No border */
+        border-radius: 4px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+        font-size: 16px; /* Increase font size */
+    }
 
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}     
-        
-    Don't have an account yet? <a href="{% url 'autentifikasi:register' %}">Register Now</a>
+    .login_btn:hover {
+        background-color: #45a049; /* Darker green on hover */
+    }
+</style>
+
+<div class="login-container">
+
+    <div class="login">
+
+        <h1>Login</h1>
+
+        <form method="POST" action="">
+            <table>
+                <tr>
+                    <td>Username: </td>
+                    <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
+                </tr>
+
+                <tr>
+                    <td>Password: </td>
+                    <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td><input class="btn login_btn" type="submit" value="Login"></td>
+                </tr>
+            </table>
+        </form>
+
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        Don't have an account yet? <a href="{% url 'autentifikasi:register' %}">Register Now</a>
+
+    </div>
 
 </div>
 
