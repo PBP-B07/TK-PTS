@@ -1,3 +1,4 @@
+import json
 from book.models import Book
 from forum.models import Forum, Reply
 from django.http import HttpResponseNotFound, JsonResponse
@@ -19,13 +20,14 @@ def show_forum(request, id):
 
 def get_forum_json(request,id):
     book = Book.objects.get(pk=id)
-    forum_items = Forum.objects.filter(book=book)
-    return HttpResponse(serializers.serialize('json', forum_items))
+    forum_items = Forum.objects.filter(book=book).values("user","user__username", "date_added", "subject", "description", "pk")
+    return JsonResponse(list(forum_items), safe=False)
 
-def get_reply_json(request,id):
-    forum = Forum.objects.filter(pk=id)
-    message_items = Reply.objects.filter(forum=forum)
-    return HttpResponse(serializers.serialize('json', message_items))
+def get_reply_json(request,bookid,id):
+    book = Book.objects.get(pk=bookid)
+    forum = Forum.objects.get(pk=id)
+    message_items = Reply.objects.filter(forum=forum).values("user","user__username", "message", "pk")
+    return JsonResponse(list(message_items), safe=False)
 
 @csrf_exempt
 def add_forum_ajax(request,id):
@@ -43,14 +45,15 @@ def add_forum_ajax(request,id):
     return HttpResponseNotFound()
 
 @csrf_exempt
-def add_reply_ajax(request,id):
+def add_reply_ajax(request,bookid,id):
     if request.method == 'POST':
-        message = request.POST.get("message")
+        data = json.loads(request.body.decode('utf-8'))
+        message = data.get("message")
         user = request.user
-        book = Book.objects.get(pk=id)
-        forum = Forum.objects.filter(pk=id)
+        book = Book.objects.get(pk=bookid)
+        forum = Forum.objects.get(pk=id)
 
-        new_reply = Reply(message=message, user=user, book=book, forum=forum)
+        new_reply = Reply(message=message, user=user, forum=forum)
         new_reply.save()
 
         return HttpResponse(b"CREATED", status=201)

@@ -24,30 +24,33 @@ def show_main(request):
     return render(request, "show_catalogue.html", context)
 
 
-
-
 def get_product_json(request):
-    query = request.GET.get('query', '')  # mendapatkan query pencarian dari parameter GET
-    category = request.GET.get('category', '')  # mendapatkan kategori dari parameter GET
-    
-    # Memulai dengan semua buku
+    query = request.GET.get('query', '')
+    category = request.GET.get('category', '')
+    sort = request.GET.get('sort', 'title')  # Default sorting by title
+
+    # Starting with all books
     books = Book.objects.all()
-    
-    # Jika ada query pencarian, filter buku yang judulnya mengandung query
+
+    # If there's a search query, filter books that have titles containing the query
     if query:
         books = books.filter(title__icontains=query)
-    
-    # Jika ada kategori yang dipilih, filter buku berdasarkan kategori
+
+    # If a category is selected, filter books based on category
     if category:
-        books = books.filter(category__iexact=category)  # Assuming your field name is 'category'
-    
-    # Mengurutkan buku berdasarkan judul
-    books = books.order_by('title')
-    
-    # Mengonversi queryset ke format JSON dan mengembalikannya sebagai respons
+        books = books.filter(category__iexact=category)
+
+    # Sorting books based on the sort parameter
+    if sort == 'rating':
+        books = books.order_by('-rating', 'title')  # If ratings are equal, sort by title
+    elif sort == 'rating_asc':
+        books = books.order_by('rating', 'title')   # If ratings are equal, sort by title
+    else:
+        books = books.order_by('title')
+
+    # Convert the queryset to JSON format and return it as a response
     books_json = serializers.serialize('json', books)
     return HttpResponse(books_json)
-
 
 
 def get_categories_json(request):
@@ -67,12 +70,14 @@ def add_product_ajax(request):
         edition = request.POST.get("edition")
         best_seller = request.POST.get("best_seller")
         category = request.POST.get("category")
+        rating = request.POST.get("rating")
         
         # Membuat dan menyimpan objek buku baru
         new_book = Book(
             title=title, description=description, author=author,
             isbn10=isbn10, isbn13=isbn13, publish_date=publish_date,
-            edition=edition, best_seller=best_seller, category=category
+            edition=edition, best_seller=best_seller, category=category,
+            rating=rating
         )
         new_book.save()
 
