@@ -26,4 +26,5 @@ urlpatterns = [
     path('autentifikasi/', include('autentifikasi.urls')),
     path('books/', include('book.urls')),
     path('review/', include('reviews.urls')),
+    path('forum/', include('forum.urls')),
 ]
