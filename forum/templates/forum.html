@@ -1,137 +1,15 @@
 {% extends 'base.html' %}
-
-{% block meta %}
-    {% include "header.html" %}
-    <head>
-        <title>Forum</title>
-        <style>
-            body {
-            background: white; /* Change this to your desired color */
-            }
-            #forum_container{
-                flex-direction: column-reverse;
-                float: left;
-                box-sizing: border-box; 
-                width:50%;
-            }
-            #reply_container{
-                float: right;
-                box-sizing: border-box; 
-                width:50%;
-            }
-            button{
-                background: none;
-                border: none;
-            }
-            .card {
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-                margin-right: auto;
-                margin-left: 10px;
-                margin-bottom: 25px;
-                background-color: #d8e5e6; /* Change this to your desired color */
-                color: rgb(31, 28, 28);
-                padding: 25px;
-                text-align: left;
-            }
-            .center-button {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-top: 20px; /* Adjust the margin to your liking */
-                margin-bottom: 50px;
-                border-radius: 15px;
-            }
-
-            .center-align {
-                text-align: center;
-                margin-top: 30px;
-            }
-
-            .row{
-                display: flex;
-                justify-content: space-between;
-                width:100%;
-            }
-            .frame{
-                float: right;
-                max-width:100%; 
-                border: 2px solid #d7d7d7;
-                background-color: #d7d7d7;
-                border-radius: 5px;
-                padding: 10px;
-            }
-            .container {
-                border: 2px solid #8bd8ed;
-                background-color: #8bd8ed;
-                border-radius: 5px;
-                padding: 10px;
-                margin: 10px 0;
-            }
-
-            .container::after {
-                content: "";
-                clear: both;
-                display: table;
-            }
-
-            .chat-frame-container {
-                width: 100%;
-            }
-
-            .frame.chat-frame {
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-                width: 100%;
-                height: 100%;
-                position: relative;
-                margin-bottom: 10px;
-            }
-            .reply{
-                border: 2px solid #ffffff;
-                background-color: #ffffff;
-                border-radius: 5px;
-                padding: 10px;
-                margin: 10px 0;
-                color: black;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            }
-            .clearfix::after {
-                content: "";
-                display: table;
-                clear: both;
-            }
-            .input{
-                border: 5px solid #ffffff; 
-                border-color: #ffffff; 
-            }
-            #reply_box{
-                height:75%;
-            }
-            #message_form{
-                border-radius: 5px;
-                display: flex;
-                background-color: #d7d7d7; /* Adjust the background color as needed */
-                padding: 10px;
-            }
-            #form_container{
-                width: 100%;
-            }
-            .chat-frame-container {
-                width: 100%;
-                max-height: 400px; /* Set a fixed height or max-height for scrolling */
-                overflow-y: auto; /* Enable vertical scrolling when content overflows */
-            }
-            .input_message{
-                text-align: right;
-            }
-        </style>
-    </head>
-{% endblock meta %}
-
+{% load static %}
 {% block content %}
+{% include "header.html" %}
+<link rel="stylesheet" href="{% static 'forum.css' %}">
+<script src="{% static 'forum.js' %}"></script>
 <body>
 
     <h1 class="center-align">Forum</h1>
     <h2 class="center-align"> Forum Discussion of {{book.title}} by {{book.author}}</h2>
+    <h5 class="center-align">{{username}} terakhir login pada</h5>
+    <h5 class="center-align">{{last_login}}</h5>
 
     <div class="center-button">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Forum</button>
@@ -177,33 +55,6 @@
         return fetch("{% url 'forum:get_forum_json' book.pk %}").then((res) => res.json())
     }
 
-    async function refreshForums() {
-        document.getElementById("forum_container").innerHTML = ""
-        const forums = await getForums()
-        forums.reverse()
-        let htmlString = ''
-        let counter = 0
-        const totalForums = forums.length
-        for (const item of forums) {
-            counter++
-            htmlString += `
-            <button class="row" id="forum_card" onclick="refreshReplies(${item.pk})" data-id="${item.id}">
-                    <div class="col s12 m6 l4">
-                        <div class="card">  
-                            <div class="card-content">
-                                <h5 class="card-title", style="font-family: 'Poppins', sans-serif; font-weight: bold;">${item.subject} by ${item.user__username}</h5>
-                                <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">${item.description}</p>
-                                <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">Posted on: ${item.date_added}</p>
-                            </div>
-                        </div>
-                    </div>
-                </button>
-
-            `
-        }
-        document.getElementById("forum_container").innerHTML = htmlString
-    }
-
     refreshForums()
 
     function addForum() {
@@ -223,38 +74,6 @@
         const reply = fetch(`get-reply/${forum_id}/`).then((res) => res.json())
         return reply
     }
-
-    async function refreshReplies(forum_id) {
-        document.getElementById("reply_box").innerHTML = ""
-        const replies = await getReplies(forum_id)
-        let htmlString = ''
-        let counter = 0
-        const totalReplies = replies.length
-        for (const item of replies) {
-            counter++
-            htmlString += `
-                    <div class="reply-card">
-                        <h5>By ${item.user__username}</h5>
-                        <p class="reply">${item.message}</p>
-                    </div>
-            `
-        }
-    document.getElementById("reply_box").innerHTML = htmlString
-    document.getElementById("form_container").innerHTML = `
-                <form id="message_form">
-                    <input type="textarea" class="input" id="message_input" placeholder="Enter your reply message"></input>
-                    <button type="submit" id="input_message" class="input_message")>Send</button>
-                </form>
-        `
-    // Add event listener to reply form
-    const messageForm = document.getElementById("message_form");
-        messageForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            addReply(forum_id);
-        });
-    }
-
-    // refreshReplies()
 
     function addReply(forum_id) {
         const message = document.getElementById("message_input").value;
