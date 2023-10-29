@@ -24,7 +24,7 @@ Namun, UlasBuku bukan sekadar tempat untuk ulasan. Seiring dengan pertumbuhan pe
 3. Menambah Pengetahuan: Melalui diskusi dengan komunitas yang aktif, pengguna mendapat wawasan tambahan tentang topik-topik dalam buku, yang mungkin tidak mereka peroleh hanya dengan membaca buku tersebut.
 
 ## Daftar Modul 📚
-1. Homepage (main) -> berisi rekomendasi, forum dan ulasan terbaru dari user, dan iklan dari buku yang ada di database.
+1. Homepage (main) -> berisi rekomendasi, forum dan ulasan terbaru dari user, dan iklan dari buku yang ada di database. (Monica)
     - Menampilkan rekomendasi buku berupa forum yang sedang ramai diperbincangkan dan juga forum yang kurang peminatnya dari seluruh user UlasBuku (READ)
     - Menampilkan buku dengan ulasan terbaru dan terbaik dari user (READ)
     - Menampilkan buku dengan forum terbaru dan ter-ramai dari user (READ)
@@ -33,14 +33,14 @@ Namun, UlasBuku bukan sekadar tempat untuk ulasan. Seiring dengan pertumbuhan pe
     - Tentang UlasBuku (READ)
     
 
-2. Profile (ditaruh di navbar)
+2. Profile (ditaruh di navbar) (Hanan)
     - Riwayat ulasan buku yang pernah di ulas oleh user (READ)
     - Riwayat forum yang pernah user kontribusi (READ)
     - Deskripsi diri (READ)
     - Hapus ulasan (DELETE)
     - Edit ulasan (UPDATE)
 
-3. Katalog buku (ditaruh di navbar)
+3. Katalog buku (ditaruh di navbar) (Farrel)
     - Berisi apa saja buku yang ada di UlasBuku yang terurut sesuai abjad (READ)
     - Didalam page ini ada fitur ‘search’ buku (READ)
     - Didalam page ini ada fitur filter (berdasarkan tag)  (READ)
@@ -48,26 +48,26 @@ Namun, UlasBuku bukan sekadar tempat untuk ulasan. Seiring dengan pertumbuhan pe
         2. Bintang (hasil ulasan)
     - `Admin` dapat menambahkan detail buku (CREATE)
 
-4. Deskripsi per buku (ada di setiap buku)
+4. Deskripsi per buku (ada di setiap buku) (Azmi)
     - Details buku (Judul, Deskripsi, Penulis, ISBN-10, ISBN-13, Tanggal Rilis, Edisi, Best Seller, Estimasi Harga, tag buku) (READ)
     - Melihat review dan rate user jika ada (READ)
     - Lihat ringkasan review dan rate yang ada di buku yang berkaitan (READ)
     - Lihat ringkasan forum diskusi yang ada di buku yang berkaitan (READ)
     - `Admin` dapat mengedit deskripsi buku (UPDATE)
 
-5. Review + Rate (ada di setiap buku)
+5. Review + Rate (ada di setiap buku) (Alifa)
     - User dapat memberikan satu review/ulasan dan rating terhadap satu buku (CREATE)
     - User dapat melihat review dan rating secara lengkap (READ)
     - User dapat memfilter review dan rating yang diinginkan berdasarkan: (READ)
         1. Jumlah Bintang (1-5) 
         2. Terbaru-Terlama
 
-6. Forum (ada di setiap buku)
+6. Forum (ada di setiap buku) (Nona)
     - User dapat memposting pembicaraannya pada forum (CREATE)
     - User dapat mengirimkan foto pada forum (CREATE)
     - User dapat melihat perbincangan di forum tersebut (READ)
 
-7. Login dan Register
+7. Login dan Register (Bersama)
     - User dapat masuk menggunakan login (CREATE)
     - User dapat mendaftarkan menggunakan register (CREATE)
 

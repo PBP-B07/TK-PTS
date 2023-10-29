@@ -1,5 +1,6 @@
 import json
 from book.models import Book
+from forum.forms import ForumForm
 from forum.models import Forum, Reply
 from django.http import HttpResponseNotFound, JsonResponse
 from django.shortcuts import render
@@ -7,14 +8,20 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+import datetime
 
-@login_required(login_url='')
+@login_required(login_url=('../../autentifikasi/login'))
 def show_forum(request, id):
     book = Book.objects.get(pk=id)
     forums = Forum.objects.filter(user=request.user)
+    form = ForumForm()
     context = {
         'forums': forums,
         'book':  book,
+        'last_login': request.COOKIES['last_login'],
+        'username': request.user.username,
+        'pk': request.user.pk,
+        'form': form,
     }
     return render(request, "forum.html", context)
 
@@ -32,15 +39,17 @@ def get_reply_json(request,bookid,id):
 @csrf_exempt
 def add_forum_ajax(request,id):
     if request.method == 'POST':
-        subject = request.POST.get("subject")
-        description = request.POST.get("description")
+        subject = request.POST.get("subject").strip()
+        description = request.POST.get("description").strip()
         user = request.user
         book = Book.objects.get(pk=id)
 
-        new_forum = Forum(subject=subject, description=description, user=user, book=book)
-        new_forum.save()
-
-        return HttpResponse(b"CREATED", status=201)
+        if subject and description:
+            new_forum = Forum(subject=subject, description=description, user=user, book=book)
+            new_forum.save()
+            return HttpResponse(b"CREATED", status=201)
+        else:
+            return HttpResponseNotFound
 
     return HttpResponseNotFound()
 
@@ -48,7 +57,7 @@ def add_forum_ajax(request,id):
 def add_reply_ajax(request,bookid,id):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
-        message = data.get("message")
+        message = data.get("message").strip()
         user = request.user
         book = Book.objects.get(pk=bookid)
         forum = Forum.objects.get(pk=id)
@@ -56,9 +65,11 @@ def add_reply_ajax(request,bookid,id):
         forum.total_reply +=1 
         forum.save()
         
-        new_reply = Reply(message=message, user=user, forum=forum)
-        new_reply.save()
-
-        return HttpResponse(b"CREATED", status=201)
+        if message:
+            new_reply = Reply(message=message, user=user, forum=forum)
+            new_reply.save()
+            return HttpResponse(b"CREATED", status=201)
+        else:
+            return HttpResponseNotFound()
 
     return HttpResponseNotFound()
