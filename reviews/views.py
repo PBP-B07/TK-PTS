@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from reviews.forms import ReviewForm
 from reviews.models import Review
 from book.models import Book
 from user_profile.models import Profile
@@ -11,10 +12,12 @@ from user_profile.models import Profile
 def show_review(request, id):
     book = Book.objects.get(pk=id) # mengambil objek buku sesuai id
     reviews = Review.objects.filter(book=book)
+    form = ReviewForm()
     context = {
                'page' : 'Reviews',
                'reviews' : reviews,
-               'book' : book
+               'book' : book,
+               'form' : form,
     }
 
     return render(request, "reviews.html", context)
