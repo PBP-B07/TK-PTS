@@ -6,24 +6,30 @@ from django.core import serializers
 from django.db.models import Q  # jangan lupa mengimpor Q
 from django.http import JsonResponse  # impor JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from .forms import BookForm
 
-
-
+@login_required(login_url='../autentifikasi/login')
 # Create your views here.
 def show_main(request):
     # if 'sort' in request.GET and request.GET['sort'] == 'title':
     #     books = Book.objects.all().order_by('title').values()
     # else:
     #     books = Book.objects.all().order_by('title').values()
-
+    form = BookForm()
     context = {
         'page': 'catalogue',
+        'last_login': request.COOKIES['last_login'],
+        'username': request.user.username,
+        'pk': request.user.pk,
+        'form': form,
+
         # 'books': books,
     }
 
     return render(request, "show_catalogue.html", context)
 
-
+@login_required(login_url='../../autentifikasi/login')
 def get_product_json(request):
     query = request.GET.get('query', '')
     category = request.GET.get('category', '')
@@ -52,12 +58,12 @@ def get_product_json(request):
     books_json = serializers.serialize('json', books)
     return HttpResponse(books_json)
 
-
+@login_required(login_url='../../autentifikasi/login')
 def get_categories_json(request):
     categories = Book.objects.values_list('category', flat=True).distinct()
     return JsonResponse(list(categories), safe=False)
 
-
+@login_required(login_url='../../autentifikasi/login')
 @csrf_exempt
 def add_product_ajax(request):
     if request.method == 'POST':
@@ -71,7 +77,7 @@ def add_product_ajax(request):
         best_seller = request.POST.get("best_seller")
         category = request.POST.get("category")
         rating = request.POST.get("rating")
-        
+
         # Membuat dan menyimpan objek buku baru
         new_book = Book(
             title=title, description=description, author=author,
@@ -86,3 +92,16 @@ def add_product_ajax(request):
     return HttpResponseNotFound()
 
 
+# @login_required(login_url='../../autentifikasi/login')
+# @csrf_exempt
+# def add_product_ajax(request):
+#     if request.method == 'POST':
+#         form = BookForm(request.POST)
+#
+#         if form.is_valid():
+#             form.save()
+#             return JsonResponse({"status": "success"}, status=201)
+#         else:
+#             return JsonResponse({"errors": form.errors}, status=400)
+#
+#     return HttpResponseNotAllowed(['POST'])
