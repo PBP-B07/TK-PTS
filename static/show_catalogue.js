@@ -1,6 +1,6 @@
 window.onload = function() {
-            populateCategories();
-        }
+    populateCategories();
+}
 
 function filterByCategory() {
     const selectedCategory = document.getElementById('categoryFilter').value;
@@ -9,15 +9,15 @@ function filterByCategory() {
 }
 
 function searchProducts() {
-            const query = document.getElementById('searchBar').value;
-            refreshProducts(query);
-        }
+    const query = document.getElementById('searchBar').value;
+    refreshProducts(query);
+}
 
-         async function refreshProducts(query = '', category = '', sort = '') {
-        document.getElementById("product_cards").innerHTML = "";
-        const products = await getProducts(query, category, sort);
-        displayProducts(products);
-    }
+async function refreshProducts(query = '', category = '', sort = '') {
+    document.getElementById("product_cards").innerHTML = "";
+    const products = await getProducts(query, category, sort);
+    displayProducts(products);
+}
 
 function displayProducts(products) {
     const container = document.getElementById("product_cards");
@@ -49,15 +49,15 @@ function displayProducts(products) {
 }
 
 function sortProducts() {
-            const sortSelect = document.getElementById('sortRating');
-            let sortValue = sortSelect.value;
-            let sortParam = ''; // Default as title
+    const sortSelect = document.getElementById('sortRating');
+    let sortValue = sortSelect.value;
+    let sortParam = ''; // Default as title
 
-            if (sortValue === 'desc') {
-                sortParam = 'rating'; // If we want to sort by rating in descending order
-            } else if (sortValue === 'asc') {
-                sortParam = 'rating_asc'; // If we want to sort by rating in ascending order
-            }
+    if (sortValue === 'desc') {
+        sortParam = 'rating'; // If we want to sort by rating in descending order
+    } else if (sortValue === 'asc') {
+        sortParam = 'rating_asc'; // If we want to sort by rating in ascending order
+    }
 
-            refreshProducts('', '', sortParam);
-        }
+    refreshProducts('', '', sortParam);
+}
