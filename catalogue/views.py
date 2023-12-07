@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from book.models import Book
 from django.http import HttpResponse
@@ -105,3 +106,28 @@ def add_product_ajax(request):
 #             return JsonResponse({"errors": form.errors}, status=400)
 #
 #     return HttpResponseNotAllowed(['POST'])
+
+def create_product_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+
+        new_product = Book.objects.create(
+            user=request.user,
+            title=data["title"],
+            description = data["description"],
+            author = data["author"],
+            isbn10 = data["isbn10"],
+            isbn13 = data["isbn13"],
+            publish_date = data["publish_date"],
+            edition = data["edition"],
+            best_seller = data["best_seller"],
+            category = data["category"],
+            rating = float(data["rating"]),    
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
