@@ -8,7 +8,7 @@
     <script src="{% static 'homepage.js' %}"></script>
     
     <h2 style="text-align: center;">Review CS Books</h2>
-    <h1 style="text-align: center;font-size: 21px;">Selamat Datang {{username}}</h2>
+    <h1 style="text-align: center;font-size: 21px;color: blue;">Selamat Datang {{username}}</h2>
 
     <div class="container">
         <div class="container-review">
@@ -58,6 +58,7 @@
         bertukar perspektif, dan bantuan dalam topik sulit."</p>
         </div>
 
+
     <div id="review_table" data-username="{{ username }}" data-pk="{{ pk }}"></div>
     <div id="book-list"></div>
     <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -90,12 +91,12 @@
 
 
     <script>
-        // get event dari user
+        // get event : akan menampilkan event dari user
         async function getEvent() {
             const events = fetch("{% url 'homepage:get_event' %}").then((res) => res.json())
             return events
         }
-
+    
         async function addEvent() {
             fetch("{% url 'homepage:add_event_ajax' %}", {
                 method: "POST",
@@ -143,7 +144,7 @@
             alert('Logout berhasil!');
         }
 
-        // get review terbaru berdasarkan urutan star 
+        // get review terbaru berdasarkan urutan star / top latest review 
         async function getReview() {
             return fetch("{% url 'homepage:get_review' %}?sort=star").then((res) => res.json())
         }
@@ -174,7 +175,7 @@
 
         refreshReview()
 
-        // get kategori untuk setiap title di modal 
+        // get kategori untuk setiap title di modal event
         async function getCategories() {
             const url = "{% url 'homepage:get_categories' %}";
             const response = await fetch(url);
@@ -211,7 +212,7 @@
         }
 
 
-        // get forum terbaru 
+        // get forum terbaru / get forum latest 
         async function getForum() {
             return fetch("{% url 'homepage:get_forum' %}").then((res) => res.json())
         }
@@ -240,7 +241,7 @@
 
         refreshForum()
 
-        // get busiest forum 
+        // get busiest forum : forum teramai dari user
         async function getBusiestforum() {
             return fetch("{% url 'homepage:get_busiest_forum' %}").then((res) => res.json())
         }
