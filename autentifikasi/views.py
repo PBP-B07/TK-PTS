@@ -10,14 +10,17 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from autentifikasi.forms import ProfileForm
 
-# Create your views here.
+# Import the CustomUserCreationForm at the top of your views.py file
+from .forms import CustomUserCreationForm
+
+# Your existing code remains unchanged, just replace UserCreationForm with CustomUserCreationForm
 @csrf_exempt
 def register(request):
-    form = UserCreationForm()
+    form = CustomUserCreationForm()
     form_profile = ProfileForm(request.POST or None)
 
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid() and form_profile.is_valid():
             user = form.save()
             profile = form_profile.save(commit=False)
@@ -25,8 +28,9 @@ def register(request):
             profile.save()
             messages.success(request, 'Your account has been successfully created!')
             return redirect('autentifikasi:login')
-    context = {'form':form, 'form_profile':form_profile}
+    context = {'form': form, 'form_profile': form_profile}
     return render(request, 'register.html', context)
+
 
 @csrf_exempt
 def login_user(request):
