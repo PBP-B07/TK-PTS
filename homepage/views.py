@@ -33,6 +33,7 @@ def show_main(request):
 
 # fungsi add event ajax : akan membuat event ajax dengan mengambil berupa title, description, dan book title 
 @csrf_exempt
+#@login_required(login_url='autentifikasi/login')
 def add_event_ajax(request):
     form = HomepageForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
