@@ -8,6 +8,7 @@ from django.db.models import Q  # jangan lupa mengimpor Q
 from django.http import JsonResponse  # impor JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from .forms import BookForm
 
 @login_required(login_url='../autentifikasi/login')
@@ -107,20 +108,20 @@ def add_product_ajax(request):
 #
 #     return HttpResponseNotAllowed(['POST'])
 
+@csrf_exempt
 def create_product_flutter(request):
     if request.method == 'POST':
         
         data = json.loads(request.body)
 
         new_product = Book.objects.create(
-            user=request.user,
             title=data["title"],
             description = data["description"],
             author = data["author"],
             isbn10 = data["isbn10"],
             isbn13 = data["isbn13"],
             publish_date = data["publish_date"],
-            edition = data["edition"],
+            edition = int(data["edition"]),
             best_seller = data["best_seller"],
             category = data["category"],
             rating = float(data["rating"]),    
