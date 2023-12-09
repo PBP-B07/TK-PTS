@@ -34,6 +34,7 @@ def get_reply_json(request,bookid,id):
     book = Book.objects.get(pk=bookid)
     forum = Forum.objects.get(pk=id)
     message_items = Reply.objects.filter(forum=forum).values("user","user__username", "message", "pk")
+    message_items = message_items.order_by('pk')
     return JsonResponse(list(message_items), safe=False)
 
 @csrf_exempt

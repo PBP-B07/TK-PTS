@@ -1,112 +1,115 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    {% include "header.html" %}
+{% include "header.html" %}
 
-    <link rel="stylesheet" href="{% static 'show_catalogue.css' %}"> <!-- Referensi ke file CSS -->
+<link rel="stylesheet" href="{% static 'show_catalogue.css' %}"> <!-- Referensi ke file CSS -->
 
-    <script src="{% static 'show_catalogue.js' %}"></script> <!-- Referensi ke file JavaScript -->
-
-
-    <h5 class="text-center">{{username}} terakhir login pada</h5>
-    <h5 class="text-center">{{last_login}}</h5>
-    <h1 class="text-center">{{page}}</h1>
+<script src="{% static 'show_catalogue.js' %}"></script> <!-- Referensi ke file JavaScript -->
 
 
+<h5 class="text-center">{{username}} terakhir login pada</h5>
+<h5 class="text-center">{{last_login}}</h5>
+<h1 class="text-center">{{page}}</h1>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Book</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="form" onsubmit="return false;">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book</button>
-                </div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Book</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Button trigger modal -->
-    <div class="row justify-content-center mb-3">
-        <div class="fixed-width">
-            <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Add Book
-            </button>
-        </div>
+{% if request.user.is_authenticated and request.user.is_staff %}
+<!-- Button trigger modal -->
+<div class="row justify-content-center mb-3">
+    <div class="fixed-width">
+        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Add Book
+        </button>
     </div>
+</div>
+{% endif %}
 
-    <!-- Dropdown for category filter -->
-    <div class="row justify-content-center mb-3">
-        <div class="fixed-width">
-            <label for="categoryFilter" class="me-2 d-block">Filter by Category:</label>
-            <select id="categoryFilter" class="form-select" onchange="filterByCategory()">
-                <option value="">All Categories</option>
-                <!-- Options will be populated dynamically -->
-            </select>
-        </div>
+<!-- Dropdown for category filter -->
+<div class="row justify-content-center mb-3">
+    <div class="fixed-width">
+        <label for="categoryFilter" class="me-2 d-block">Filter by Category:</label>
+        <select id="categoryFilter" class="form-select" onchange="filterByCategory()">
+            <option value="">All Categories</option>
+            <!-- Options will be populated dynamically -->
+        </select>
     </div>
+</div>
 
-    <!-- Dropdown for sorting -->
-    <div class="row justify-content-center mb-3">
-        <div class="fixed-width">
-            <label for="sortRating" class="me-2 d-block">Sort by Rating:</label>
-            <select id="sortRating" class="form-select" onchange="sortProducts()">
-                <option value="">Select</option>
-                <option value="desc">Highest to Lowest</option>
-                <option value="asc">Lowest to Highest</option>
-            </select>
-        </div>
+<!-- Dropdown for sorting -->
+<div class="row justify-content-center mb-3">
+    <div class="fixed-width">
+        <label for="sortRating" class="me-2 d-block">Sort by Rating:</label>
+        <select id="sortRating" class="form-select" onchange="sortProducts()">
+            <option value="">Select</option>
+            <option value="desc">Highest to Lowest</option>
+            <option value="asc">Lowest to Highest</option>
+        </select>
     </div>
+</div>
 
-    <!-- Search bar -->
-    <div class="row justify-content-center mb-3">
-        <div class="fixed-width">
-            <input type="text" id="searchBar" class="form-control" placeholder="Search products..." onkeyup="searchProducts()">
-        </div>
+<!-- Search bar -->
+<div class="row justify-content-center mb-3">
+    <div class="fixed-width">
+        <input type="text" id="searchBar" class="form-control" placeholder="Search products..."
+            onkeyup="searchProducts()">
     </div>
+</div>
 
-    <div id="product_cards" class="card-container container"></div>
-
-
-
-    <style>
-
-    </style>
+<div id="product_cards" class="card-container container"></div>
 
 
 
+<style>
 
-    <script>
-        async function getProducts(query = '', category = '', sort = '') {
-            let url = "{% url 'catalogue:get_product_json' %}?";
-            if (query) {
-                url += `&query=${query}`;
-            }
-            if (category) {
-                url += `&category=${category}`;
-            }
-            if (sort) {
-                url += `&sort=${sort}`;
-            }
-            return fetch(url).then((res) => res.json());
+</style>
+
+
+
+
+<script>
+    async function getProducts(query = '', category = '', sort = '') {
+        let url = "{% url 'catalogue:get_product_json' %}?";
+        if (query) {
+            url += `&query=${query}`;
         }
+        if (category) {
+            url += `&category=${category}`;
+        }
+        if (sort) {
+            url += `&sort=${sort}`;
+        }
+        return fetch(url).then((res) => res.json());
+    }
 
-        refreshProducts();
+    refreshProducts();
 
-        function addProduct() {
-            fetch("{% url 'catalogue:add_product_ajax' %}", {
-                method: "POST",
-                body: new FormData(document.querySelector('#form'))
-            })
+    function addProduct() {
+        fetch("{% url 'catalogue:add_product_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        })
             .then(response => {
                 console.log(response);
                 if (response.status === 201) {
@@ -121,48 +124,48 @@
                 console.error('There was a problem with the fetch operation:', error);
             });
 
-            return false;
+        return false;
+    }
+
+    document.getElementById("button_add").onclick = addProduct
+
+    async function getCategories() {
+        const url = "{% url 'catalogue:get_categories' %}";
+        const response = await fetch(url);
+        const categories = await response.json();
+        const select = document.getElementById('categoryFilter');
+
+        categories.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category;
+            option.text = category;
+            select.add(option);
+        });
+    }
+
+    async function populateCategories() {
+        const url = "{% url 'catalogue:get_categories' %}";
+        const response = await fetch(url);
+        const categories = await response.json();
+        const select = document.getElementById('categoryFilter');
+
+        // Menghapus semua opsi sebelumnya kecuali opsi pertama ("All Categories")
+        while (select.options.length > 1) {
+            select.remove(1);
         }
 
-        document.getElementById("button_add").onclick = addProduct
-       
-        async function getCategories() {
-            const url = "{% url 'catalogue:get_categories' %}";
-            const response = await fetch(url);
-            const categories = await response.json();
-            const select = document.getElementById('categoryFilter');
-            
-            categories.forEach(category => {
-                const option = document.createElement('option');
-                option.value = category;
-                option.text = category;
-                select.add(option);
-            });
-        }
-
-        async function populateCategories() {
-            const url = "{% url 'catalogue:get_categories' %}";
-            const response = await fetch(url);
-            const categories = await response.json();
-            const select = document.getElementById('categoryFilter');
-            
-            // Menghapus semua opsi sebelumnya kecuali opsi pertama ("All Categories")
-            while (select.options.length > 1) {
-                select.remove(1);
-            }
-
-            categories.forEach(category => {
-                const option = document.createElement('option');
-                option.value = category;
-                option.text = category;
-                select.add(option);
-            });
-        }
+        categories.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category;
+            option.text = category;
+            select.add(option);
+        });
+    }
 
 
 
 
 
-    </script>
+</script>
 
 {% endblock content %}
