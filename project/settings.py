@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'autentifikasi',
     'book',
     'authentication',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
