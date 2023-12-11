@@ -113,9 +113,14 @@ def get_categories_json(request):
 # Lalu, Respons JSON yang dihasilkan akan berisi informasi tentang dua forum terbaru, termasuk nama pengguna,
 # subject, user, description 
 #@login_required(login_url='autentifikasi/login')
-@login_required
+#@login_required
+#def get_forum(request):
+#    forum = Forum.objects.filter(user=request.user).order_by('date_added')[:3].values(
+#        "user","user__username", "date_added", "subject", "description", "pk", "book__title", 'book__pk')
+#    return JsonResponse(list(forum), safe=False)
+
 def get_forum(request):
-    forum = Forum.objects.filter(user=request.user).order_by('date_added')[:3].values(
+    forum = Forum.objects.order_by('-date_added')[:3].values(
         "user","user__username", "date_added", "subject", "description", "pk", "book__title", 'book__pk')
     return JsonResponse(list(forum), safe=False)
 
@@ -127,11 +132,17 @@ def get_forum(request):
 # dan akan dikembalikan dengan respon json yang berisi informasi tentang dua forum terbusiest
 # yang dibuat oleh pengguna yang saat ini masuk, subject, description, 
 #@login_required(login_url='autentifikasi/login')
-@login_required
+#@login_required
+#def get_busiest_forum(request):
+#   forum = Forum.objects.filter(user=request.user).order_by('-total_reply')[:3].values(
+#        "user","user__username", "date_added", "subject", "description", "pk", "book__title", "total_reply", 'book__pk')
+#    return JsonResponse(list(forum), safe=False)
+
+
 def get_busiest_forum(request):
-    forum = Forum.objects.filter(user=request.user).order_by('-total_reply')[:3].values(
+   forum = Forum.objects.order_by('-total_reply')[:3].values(
         "user","user__username", "date_added", "subject", "description", "pk", "book__title", "total_reply", 'book__pk')
-    return JsonResponse(list(forum), safe=False)
+   return JsonResponse(list(forum), safe=False)
 
 
 # get recomended forum for all user : akan mengambil data forum yang direkomendasikan berdasarkan paling banyak peminatnya dari seluruh user
