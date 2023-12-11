@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -36,6 +37,7 @@ def get_reviews_json(request, id):
 
     return JsonResponse(list(reviews), safe=False)
 
+@login_required
 def get_user_review(request, id):
     book = Book.objects.get(pk=id)
     reviews = Review.objects.filter(book=book, user=request.user).values('user','profile__name', 'book__title', 'book__pk', 'pk', 'description', 'star', 'date_added')
@@ -63,3 +65,31 @@ def add_reviews_ajax(request, id):
         return HttpResponse(b"CREATED", status=201)
 
     return HttpResponseNotFound()
+
+@csrf_exempt
+def add_reviews_flutter(request, id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        book = Book.objects.get(pk=id)
+        reviews = Review.objects.filter(book=book)
+        profile = Profile.objects.get(user=request.user)
+        star = int(data["star"])
+
+        rate = (book.rating*len(reviews)+star)/(len(reviews)+1)
+        book.rating = rate
+        book.save()
+
+        new_product = Review.objects.create(
+            user = request.user,
+            profile = profile,
+            book = book,
+            description = data["description"],
+            star = star,
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
