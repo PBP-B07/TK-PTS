@@ -9,6 +9,7 @@ from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import datetime
+from forum.models import Forum
 
 @login_required(login_url=('../../autentifikasi/login'))
 def show_forum(request, id):
@@ -74,3 +75,19 @@ def add_reply_ajax(request,bookid,id):
             return HttpResponseNotFound()
 
     return HttpResponseNotFound()
+
+@csrf_exempt
+def create_forum_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        book = Book.objects.get(pk=id)
+
+        new_forum = Forum.objects.create(
+            user=request.user,
+            subject=data["subject"],
+            description=data["description"],
+        )
+        new_forum.save()
+        return JsonResponse({"status": "Berhasil menambahkan forum baru"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
