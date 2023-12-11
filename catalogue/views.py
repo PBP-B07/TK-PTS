@@ -107,13 +107,13 @@ def add_product_ajax(request):
 #
 #     return HttpResponseNotAllowed(['POST'])
 
+@csrf_exempt
 def create_product_flutter(request):
     if request.method == 'POST':
         
         data = json.loads(request.body)
 
         new_product = Book.objects.create(
-            user=request.user,
             title=data["title"],
             description = data["description"],
             author = data["author"],
