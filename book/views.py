@@ -1,15 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from book.models import Book
 
 @login_required(login_url='../../autentifikasi/login')
 def show_main_book(request, book_id):
-    
     book = get_object_or_404(Book, pk=book_id)
-
     context = {
         'page': 'Book Description',
         'book': book, 
@@ -20,6 +18,21 @@ def show_main_book(request, book_id):
 def get_books(request):
     data = Book.objects.all()
     return HttpResponse(serializers.serialize("json", data),content_type="application/json")
+
+def get_book_json(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    book_data = {
+        'title': book.title,
+        'description': book.description,
+        'author': book.author,
+        'isbn10': book.isbn10,
+        'isbn13': book.isbn13,
+        'publish_date': book.publish_date,
+        'edition': book.edition,
+        'best_seller': book.best_seller,
+        'category': book.category,
+    }
+    return JsonResponse(book_data)
 
 @csrf_exempt
 def edit_book(request, book_id):
