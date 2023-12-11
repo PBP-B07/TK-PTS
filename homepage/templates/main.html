@@ -22,22 +22,22 @@
         </div>
 
         <div class ="container-forum">
-            <h2>Latest Forum </h2>
+            <h2>Latest Forum</h2>
             <table id="forum_table"></table>
         </div>
 
         <div class="container-busiest">
-            <h2>Busiest Forum From {{ username }}</h2>
+            <h2>Busiest Forum</h2>
             <table id="busiest_table"></table>
         </div>
 
         <div class="recomended">
-            <h2>Recomended Forum From All User</h2>
+            <h2>Recomended Forum</h2>
             <table id="recomended_forum"></table>
         </div>
 
         <div class="not-recomended">
-            <h2>Not Recomended Forum From All User</h2>
+            <h2>Not Recomended Forum</h2>
             <table id="not_recomended_forum"></table>
         </div>
 
@@ -227,6 +227,7 @@
 
             let htmlString = `<tr>
                 <th>Title</th>
+                <th>User</th>
                 <th>Subject</th>
                 <th>Description</th>
                
@@ -234,6 +235,7 @@
             forums.forEach((forum) => {
                 htmlString += `\n<tr>
                 <td><a href="/books/${forum.book__pk}/">${forum.book__title}</td>
+                <td>${forum.user__username}</td>
                 <td>${forum.subject}</td>
                 <td>${forum.description}</td>
                 
@@ -256,6 +258,7 @@
 
             let htmlString = `<tr>
                 <th>Title</th>
+                <th>User</th>
                 <th>Subject</th>
                 <th>Description</th>
                
@@ -263,6 +266,7 @@
             forums.forEach((forum) => {
                 htmlString += `\n<tr>
                 <td><a href="/books/${forum.book__pk}/">${forum.book__title}</td>
+                <td>${forum.user__username}</td>
                 <td>${forum.subject}</td>
                 <td>${forum.description}</td>
                 
