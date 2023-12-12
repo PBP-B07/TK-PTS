@@ -8,5 +8,5 @@ urlpatterns = [
     path('get-reviews-json/<int:id>/', get_reviews_json, name='get_reviews_json'),
     path('create-reviews-ajax/<int:id>/', add_reviews_ajax, name='add_reviews_ajax'), 
     path('get-user-reviews/<int:id>/', get_user_review, name='get_user_review'),
-    path('create-reviews-flutter/<int:id>/', add_reviews_flutter, name='add_reviews_flutter')
+    path('create-reviews-flutter/<int:id>/', add_reviews_flutter, name='add_reviews_flutter'),
 ]
