@@ -37,7 +37,6 @@ def get_reviews_json(request, id):
 
     return JsonResponse(list(reviews), safe=False)
 
-@login_required
 def get_user_review(request, id):
     book = Book.objects.get(pk=id)
     reviews = Review.objects.filter(book=book, user=request.user).values('user','profile__name', 'book__title', 'book__pk', 'pk', 'description', 'star', 'date_added')
