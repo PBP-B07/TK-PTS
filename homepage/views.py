@@ -1,3 +1,4 @@
+import json
 from django.urls import reverse
 from homepage.forms import HomepageForm
 from reviews.models import Review
@@ -114,15 +115,15 @@ def get_categories_json(request):
 # subject, user, description 
 #@login_required(login_url='autentifikasi/login')
 #@login_required
-#def get_forum(request):
-#    forum = Forum.objects.filter(user=request.user).order_by('date_added')[:3].values(
-#        "user","user__username", "date_added", "subject", "description", "pk", "book__title", 'book__pk')
-#    return JsonResponse(list(forum), safe=False)
-
 def get_forum(request):
-    forum = Forum.objects.order_by('-date_added')[:3].values(
+    forum = Forum.objects.filter(user=request.user).order_by('date_added')[:3].values(
         "user","user__username", "date_added", "subject", "description", "pk", "book__title", 'book__pk')
     return JsonResponse(list(forum), safe=False)
+
+#def get_forum(request):
+ #   forum = Forum.objects.order_by('-date_added')[:3].values(
+  #      "user","user__username", "date_added", "subject", "description", "pk", "book__title", 'book__pk')
+   # return JsonResponse(list(forum), safe=False)
 
 
 # get forum busiest for one user : fungsi ini akan mengambil data dari model Forum
@@ -133,16 +134,16 @@ def get_forum(request):
 # yang dibuat oleh pengguna yang saat ini masuk, subject, description, 
 #@login_required(login_url='autentifikasi/login')
 #@login_required
-#def get_busiest_forum(request):
-#   forum = Forum.objects.filter(user=request.user).order_by('-total_reply')[:3].values(
-#        "user","user__username", "date_added", "subject", "description", "pk", "book__title", "total_reply", 'book__pk')
-#    return JsonResponse(list(forum), safe=False)
-
-
 def get_busiest_forum(request):
-   forum = Forum.objects.order_by('-total_reply')[:3].values(
-        "user","user__username", "date_added", "subject", "description", "pk", "book__title", "total_reply", 'book__pk')
+   forum = Forum.objects.filter(user=request.user).order_by('-total_reply')[:3].values(
+       "user","user__username", "date_added", "subject", "description", "pk", "book__title", "total_reply", 'book__pk')
    return JsonResponse(list(forum), safe=False)
+
+
+#def get_busiest_forum(request):
+#   forum = Forum.objects.order_by('-total_reply')[:3].values(
+ #       "user","user__username", "date_added", "subject", "description", "pk", "book__title", "total_reply", 'book__pk')
+  # return JsonResponse(list(forum), safe=False)
 
 
 # get recomended forum for all user : akan mengambil data forum yang direkomendasikan berdasarkan paling banyak peminatnya dari seluruh user
@@ -162,3 +163,22 @@ def get_not_recomended_forum(request):
     forum = Forum.objects.order_by('total_reply')[:2].values(
         "user","user__username", "date_added", "subject", "description", "pk", "book__title", "total_reply", 'book__pk')
     return JsonResponse(list(forum), safe=False)
+
+
+@csrf_exempt
+def create_event_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+
+        new_product = BookEvent.objects.create(
+            title = data["title"],
+            description = data["description"],
+            book = Book.objects.get(title=data["bookTitle"]),
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
