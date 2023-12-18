@@ -1,6 +1,6 @@
 from book.views import show_main_book
 from django.urls import path
-from homepage.views import create_event_flutter, get_event, show_main, get_busiest_forum
+from homepage.views import create_event_flutter, get_event, is_admin, show_main, get_busiest_forum
 from homepage.views import get_book, get_event, add_event_ajax, get_review,get_categories_json,get_forum
 from homepage.views import get_recomended_forum, get_not_recomended_forum
 
@@ -19,4 +19,5 @@ urlpatterns = [
     path('get_recomended_forum/',get_recomended_forum,name='get_recomended_forum'),
     path('get_not_recomended_forum/',get_not_recomended_forum,name='get_not_recomended_forum'),
     path('create-flutter/', create_event_flutter, name='create_product_flutter'),
+    path('is-admin/', is_admin, name='is_admin'),
 ]
