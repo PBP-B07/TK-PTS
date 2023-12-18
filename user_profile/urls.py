@@ -1,5 +1,6 @@
 from django.urls import path
 from user_profile.views import show_main, get_profile_json, get_profile, edit_profile_ajax, get_reviews, delete_review, get_review_json, edit_review_ajax, get_forum, get_reply, get_reply_json
+from user_profile.views import edit_reviews_flutter, delete_reviews_flutter
 
 app_name = 'user_profile'
 
@@ -15,4 +16,7 @@ urlpatterns = [
     path('get_reply/', get_reply, name='get_reply'),
     path('get_reply/<int:id>/', get_reply_json, name='get_reply_json'),
     path('edit_review/<int:id>/', edit_review_ajax, name='edit_review_ajax'),
+
+    path('edit_review_flutter/<int:id>/', edit_reviews_flutter, name='edit_review_flutter'),
+    path('delete_review_flutter/<int:id>/', delete_reviews_flutter, name='delete_review_flutter'),
 ]
