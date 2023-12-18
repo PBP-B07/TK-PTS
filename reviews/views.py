@@ -92,3 +92,4 @@ def add_reviews_flutter(request, id):
         return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)
+    
