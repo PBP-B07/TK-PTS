@@ -132,3 +132,9 @@ def create_product_flutter(request):
         return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+def is_admin(request):
+    user = request.user
+    is_admin = user.is_staff
+    return JsonResponse({'is_admin': is_admin})
