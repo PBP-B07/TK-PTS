@@ -115,7 +115,7 @@ def get_forum(request):
     forum = Forum.objects.filter(user=request.user).values('book__title', 'pk', 'subject', 'description', 'date_added').order_by('-pk')
     return JsonResponse(list(forum), safe=False)
 
-@login_required(login_url='../../autentifikasi/login')
+# @login_required(login_url='../../autentifikasi/login')
 def get_reply(request):
     reply = Reply.objects.filter(user=request.user).values('forum__subject', 'message', 'forum__user__username', 'forum__user__pk', 'pk').order_by('-pk')
     return JsonResponse(list(reply), safe=False)
