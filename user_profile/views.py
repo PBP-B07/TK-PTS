@@ -90,7 +90,7 @@ def delete_review(request, id):
         if len(review_book) == 1:
             newrating = 0
         else:
-            newrating = (book.rating*len(review_book) - review.star)/len(review_book)-1
+            newrating = (book.rating*len(review_book) - review.star)/(len(review_book)-1)
         
         book.rating=newrating
         book.save()
@@ -160,7 +160,7 @@ def delete_reviews_flutter(request, id):
         if len(review_book) == 1:
             newrating = 0
         else:
-            newrating = (book.rating*len(review_book) - review.star)/len(review_book)-1
+            newrating = (book.rating*len(review_book) - review.star)/(len(review_book)-1)
         
         book.rating=newrating
         book.save()
