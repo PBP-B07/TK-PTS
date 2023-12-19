@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from user_profile.models import Profile
 
 
 @csrf_exempt
@@ -62,14 +63,28 @@ def register(request):
         # Extracting values from form data
         username = request.POST.get('username')
         password = request.POST.get('password')
+        surname = request.POST.get('surname')
+        description = request.POST.get('description')
+        is_staff = request.POST.get('admin') == 'true'
 
-        new_user = User.objects.create_user(username=username, password=password)
-            
-        return JsonResponse({
-            "status": True,
-            "message": "Account created successfully!",
-            "user_id": new_user.id  # Optionally return the created user's ID
-        }, status=200)
+        try:
+            # Create a new user
+            new_user = User.objects.create_user(username=username, password=password, is_staff=is_staff)
+
+            # Create a new profile
+            new_profile = Profile.objects.create(user=new_user, name=surname, description=description)
+
+            return JsonResponse({
+                "status": True,
+                "message": "Account created successfully!",
+                "user_id": new_user.id  # Optionally return the created user's ID
+            }, status=200)
+
+        except Exception as e:
+            return JsonResponse({
+                "status": False,
+                "message": f"Failed to create user. {str(e)}"
+            }, status=500)
     
     return JsonResponse({
         "status": False,
