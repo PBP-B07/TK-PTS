@@ -77,7 +77,7 @@ def add_reply_ajax(request,bookid,id):
     return HttpResponseNotFound()
 
 @csrf_exempt
-def create_forum_flutter(request):
+def create_forum_flutter(request,id):
     if request.method == 'POST':
         data = json.loads(request.body)
         book = Book.objects.get(pk=id)
@@ -86,8 +86,30 @@ def create_forum_flutter(request):
             user=request.user,
             subject=data["subject"],
             description=data["description"],
+            book = book,
         )
         new_forum.save()
-        return JsonResponse({"status": "Berhasil menambahkan forum baru"}, status=200)
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+def create_reply_flutter(request,bookid,id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        book = Book.objects.get(pk=bookid)
+        forum = Forum.objects.get(pk=id)
+        forum.total_reply +=1 
+        forum.save()
+
+        new_reply = Reply.objects.create(
+            user=request.user,
+            message=data["message"],
+            forum=forum,
+        )
+        new_reply.save()
+
+        return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)
