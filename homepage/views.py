@@ -116,7 +116,7 @@ def get_categories_json(request):
 #@login_required(login_url='autentifikasi/login')
 #@login_required
 def get_forum(request):
-    forum = Forum.objects.filter(user=request.user).order_by('date_added')[:3].values(
+    forum = Forum.objects.filter(user=request.user).order_by('-pk')[:3].values(
         "user","user__username", "date_added", "subject", "description", "pk", "book__title", 'book__pk')
     return JsonResponse(list(forum), safe=False)
 
